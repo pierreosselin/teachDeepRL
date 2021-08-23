@@ -149,7 +149,6 @@ def sac(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     env.reset()
 
     obs_dim = env.env.observation_space.shape[0]
-    print(obs_dim)
     act_dim = env.env.action_space.shape[0]
 
     # Action limit for clamping: critically, assumes all dimensions share the same bound!

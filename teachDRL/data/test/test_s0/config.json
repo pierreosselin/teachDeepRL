@@ -1,0 +1,41 @@
+{
+    "ac_kwargs":	{},
+    "actor_critic":	"mlp_actor_critic",
+    "alpha":	0.005,
+    "batch_size":	1000,
+    "env_fn":	"<function <lambda> at 0x7f62fa4fc620>",
+    "env_init":	{},
+    "env_name":	"bipedal-walker-continuous-v0",
+    "epochs":	100,
+    "exp_name":	"test",
+    "gamma":	0.99,
+    "logger":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f62fa500fd0>":	{
+            "epoch_dict":	{},
+            "exp_name":	"test",
+            "first_row":	true,
+            "log_current_row":	{},
+            "log_headers":	[],
+            "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0",
+            "output_file":	{
+                "<_io.TextIOWrapper name='/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                    "mode":	"w"
+                }
+            }
+        }
+    },
+    "logger_kwargs":	{
+        "exp_name":	"test",
+        "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0"
+    },
+    "lr":	0.001,
+    "max_ep_len":	2000,
+    "nb_test_episodes":	50,
+    "polyak":	0.995,
+    "replay_size":	2000000,
+    "save_freq":	1,
+    "seed":	0,
+    "start_steps":	10000,
+    "steps_per_epoch":	200000,
+    "train_freq":	10
+}

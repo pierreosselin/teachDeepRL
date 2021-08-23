@@ -1,0 +1,43 @@
+{
+    "ac_kwargs":	{},
+    "actor_critic":	"mlp_actor_critic",
+    "alpha":	0.005,
+    "batch_size":	1000,
+    "env_fn":	"<function <lambda> at 0x7fc257444158>",
+    "env_init":	{
+        "leg_size":	"default"
+    },
+    "env_name":	"bipedal-walker-continuous-v0",
+    "epochs":	100,
+    "exp_name":	"test_alpgmm",
+    "gamma":	0.99,
+    "logger":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7fc257448f60>":	{
+            "epoch_dict":	{},
+            "exp_name":	"test_alpgmm",
+            "first_row":	true,
+            "log_current_row":	{},
+            "log_headers":	[],
+            "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test_alpgmm/test_alpgmm_s42",
+            "output_file":	{
+                "<_io.TextIOWrapper name='/home/pierre/Git/teachDeepRL/teachDRL/data/test_alpgmm/test_alpgmm_s42/progress.txt' mode='w' encoding='UTF-8'>":	{
+                    "mode":	"w"
+                }
+            }
+        }
+    },
+    "logger_kwargs":	{
+        "exp_name":	"test_alpgmm",
+        "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test_alpgmm/test_alpgmm_s42"
+    },
+    "lr":	0.001,
+    "max_ep_len":	2000,
+    "nb_test_episodes":	50,
+    "polyak":	0.995,
+    "replay_size":	2000000,
+    "save_freq":	1,
+    "seed":	42,
+    "start_steps":	10000,
+    "steps_per_epoch":	200000,
+    "train_freq":	10
+}

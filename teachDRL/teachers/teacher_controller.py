@@ -53,6 +53,7 @@ class TeacherController(object):
                 print("ill defined boundaries, use [min, max, nb_dims] format or [min, max] if nb_dims=1")
                 exit(1)
 
+
         # setup tasks generator
         if teacher == 'Oracle':
             self.task_generator = OracleTeacher(mins, maxs, teacher_params['window_step_vector'], seed=seed)
@@ -69,9 +70,10 @@ class TeacherController(object):
             raise NotImplementedError
 
         self.test_mode = "fixed_set"
+        self.test_mode = "None"
         if self.test_mode == "fixed_set":
             name = get_test_set_name(self.param_env_bounds)
-            self.test_env_list = pickle.load( open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ) )
+            self.test_env_list = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
             print('fixed set of {} tasks loaded: {}'.format(len(self.test_env_list),name))
 
         #data recording
@@ -79,7 +81,6 @@ class TeacherController(object):
         self.env_train_rewards = []
         self.env_train_norm_rewards = []
         self.env_train_len = []
-
         self.env_params_test = []
         self.env_test_rewards = []
         self.env_test_len = []
