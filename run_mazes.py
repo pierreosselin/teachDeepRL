@@ -1,7 +1,7 @@
 import argparse
 from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
-from teachDRL.spinup.algos.sac.sac import sac
-from teachDRL.spinup.algos.sac import core
+from teachDRL.spinup.algos.ppo.ppo import ppo
+from teachDRL.spinup.algos.ppo import core
 import gym
 from gym.wrappers.time_limit import TimeLimit
 from teachDRL.gym_flowers.envs.maze_env import *
@@ -153,7 +153,7 @@ Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bound
                             seed=args.seed, teacher_params=params)
 
 # Launch Student training
-sac(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
+ppo(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
     logger_kwargs=logger_kwargs, alpha=args.ent_coef, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep,
     replay_size=args.buf_size, env_init=env_init, env_name=args.env, nb_test_episodes=args.nb_test_episodes, lr=args.lr,
     train_freq=args.train_freq, batch_size=args.batch_size, Teacher=Teacher)

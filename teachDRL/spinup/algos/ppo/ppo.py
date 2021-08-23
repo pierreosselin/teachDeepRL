@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 import gym
 import time
-import spinup.algos.ppo.core as core
+import teachDRL.spinup.algos.ppo.core as core
 from teachDRL.spinup.utils.logx import EpochLogger
 from teachDRL.spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
 from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
