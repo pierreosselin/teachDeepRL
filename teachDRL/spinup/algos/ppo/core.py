@@ -31,6 +31,13 @@ def mlp(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
         x = tf.layers.dense(x, units=h, activation=activation)
     return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
 
+
+def convolutional(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
+    for h in hidden_sizes[:-1]:
+        x = tf.layers.dense(x, units=h, activation=activation)
+    return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
+
+
 def get_vars(scope=''):
     return [x for x in tf.trainable_variables() if scope in x.name]
 
@@ -66,8 +73,9 @@ Policies
 
 def mlp_categorical_policy(x, a, hidden_sizes, activation, output_activation, action_space):
     act_dim = action_space.n
-    logits = mlp(x, list(hidden_sizes)+[act_dim], activation, None)
+    logits = mlp(x, list(hidden_sizes)+[act_dim], activation, None) ## To modify to adapt to mazes (convolutional)
     logp_all = tf.nn.log_softmax(logits)
+
     pi = tf.squeeze(tf.multinomial(logits,1), axis=1)
     logp = tf.reduce_sum(tf.one_hot(a, depth=act_dim) * logp_all, axis=1)
     logp_pi = tf.reduce_sum(tf.one_hot(pi, depth=act_dim) * logp_all, axis=1)

@@ -1,0 +1,3 @@
+- Change Architecture Agent for a convolutional neural network
+- Check Gan Latent Space Gives modes of environments
+- Check if uses GPU

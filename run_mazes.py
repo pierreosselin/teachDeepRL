@@ -24,7 +24,7 @@ parser.add_argument('--epochs', type=int, default=100)
 parser.add_argument('--gpu_id', type=int, default=-1)  # default is no GPU
 parser.add_argument('--ent_coef', type=float, default=0.005)
 parser.add_argument('--max_ep_len', type=int, default=2000)
-parser.add_argument('--steps_per_ep', type=int, default=200000)  # nb of env steps per epochs (stay above max_ep_len)
+parser.add_argument('--steps_per_ep', type=int, default=2000)  # nb of env steps per epochs (stay above max_ep_len)
 parser.add_argument('--buf_size', type=int, default=2000000)
 parser.add_argument('--nb_test_episodes', type=int, default=50)
 parser.add_argument('--lr', type=float, default=1e-3)
@@ -145,7 +145,7 @@ env_config = {}
 env_config['device'] = "cuda"
 env_config['maze_model_path'] = "/home/pierre/Git/teachDeepRL/teachDRL/models/generator_aldous-broder_1.pth"
 env_config['obs_radius'] = 2
-env_f = lambda: TimeLimit(MazeEnv(env_config))
+env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=100)
 env_init = {}
 
 # Initialize teacher
@@ -153,7 +153,32 @@ Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bound
                             seed=args.seed, teacher_params=params)
 
 # Launch Student training
+
 ppo(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
-    logger_kwargs=logger_kwargs, alpha=args.ent_coef, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep,
+    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep)
+
+"""
+add alpha
+sac(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
+    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep,
     replay_size=args.buf_size, env_init=env_init, env_name=args.env, nb_test_episodes=args.nb_test_episodes, lr=args.lr,
     train_freq=args.train_freq, batch_size=args.batch_size, Teacher=Teacher)
+
+clip_ratio
+pi_lr
+vf_lr
+train_pi_iters
+train_v_iters
+lam
+target_kl
+save_freq
+
+to remove:
+replay_size
+env_init
+env_name
+"""
+
+
+
+

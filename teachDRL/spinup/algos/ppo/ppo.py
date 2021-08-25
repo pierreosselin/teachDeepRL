@@ -6,7 +6,7 @@ import teachDRL.spinup.algos.ppo.core as core
 from teachDRL.spinup.utils.logx import EpochLogger
 from teachDRL.spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
 from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
-
+from tqdm import tqdm
 
 class PPOBuffer:
     """
@@ -181,9 +181,14 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
     # Inputs to computation graph
     x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
+    x_ph = tf.layers.Flatten()(x_ph)
+
     adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
     # Main outputs from computation graph
+    # ac_kwargs defines architecture student
+    # x_ph is the data
+    # a_ph is the action placeholder
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
 
     # Need all placeholders in *this* order later (to zip with data from buffer)
@@ -252,17 +257,17 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
-        for t in range(local_steps_per_epoch):
+        for t in tqdm(range(local_steps_per_epoch)):
             a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: o.reshape(1,-1)})
-
             # save and log
             buf.store(o, a, r, v_t, logp_t)
             logger.store(VVals=v_t)
-
+            
             o, r, d, _ = env.step(a[0])
+
             ep_ret += r
             ep_len += 1
-
+            
             terminal = d or (ep_len == max_ep_len)
             if terminal or (t==local_steps_per_epoch-1):
                 if not(terminal):
@@ -286,7 +291,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('Epoch', epoch)
         logger.log_tabular('EpRet', with_min_and_max=True)
         logger.log_tabular('EpLen', average_only=True)
-        logger.log_tabular('VVals', with_min_and_max=True)
+        #logger.log_tabular('VVals', with_min_and_max=True)
         logger.log_tabular('TotalEnvInteracts', (epoch+1)*steps_per_epoch)
         logger.log_tabular('LossPi', average_only=True)
         logger.log_tabular('LossV', average_only=True)

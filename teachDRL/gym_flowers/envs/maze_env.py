@@ -49,20 +49,18 @@ class MazeEnv(Env):
 
         self.generator.load_state_dict(torch.load(str(env_config['maze_model_path']), map_location=self.device))
 
-
+        self.maze = self.generator.generate_random()[0][0]
         self.action_space = spaces.Discrete(4) # 4 actions
         self.obs_radius = env_config['obs_radius']
         self.observation_space = spaces.Box(low=0, 
                                             high=2, 
-                                            shape=(self.obs_radius*2 + 1, self.obs_radius*2 + 1), 
+                                            shape=self.maze.shape, 
                                             dtype=np.uint8)
         
         self.Z = Variable(torch.tensor(np.random.normal(0, 1, (1, self.generator.latent_dim)), dtype=torch.float)).cuda()
         self.reset()
 
     def step(self, action):
-        print(action)
-
         if action == 0:
             # up
             x_t = self.x
@@ -106,14 +104,12 @@ class MazeEnv(Env):
     """
 
     def _get_obs(self):
-        return self.maze
+        return self.maze.cpu().detach().numpy() ##
 
     def reset(self, random = False):
         if random:
             self.maze = self.generator.generate_random()[0][0]
         else:
-            print(self.Z)
-            print(self.Z.shape)
             self.maze = self.generator.forward(self.Z)
         self.x = 0
         self.y = self.maze.shape[0] - 1
