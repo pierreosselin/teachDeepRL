@@ -7,6 +7,9 @@ from teachDRL.spinup.utils.logx import EpochLogger
 from teachDRL.spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
 from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
 from tqdm import tqdm
+from PIL import Image
+from moviepy.editor import ImageSequenceClip
+
 
 class PPOBuffer:
     """
@@ -89,10 +92,23 @@ Proximal Policy Optimization (by clipping),
 with early stopping based on approximate KL
 
 """
+
+def images_to_gif(l_images, epoch):
+    """
+    Output gif from list of images
+    """
+    new_l = [np.repeat(el.astype(np.uint8)[:, :, np.newaxis], 3, axis=2) for el in l_images]
+    new_l = [el[:,:,np.newaxis]/3 for el in l_images]
+    
+    clip = ImageSequenceClip(new_l, fps=20, ismask=True)
+    
+    clip.write_gif(f'./epoch_number_{epoch}.gif', fps=20)
+
+
 def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10):
+        target_kl=0.01, logger_kwargs=dict(), save_freq=10, Teacher=None):
     """
 
     Args:
@@ -173,6 +189,10 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     np.random.seed(seed)
 
     env = env_fn()
+
+    if Teacher: Teacher.set_env_params(env)
+
+
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
     
@@ -253,8 +273,11 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                      DeltaLossV=(v_l_new - v_l_old))
 
     start_time = time.time()
-    o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-
+    o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
+    images_gif = []
+    o_new = o.reshape(16,16)
+    o_new[env.env.y, env.env.x] = 3
+    images_gif.append(o_new)
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
@@ -264,7 +287,11 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
             logger.store(VVals=v_t)
             
             o, r, d, _ = env.step(a[0])
-
+            
+            o_new = o.reshape(16,16)
+            o_new[env.env.y, env.env.x] = 3
+            images_gif.append(o_new)
+            
             ep_ret += r
             ep_len += 1
             
@@ -278,12 +305,25 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                 if terminal:
                     # only save EpRet / EpLen if trajectory finished
                     logger.store(EpRet=ep_ret, EpLen=ep_len)
+                #images_to_gif(images_gif, epoch)
+                #images_gif = []
+                if Teacher:
+                    Teacher.record_train_episode(ep_ret, ep_len)
+                    Teacher.set_env_params(env)
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+                o_new = o.reshape(16,16)
+                o_new[env.env.y, env.env.x] = 3
+                images_gif.append(o_new)
+
+
+
 
         # Save model
         if (epoch % save_freq == 0) or (epoch == epochs-1):
             logger.save_state({'env': env}, None)
 
+        images_to_gif(images_gif, epoch)
+        images_gif = []
         # Perform PPO update!
         update()
 
@@ -291,7 +331,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('Epoch', epoch)
         logger.log_tabular('EpRet', with_min_and_max=True)
         logger.log_tabular('EpLen', average_only=True)
-        #logger.log_tabular('VVals', with_min_and_max=True)
+        logger.log_tabular('VVals', with_min_and_max=True)
         logger.log_tabular('TotalEnvInteracts', (epoch+1)*steps_per_epoch)
         logger.log_tabular('LossPi', average_only=True)
         logger.log_tabular('LossV', average_only=True)
@@ -303,6 +343,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('StopIter', average_only=True)
         logger.log_tabular('Time', time.time()-start_time)
         logger.dump_tabular()
+        if Teacher: Teacher.dump(logger.output_dir+'/env_params_save.pkl')
 
 if __name__ == '__main__':
     import argparse

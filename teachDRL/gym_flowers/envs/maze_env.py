@@ -1,4 +1,5 @@
 import torch
+from torchvision.utils import save_image
 import random
 import os
 import numpy as np
@@ -22,7 +23,7 @@ class WGanGPConfig:
     b2 = 0.999
     n_cpu = 8
     latent_dim = 100
-    img_size = 32
+    img_size = 16
     channels = 1
     n_critic = 5
     clip_value = 0.01
@@ -54,7 +55,7 @@ class MazeEnv(Env):
         self.obs_radius = env_config['obs_radius']
         self.observation_space = spaces.Box(low=0, 
                                             high=2, 
-                                            shape=self.maze.shape, 
+                                            shape=self.maze.flatten().shape, 
                                             dtype=np.uint8)
         
         self.Z = Variable(torch.tensor(np.random.normal(0, 1, (1, self.generator.latent_dim)), dtype=torch.float)).cuda()
@@ -76,9 +77,9 @@ class MazeEnv(Env):
         elif action == 3:
             # right
             x_t = self.x + 1
-            y_t = self.y 
+            y_t = self.y
         
-        if x_t >= 0 and x_t < self.maze.shape[1] and y_t >= 0 and y_t < self.maze.shape[0]:
+        if x_t >= 0 and x_t < self.maze.shape[1] and y_t >= 0 and y_t < self.maze.shape[0]:            
             if self.maze[y_t, x_t] != WALL:
                 self.x = x_t
                 self.y = y_t
@@ -86,7 +87,7 @@ class MazeEnv(Env):
         return self._get_obs(), self._get_reward(), self._is_solved(), {}
 
     def _is_solved(self):
-        if self.x == self.goal_x and self.goal_y:
+        if self.x == self.goal_x and self.y == self.goal_y:
             return True
         else:
             return False
@@ -104,26 +105,26 @@ class MazeEnv(Env):
     """
 
     def _get_obs(self):
-        return self.maze.cpu().detach().numpy() ##
+        return self.maze.cpu().detach().numpy().flatten() ##
 
     def reset(self, random = False):
         if random:
             self.maze = self.generator.generate_random()[0][0]
         else:
-            self.maze = self.generator.forward(self.Z)
+            self.maze = self.generator.forward(self.Z)[0][0]
         self.x = 0
         self.y = self.maze.shape[0] - 1
 
         self.goal_x, self.goal_y = self._sample_goal()
-
+        save_image(self.maze, "./test_sample.png", normalize=True)
         return self._get_obs()
 
     def set_environment(self, **param_dict):
         self.Z = Variable(torch.tensor(param_dict["Z"].reshape(1,-1))).cuda()
 
     def _sample_goal(self):
-        goal_y = self.maze.shape[0] - 1
-        goal_x = 0
+        goal_y = 0
+        goal_x = self.maze.shape[1] - 1
 
         self.maze[goal_y, goal_x] = GOAL
 
