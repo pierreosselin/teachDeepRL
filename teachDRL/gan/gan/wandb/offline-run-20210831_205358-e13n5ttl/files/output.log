@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "wgan_gp.py", line 72, in <module>
+    MazeDataset(size=(opt.img_size, opt.img_size),
+  File "/home/pierre/Git/gamegan/src/gan/dataset.py", line 18, in __init__
+    self.maze_generator = aldousbroder.AldousBroderMazeGenerator(size=size)
+AttributeError: module 'aldousbroder' has no attribute 'AldousBroderMazeGenerator'

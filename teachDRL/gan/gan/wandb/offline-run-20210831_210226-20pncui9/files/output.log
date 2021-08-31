@@ -1,0 +1,27 @@
+torch.Size([64, 128, 4, 4])
+torch.Size([64, 1, 16, 16])
+/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/functional.py:1709: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+Traceback (most recent call last):
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/einops/einops.py", line 368, in reduce
+    return recipe.apply(tensor)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/einops/einops.py", line 204, in apply
+    init_shapes, reduced_axes, axes_reordering, added_axes, final_shapes = self.reconstruct_from_shape(
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/einops/einops.py", line 172, in reconstruct_from_shape
+    raise EinopsError('Shape mismatch, {} != {}'.format(length, known_product))
+einops.EinopsError: Shape mismatch, 256 != 289
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "wgan_gp.py", line 142, in <module>
+    fake_imgs = generator(z)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/pierre/Git/gamegan/src/gan/gan_utils.py", line 51, in forward
+    img = rearrange(img, 'b (c h w) -> b c h w', c=1, h=self.img_size, w=self.img_size)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/einops/einops.py", line 424, in rearrange
+    return reduce(tensor, pattern, reduction='rearrange', **axes_lengths)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/einops/einops.py", line 376, in reduce
+    raise EinopsError(message + '\n {}'.format(e))
+einops.EinopsError:  Error while processing rearrange-reduction pattern "b (c h w) -> b c h w".
+ Input tensor shape: torch.Size([64, 256]). Additional info: {'c': 1, 'h': 17, 'w': 17}.
+ Shape mismatch, 256 != 289

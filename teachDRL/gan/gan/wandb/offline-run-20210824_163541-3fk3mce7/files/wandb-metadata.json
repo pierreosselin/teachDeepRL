@@ -1,0 +1,24 @@
+{
+    "os": "Linux-5.11.0-27-generic-x86_64-with-glibc2.10",
+    "python": "3.8.10",
+    "heartbeatAt": "2021-08-24T15:35:42.404332",
+    "startedAt": "2021-08-24T15:35:41.924492",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1650 Ti",
+    "gpu_count": 1,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "wgan_gp.py",
+    "codePath": "src/gan/wgan_gp.py",
+    "git": {
+        "remote": "https://github.com/suny-sht/gamegan.git",
+        "commit": "a1574722c05be903dcca3b1bda955c3610b9c850"
+    },
+    "email": "pierre.osselin@gmail.com",
+    "root": "/home/pierre/Git/gamegan",
+    "host": "pierre-XPS-15-9500",
+    "username": "pierre",
+    "executable": "/home/pierre/miniconda3/envs/robust/bin/python"
+}

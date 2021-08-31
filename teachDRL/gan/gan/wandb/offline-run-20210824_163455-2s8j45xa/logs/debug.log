@@ -1,0 +1,30 @@
+2021-08-24 16:34:55,663 INFO    MainThread:8108 [wandb_setup.py:_flush():69] setting env: {'base_url': 'https://api.wandb.ai'}
+2021-08-24 16:34:55,663 INFO    MainThread:8108 [wandb_setup.py:_flush():69] setting login settings: {}
+2021-08-24 16:34:55,663 INFO    MainThread:8108 [wandb_setup.py:_flush():69] setting login settings: {'mode': 'offline'}
+2021-08-24 16:34:55,664 INFO    MainThread:8108 [wandb_init.py:_log_setup():338] Logging user logs to /home/pierre/Git/gamegan/src/gan/wandb/offline-run-20210824_163455-2s8j45xa/logs/debug.log
+2021-08-24 16:34:55,664 INFO    MainThread:8108 [wandb_init.py:_log_setup():339] Logging internal logs to /home/pierre/Git/gamegan/src/gan/wandb/offline-run-20210824_163455-2s8j45xa/logs/debug-internal.log
+2021-08-24 16:34:55,664 INFO    MainThread:8108 [wandb_init.py:init():371] calling init triggers
+2021-08-24 16:34:55,664 INFO    MainThread:8108 [wandb_init.py:init():376] wandb.init called with sweep_config: {}
+config: {'n_epochs': 200, 'batch_size': 64, 'lr': 0.0002, 'b1': 0.5, 'b2': 0.999, 'n_cpu': 8, 'latent_dim': 100, 'img_size': 32, 'channels': 1, 'n_critic': 5, 'clip_value': 0.01, 'sample_interval': 400, 'model_dir': '../../data/models', 'maze_type': 'aldous-broder'}
+2021-08-24 16:34:55,664 INFO    MainThread:8108 [wandb_init.py:init():420] starting backend
+2021-08-24 16:34:55,664 INFO    MainThread:8108 [backend.py:_multiprocessing_setup():70] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2021-08-24 16:34:55,672 INFO    MainThread:8108 [backend.py:ensure_launched():135] starting backend process...
+2021-08-24 16:34:55,676 INFO    MainThread:8108 [backend.py:ensure_launched():139] started backend process with pid: 8126
+2021-08-24 16:34:55,677 INFO    MainThread:8108 [wandb_init.py:init():425] backend started and connected
+2021-08-24 16:34:55,678 INFO    MainThread:8108 [wandb_init.py:init():473] updated telemetry
+2021-08-24 16:34:55,679 INFO    MainThread:8108 [wandb_init.py:init():530] starting run threads in backend
+2021-08-24 16:34:58,252 INFO    MainThread:8108 [wandb_run.py:_console_start():1625] atexit reg
+2021-08-24 16:34:58,253 INFO    MainThread:8108 [wandb_run.py:_redirect():1499] redirect: SettingsConsole.REDIRECT
+2021-08-24 16:34:58,253 INFO    MainThread:8108 [wandb_run.py:_redirect():1504] Redirecting console.
+2021-08-24 16:34:58,254 INFO    MainThread:8108 [wandb_run.py:_redirect():1560] Redirects installed.
+2021-08-24 16:34:58,254 INFO    MainThread:8108 [wandb_init.py:init():555] run started, returning control to user process
+2021-08-24 16:35:05,330 INFO    MainThread:8108 [wandb_run.py:_atexit_cleanup():1595] got exitcode: 255
+2021-08-24 16:35:05,330 INFO    MainThread:8108 [wandb_run.py:_restore():1567] restore
+2021-08-24 16:35:07,820 INFO    MainThread:8108 [wandb_run.py:_wait_for_finish():1717] got exit ret: 
+2021-08-24 16:35:07,928 INFO    MainThread:8108 [wandb_run.py:_wait_for_finish():1717] got exit ret: 
+2021-08-24 16:35:08,031 INFO    MainThread:8108 [wandb_run.py:_wait_for_finish():1717] got exit ret: done: true
+exit_result {
+}
+
+2021-08-24 16:35:09,143 INFO    MainThread:8108 [wandb_run.py:_show_summary():1872] rendering summary
+2021-08-24 16:35:09,143 INFO    MainThread:8108 [wandb_run.py:_show_history():1910] rendering history

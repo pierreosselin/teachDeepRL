@@ -1,0 +1,13 @@
+2021-08-31 22:29:06,629 INFO    MainThread:20817 [internal.py:wandb_internal():88] W&B internal server running at pid: 20817, started at: 2021-08-31 22:29:06.628752
+2021-08-31 22:29:06,630 DEBUG   HandlerThread:20817 [handler.py:handle_request():124] handle_request: run_start
+2021-08-31 22:29:06,631 INFO    WriterThread:20817 [datastore.py:open_for_write():80] open: /home/pierre/Git/gamegan/src/gan/wandb/offline-run-20210831_222906-28ddfwr5/run-28ddfwr5.wandb
+2021-08-31 22:29:06,632 DEBUG   HandlerThread:20817 [meta.py:__init__():34] meta init
+2021-08-31 22:29:06,632 DEBUG   HandlerThread:20817 [meta.py:__init__():48] meta init done
+2021-08-31 22:29:06,632 DEBUG   HandlerThread:20817 [meta.py:probe():205] probe
+2021-08-31 22:29:06,640 DEBUG   HandlerThread:20817 [meta.py:_setup_git():195] setup git
+2021-08-31 22:29:06,653 DEBUG   HandlerThread:20817 [meta.py:_setup_git():202] setup git done
+2021-08-31 22:29:06,653 DEBUG   HandlerThread:20817 [meta.py:_save_pip():52] save pip
+2021-08-31 22:29:06,654 DEBUG   HandlerThread:20817 [meta.py:_save_pip():66] save pip done
+2021-08-31 22:29:06,654 DEBUG   HandlerThread:20817 [meta.py:_save_conda():73] save conda
+2021-08-31 22:29:08,744 DEBUG   HandlerThread:20817 [meta.py:_save_conda():81] save conda done
+2021-08-31 22:29:08,744 DEBUG   HandlerThread:20817 [meta.py:probe():247] probe done

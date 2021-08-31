@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "wgan_gp.py", line 123, in <module>
+    for i, imgs in enumerate(dataloader):
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 517, in __next__
+    data = self._next_data()
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 557, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/pierre/Git/gamegan/src/gan/dataset.py", line 25, in __getitem__
+    return torch.tensor(self.maze_generator.generate_maze()).unsqueeze(0)
+AttributeError: 'AldousBroderMazeGenerator' object has no attribute 'generate_maze'

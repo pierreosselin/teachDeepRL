@@ -1,0 +1,14 @@
+/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/torch/nn/functional.py:1805: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+Traceback (most recent call last):
+  File "wgan_gp.py", line 143, in <module>
+    fake_imgs = generator(z)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/pierre/Git/gamegan/src/gan/gan_utils.py", line 48, in forward
+    img = F.sigmoid(img) + self.binary_neuron(img).detach() - F.sigmoid(img).detach()
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/pierre/Git/gamegan/src/gan/gan_utils.py", line 15, in forward
+    return torch.heaviside(F.sigmoid(x) - 0.5, torch.tensor([0.0]))
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!

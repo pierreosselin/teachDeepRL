@@ -1,0 +1,20 @@
+Avant conv torch.Size([64, 128, 4, 4])
+torch.Size([64, 1, 17, 17])
+torch.Size([64, 289])
+torch.Size([64, 289])
+/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/functional.py:1709: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+Traceback (most recent call last):
+  File "wgan_gp.py", line 144, in <module>
+    real_validity = discriminator(real_imgs)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/pierre/Git/gamegan/src/gan/gan_utils.py", line 114, in forward
+    validity = self.adv_layer(out)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 94, in forward
+    return F.linear(input, self.weight, self.bias)
+  File "/home/pierre/miniconda3/envs/robust/lib/python3.8/site-packages/torch/nn/functional.py", line 1753, in linear
+    return torch._C._nn.linear(input, weight, bias)
+RuntimeError: mat1 dim 1 must match mat2 dim 0
