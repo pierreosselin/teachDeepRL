@@ -165,7 +165,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
-    env = env_fn()
+    env, test_env = env_fn(), env_fn()
 
     if Teacher: Teacher.set_env_params(env)
 
@@ -227,34 +227,29 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
-
-    def get_action(o, deterministic=False):
-        act_op = mu if deterministic else pi
-        return sess.run(act_op, feed_dict={x_ph: o.reshape(1,-1)})[0]
-
-    def test_agent(n, test_env, sess, pi, logp, logp_pi, epoch, gif=True):
+    def test_agent(n, sess, pi, epoch, gif=True):
         
         if gif:
-            o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-            test_env.env.set_environment_maze(Teacher.test_env_list[0])
+            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
+            test_env.env.set_environment_maze(Teacher.test_env_list[1])
             
             images_gif = []
             o_new = o.reshape(17,17)
-            o_new[env.env.y, env.env.x] = 3
+            o_new[test_env.env.y, test_env.env.x] = 3
             images_gif.append(o_new)
             while not(d or (ep_len == max_ep_len)):
-                # Take deterministic actions at test time 
+                # Take deterministic actions at test time
                 o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
                 ep_ret += r
                 ep_len += 1
                 o_new = o.reshape(17,17)
-                o_new[env.env.y, env.env.x] = 3
+                o_new[test_env.env.y, test_env.env.x] = 3
                 images_gif.append(o_new)
             images_to_gif(images_gif, epoch)
 
-
+        print("Test Set Evaluation...")
         list_rewards = []
-        for j in range(n):
+        for j in tqdm(range(n)):
             
             if Teacher: Teacher.set_test_env_params(test_env)
             o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
@@ -332,6 +327,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
         # Perform PPO update!
         update()
+
+        test_agent(100, sess, pi, epoch, gif=True)
 
         # Log info about epoch
         logger.log_tabular('Epoch', epoch)

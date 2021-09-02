@@ -124,6 +124,7 @@ class MazeEnv(Env):
     def set_environment_maze(self, maze):
         self.maze = torch.tensor(maze)
         self.maze[self.maze.shape[0] - 1, 0] = FREE_SPACE
+        self.maze[self.goal_y, self.goal_x] = GOAL
         #save_image(self.maze, "./test_sample.png", normalize=True)
         return self._get_obs()
 
