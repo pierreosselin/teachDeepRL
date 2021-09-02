@@ -49,7 +49,6 @@ class PPOBuffer:
         the whole trajectory to compute advantage estimates with GAE-Lambda,
         as well as compute the rewards-to-go for each state, to use as
         the targets for the value function.
-
         The "last_val" argument should be 0 if the trajectory ended
         because the agent reached a terminal state (died), and otherwise
         should be V(s_T), the value function estimated for the last state.
@@ -86,11 +85,8 @@ class PPOBuffer:
 
 
 """
-
 Proximal Policy Optimization (by clipping), 
-
 with early stopping based on approximate KL
-
 """
 
 def images_to_gif(l_images, epoch):
@@ -110,15 +106,12 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
         target_kl=0.01, logger_kwargs=dict(), save_freq=10, Teacher=None):
     """
-
     Args:
         env_fn : A function which creates a copy of the environment.
             The environment must satisfy the OpenAI Gym API.
-
         actor_critic: A function which takes in placeholder symbols 
             for state, ``x_ph``, and action, ``a_ph``, and returns the main 
             outputs from the agent's Tensorflow computation graph:
-
             ===========  ================  ======================================
             Symbol       Shape             Description
             ===========  ================  ======================================
@@ -134,51 +127,35 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                                            | in ``x_ph``. (Critical: make sure 
                                            | to flatten this!)
             ===========  ================  ======================================
-
         ac_kwargs (dict): Any kwargs appropriate for the actor_critic 
             function you provided to PPO.
-
         seed (int): Seed for random number generators.
-
         steps_per_epoch (int): Number of steps of interaction (state-action pairs) 
             for the agent and the environment in each epoch.
-
         epochs (int): Number of epochs of interaction (equivalent to
             number of policy updates) to perform.
-
         gamma (float): Discount factor. (Always between 0 and 1.)
-
         clip_ratio (float): Hyperparameter for clipping in the policy objective.
             Roughly: how far can the new policy go from the old policy while 
             still profiting (improving the objective function)? The new policy 
             can still go farther than the clip_ratio says, but it doesn't help
             on the objective anymore. (Usually small, 0.1 to 0.3.)
-
         pi_lr (float): Learning rate for policy optimizer.
-
         vf_lr (float): Learning rate for value function optimizer.
-
         train_pi_iters (int): Maximum number of gradient descent steps to take 
             on policy loss per epoch. (Early stopping may cause optimizer
             to take fewer than this.)
-
         train_v_iters (int): Number of gradient descent steps to take on 
             value function per epoch.
-
         lam (float): Lambda for GAE-Lambda. (Always between 0 and 1,
             close to 1.)
-
         max_ep_len (int): Maximum length of trajectory / episode / rollout.
-
         target_kl (float): Roughly what KL divergence we think is appropriate
             between new and old policies after an update. This will get used 
             for early stopping. (Usually small, 0.01 or 0.05.)
-
         logger_kwargs (dict): Keyword args for EpochLogger.
-
         save_freq (int): How often (in terms of gap between epochs) to save
             the current policy and value function.
-
     """
 
     logger = EpochLogger(**logger_kwargs)
@@ -250,6 +227,48 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
+
+    def get_action(o, deterministic=False):
+        act_op = mu if deterministic else pi
+        return sess.run(act_op, feed_dict={x_ph: o.reshape(1,-1)})[0]
+
+    def test_agent(n, test_env, sess, pi, logp, logp_pi, epoch, gif=True):
+        
+        if gif:
+            o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+            test_env.env.set_environment_maze(Teacher.test_env_list[0])
+            
+            images_gif = []
+            o_new = o.reshape(17,17)
+            o_new[env.env.y, env.env.x] = 3
+            images_gif.append(o_new)
+            while not(d or (ep_len == max_ep_len)):
+                # Take deterministic actions at test time 
+                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
+                ep_ret += r
+                ep_len += 1
+                o_new = o.reshape(17,17)
+                o_new[env.env.y, env.env.x] = 3
+                images_gif.append(o_new)
+            images_to_gif(images_gif, epoch)
+
+
+        list_rewards = []
+        for j in range(n):
+            
+            if Teacher: Teacher.set_test_env_params(test_env)
+            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
+            while not(d or (ep_len == max_ep_len)):
+                # Take deterministic actions at test time 
+                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
+                ep_ret += r
+                ep_len += 1
+
+            list_rewards.append(ep_ret)
+            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
+        if Teacher: Teacher.record_test_episode(np.mean(list_rewards), 0)
+
+
     def update():
         inputs = {k:v for k,v in zip(all_phs, buf.get())}
         pi_l_old, v_l_old, ent = sess.run([pi_loss, v_loss, approx_ent], feed_dict=inputs)
@@ -274,10 +293,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
     start_time = time.time()
     o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
-    images_gif = []
-    o_new = o.reshape(16,16)
-    o_new[env.env.y, env.env.x] = 3
-    images_gif.append(o_new)
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
@@ -287,10 +302,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
             logger.store(VVals=v_t)
             
             o, r, d, _ = env.step(a[0])
-            
-            o_new = o.reshape(16,16)
-            o_new[env.env.y, env.env.x] = 3
-            images_gif.append(o_new)
             
             ep_ret += r
             ep_len += 1
@@ -311,9 +322,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                     Teacher.record_train_episode(ep_ret, ep_len)
                     Teacher.set_env_params(env)
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-                o_new = o.reshape(16,16)
-                o_new[env.env.y, env.env.x] = 3
-                images_gif.append(o_new)
 
 
 
@@ -322,8 +330,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         if (epoch % save_freq == 0) or (epoch == epochs-1):
             logger.save_state({'env': env}, None)
 
-        images_to_gif(images_gif, epoch)
-        images_gif = []
         # Perform PPO update!
         update()
 

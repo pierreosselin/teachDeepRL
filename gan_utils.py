@@ -34,7 +34,7 @@ class Generator_Conv(nn.Module):
             nn.Conv2d(128, 64, 3, stride=1, padding=1),
             nn.BatchNorm2d(64, 0.8),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Conv2d(64, opt.channels, 3, stride=1, padding=1),
+            nn.Conv2d(64, opt.channels, 2, stride=1, padding=1),
             nn.Tanh(),
         )
 
@@ -78,6 +78,7 @@ class Discriminator_Conv(nn.Module):
 
     def forward(self, img):
         out = self.model(img)
+
         out = out.view(out.shape[0], -1)
         validity = self.adv_layer(out)
 
@@ -101,14 +102,13 @@ class Discriminator_Conv(nn.Module):
         )
 
         # The height and width of downsampled image
-        ds_size = opt.img_size // 2 ** 3
+        ds_size = (((((opt.img_size + 1) // 2) + 1) // 2) + 1) // 2
         self.adv_layer = nn.Linear(128 * ds_size ** 2, 1)
 
     def forward(self, img):
         out = self.model(img)
         out = out.view(out.shape[0], -1)
         validity = self.adv_layer(out)
-
         return validity
 
 class Generator_FC(nn.Module):

@@ -23,7 +23,7 @@ class WGanGPConfig:
     b2 = 0.999
     n_cpu = 8
     latent_dim = 100
-    img_size = 16
+    img_size = 17
     channels = 1
     n_critic = 5
     clip_value = 0.01
@@ -105,7 +105,9 @@ class MazeEnv(Env):
     """
 
     def _get_obs(self):
-        return self.maze.cpu().detach().numpy().flatten() ##
+        obs = torch.clone(self.maze).cpu().detach().numpy()
+        obs[self.y, self.x] = 3
+        return obs.flatten()
 
     def reset(self, random = False):
         if random:
@@ -116,7 +118,13 @@ class MazeEnv(Env):
         self.y = self.maze.shape[0] - 1
 
         self.goal_x, self.goal_y = self._sample_goal()
-        save_image(self.maze, "./test_sample.png", normalize=True)
+        #save_image(self.maze, "./test_sample.png", normalize=True)
+        return self._get_obs()
+
+    def set_environment_maze(self, maze):
+        self.maze = torch.tensor(maze)
+        self.maze[self.maze.shape[0] - 1, 0] = FREE_SPACE
+        #save_image(self.maze, "./test_sample.png", normalize=True)
         return self._get_obs()
 
     def set_environment(self, **param_dict):

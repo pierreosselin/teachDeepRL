@@ -70,9 +70,10 @@ class TeacherController(object):
             raise NotImplementedError
 
         self.test_mode = "fixed_set"
-        self.test_mode = "None"
+        #self.test_mode = "None"
         if self.test_mode == "fixed_set":
-            name = get_test_set_name(self.param_env_bounds)
+            #name = get_test_set_name(self.param_env_bounds)
+            name = "test_aldous_100"
             self.test_env_list = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
             print('fixed set of {} tasks loaded: {}'.format(len(self.test_env_list),name))
 
@@ -121,23 +122,23 @@ class TeacherController(object):
     def set_test_env_params(self, test_env):
         self.test_ep_counter += 1
         if self.test_mode == "fixed_set":
-            test_param_dict = self.test_env_list[self.test_ep_counter-1]
+            maze_test = self.test_env_list[self.test_ep_counter-1]
 
             # removing legacy parameters from test_set, don't pay attention
-            legacy = ['tunnel_height', 'gap_width', 'step_height', 'step_number']
-            keys = test_param_dict.keys()
-            for env_param in legacy:
-                if env_param in keys:
-                    del test_param_dict[env_param]
+            #legacy = ['tunnel_height', 'gap_width', 'step_height', 'step_number']
+            #keys = test_param_dict.keys()
+            #for env_param in legacy:
+            #    if env_param in keys:
+            #        del test_param_dict[env_param]
         else:
             raise NotImplementedError
 
         #print('test param dict is: {}'.format(test_param_dict))
-        test_param_vec = param_dict_to_param_vec(self.param_env_bounds, test_param_dict)
+        #test_param_vec = param_dict_to_param_vec(self.param_env_bounds, test_param_dict)
         #print('test param vector is: {}'.format(test_param_vec))
 
-        self.env_params_test.append(test_param_vec)
-        test_env.env.set_environment(**test_param_dict)
+        #self.env_params_test.append(test_param_vec)
+        test_env.env.set_environment_maze(maze_test)
 
         if self.test_ep_counter == self.nb_test_episodes:
             self.test_ep_counter = 0

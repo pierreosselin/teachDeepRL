@@ -3,13 +3,17 @@
 - Setup visualization
     - Latent space representation
 
-- Fix mazes (why line?)
 
 - Check Gan Latent Space Gives modes of environments
 
 - Check if uses GPU
 
 - Put on AIMS server
+
+Implementation details:
+- Correct setup for number of tests
+- Gif for first test example
+- Correct setup for data loading
 
 
 Right Now:

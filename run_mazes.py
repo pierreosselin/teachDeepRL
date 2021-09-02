@@ -143,7 +143,7 @@ elif args.teacher == "Oracle":
 
 env_config = {}
 env_config['device'] = "cuda"
-env_config['maze_model_path'] = "/home/pierre/Git/teachDeepRL/teachDRL/models/generator_aldous-broder_2.pth"
+env_config['maze_model_path'] = "/home/pierre/Git/teachDeepRL/teachDRL/models/generator_aldous-pacman_4.pth"
 env_config['obs_radius'] = 2
 env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=1000)
 env_init = {}
