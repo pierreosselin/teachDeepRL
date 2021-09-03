@@ -27,15 +27,22 @@ def placeholders_from_spaces(*args):
     return [placeholder_from_space(space) for space in args]
 
 def mlp(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
+    
     for h in hidden_sizes[:-1]:
         x = tf.layers.dense(x, units=h, activation=activation)
     return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
 
 
-def convolutional(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
-    for h in hidden_sizes[:-1]:
-        x = tf.layers.dense(x, units=h, activation=activation)
-    return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
+def convolutional(x, hidden_sizes=(32,64, 32), activation=tf.tanh, output_activation=None):
+    x = tf.layers.Conv2D(x, hidden_sizes[0], 3, input_shape=x.size, activation='relu', padding="same"),
+    for h in hidden_sizes[1:-1]:
+        x = tf.layers.Conv2D(x, h, 3, activation='relu', padding="same"),
+    x = tf.layers.Flatten(),
+    x = tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)  # output
+    return x
+    
+
+
 
 
 def get_vars(scope=''):
@@ -71,9 +78,13 @@ def discount_cumsum(x, discount):
 Policies
 """
 
-def mlp_categorical_policy(x, a, hidden_sizes, activation, output_activation, action_space):
+def mlp_categorical_policy(x, a, hidden_sizes, activation, output_activation, action_space, type = "FC"):
     act_dim = action_space.n
-    logits = mlp(x, list(hidden_sizes)+[act_dim], activation, None) ## To modify to adapt to mazes (convolutional)
+    if type == "FC":
+        logits = mlp(x, list(hidden_sizes)+[act_dim], activation, None) ## To modify to adapt to mazes (convolutional)
+    elif type == "convolutional":
+        logits = convolutional(x, list(hidden_sizes)+[act_dim], activation, None) ## To modify to adapt to mazes (convolutional)
+
     logp_all = tf.nn.log_softmax(logits)
 
     pi = tf.squeeze(tf.multinomial(logits,1), axis=1)

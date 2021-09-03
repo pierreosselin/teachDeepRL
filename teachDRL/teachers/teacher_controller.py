@@ -138,7 +138,9 @@ class TeacherController(object):
         #print('test param vector is: {}'.format(test_param_vec))
 
         #self.env_params_test.append(test_param_vec)
-        test_env.env.set_environment_maze(maze_test)
+        o = test_env.env.set_environment_maze(maze_test)
 
         if self.test_ep_counter == self.nb_test_episodes:
             self.test_ep_counter = 0
+
+        return o

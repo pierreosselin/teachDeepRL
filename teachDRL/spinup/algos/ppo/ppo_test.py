@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import gym
+import pickle
 import time
 import teachDRL.spinup.algos.ppo.core as core
 from teachDRL.spinup.utils.logx import EpochLogger
@@ -89,7 +90,7 @@ Proximal Policy Optimization (by clipping),
 with early stopping based on approximate KL
 """
 
-def images_to_gif(l_images, epoch):
+def images_to_gif(l_images, epoch, name):
     """
     Output gif from list of images
     """
@@ -98,13 +99,13 @@ def images_to_gif(l_images, epoch):
     
     clip = ImageSequenceClip(new_l, fps=20, ismask=True)
     
-    clip.write_gif(f'./epoch_number_{epoch}.gif', fps=20)
+    clip.write_gif(f'/home/pierre/Git/teachDeepRL/teachDRL/data/test_convergence/{name}_epoch_number_{epoch}.gif', fps=20)
 
 
-def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
+def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10, Teacher=None):
+        target_kl=0.01, logger_kwargs=dict(), save_freq=10):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -165,10 +166,9 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
-    env, test_env = env_fn(), env_fn()
-
-    if Teacher: Teacher.set_env_params(env)
-
+    env = env_fn()
+    name = "test_aldous_100"
+    list_mazes = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
 
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
@@ -227,43 +227,27 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
-    def test_agent(n, sess, pi, epoch, gif=True):
+    def test_agent(sess, pi, epoch):
+        print("Saving test agent")
+        o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+        o = env.env.set_environment_maze(list_mazes[0])
         
-        if gif:
-            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
-            o = test_env.env.set_environment_maze(Teacher.test_env_list[1])
-            
-            images_gif = []
+        images_gif = []
+        o_new = o.reshape(17,17)
+        o_new[env.env.y, env.env.x] = 3
+        images_gif.append(o_new)
+        
+        while not(d or (ep_len == max_ep_len)):
+            # Take deterministic actions at test time
+            o, r, d, _ = env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
+            ep_ret += r
+            ep_len += 1
             o_new = o.reshape(17,17)
-            o_new[test_env.env.y, test_env.env.x] = 3
+            o_new[env.env.y, env.env.x] = 3
             images_gif.append(o_new)
-            while not(d or (ep_len == max_ep_len)):
-                # Take deterministic actions at test time
-                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
-                ep_ret += r
-                ep_len += 1
-                o_new = o.reshape(17,17)
-                o_new[test_env.env.y, test_env.env.x] = 3
-                images_gif.append(o_new)
-            images_to_gif(images_gif, epoch)
+        images_to_gif(images_gif, epoch, "policy_test_aldous")
 
-        print("Test Set Evaluation...")
-        list_rewards = []
-        for j in tqdm(range(n)):
-
-            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
-            if Teacher:
-                o = Teacher.set_test_env_params(test_env)
-            while not(d or (ep_len == max_ep_len)):
-                # Take deterministic actions at test time 
-                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
-                ep_ret += r
-                ep_len += 1
-
-            list_rewards.append(ep_ret)
-            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
-        if Teacher: Teacher.record_test_episode(np.mean(list_rewards), 0)
-
+        return
 
     def update():
         inputs = {k:v for k,v in zip(all_phs, buf.get())}
@@ -288,7 +272,9 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                      DeltaLossV=(v_l_new - v_l_old))
 
     start_time = time.time()
-    o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
+    o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+    o = env.env.set_environment_maze(list_mazes[0])
+
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
@@ -314,10 +300,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                     logger.store(EpRet=ep_ret, EpLen=ep_len)
                 #images_to_gif(images_gif, epoch)
                 #images_gif = []
-                if Teacher:
-                    Teacher.record_train_episode(ep_ret, ep_len)
-                    Teacher.set_env_params(env)
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+                o = env.env.set_environment_maze(list_mazes[0])
 
 
 
@@ -329,7 +313,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         # Perform PPO update!
         update()
 
-        test_agent(100, sess, pi, epoch, gif=True)
+        if (epoch % save_freq == 0) or (epoch == epochs-1):
+            test_agent(sess, pi, epoch)
 
         # Log info about epoch
         logger.log_tabular('Epoch', epoch)
@@ -347,7 +332,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('StopIter', average_only=True)
         logger.log_tabular('Time', time.time()-start_time)
         logger.dump_tabular()
-        if Teacher: Teacher.dump(logger.output_dir+'/env_params_save.pkl')
 
 if __name__ == '__main__':
     import argparse
@@ -368,7 +352,7 @@ if __name__ == '__main__':
     from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
-    ppo(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,
+    ppo_test(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l), gamma=args.gamma, 
         seed=args.seed, steps_per_epoch=args.steps, epochs=args.epochs,
         logger_kwargs=logger_kwargs)
