@@ -167,7 +167,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     np.random.seed(seed)
 
     env = env_fn()
-    name = "test_aldous_100"
+    name = "test_pacman_100"
     list_mazes = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
 
     obs_dim = env.observation_space.shape
@@ -178,7 +178,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
 
     # Inputs to computation graph
     x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-    x_ph = tf.layers.Flatten()(x_ph)
+    #x_ph = tf.layers.Flatten()(x_ph)
 
     adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
@@ -239,13 +239,13 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
         
         while not(d or (ep_len == max_ep_len)):
             # Take deterministic actions at test time
-            o, r, d, _ = env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
+            o, r, d, _ = env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
             ep_ret += r
             ep_len += 1
             o_new = o.reshape(17,17)
             o_new[env.env.y, env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, "policy_test_aldous")
+        images_to_gif(images_gif, epoch, "policy_test_pacman")
 
         return
 
@@ -278,7 +278,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
-            a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: o.reshape(1,-1)})
+            a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.expand_dims(o, axis=0)})
             # save and log
             buf.store(o, a, r, v_t, logp_t)
             logger.store(VVals=v_t)
@@ -293,7 +293,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
                 if not(terminal):
                     print('Warning: trajectory cut off by epoch at %d steps.'%ep_len)
                 # if trajectory didn't reach terminal state, bootstrap value target
-                last_val = r if d else sess.run(v, feed_dict={x_ph: o.reshape(1,-1)})
+                last_val = r if d else sess.run(v, feed_dict={x_ph: np.expand_dims(o, axis=0)})
                 buf.finish_path(last_val)
                 if terminal:
                     # only save EpRet / EpLen if trajectory finished

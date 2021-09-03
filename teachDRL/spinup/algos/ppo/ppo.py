@@ -178,7 +178,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
     # Inputs to computation graph
     x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-    x_ph = tf.layers.Flatten()(x_ph)
+    #x_ph = tf.layers.Flatten()(x_ph) try to put 2D observation
 
     adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
@@ -239,7 +239,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
             images_gif.append(o_new)
             while not(d or (ep_len == max_ep_len)):
                 # Take deterministic actions at test time
-                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
+                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
                 ep_ret += r
                 ep_len += 1
                 o_new = o.reshape(17,17)
@@ -256,7 +256,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                 o = Teacher.set_test_env_params(test_env)
             while not(d or (ep_len == max_ep_len)):
                 # Take deterministic actions at test time 
-                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: o.reshape(1,-1)})[0])
+                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
                 ep_ret += r
                 ep_len += 1
 
@@ -292,7 +292,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
-            a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: o.reshape(1,-1)})
+            a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.expand_dims(o, axis=0)})
             # save and log
             buf.store(o, a, r, v_t, logp_t)
             logger.store(VVals=v_t)
@@ -307,7 +307,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                 if not(terminal):
                     print('Warning: trajectory cut off by epoch at %d steps.'%ep_len)
                 # if trajectory didn't reach terminal state, bootstrap value target
-                last_val = r if d else sess.run(v, feed_dict={x_ph: o.reshape(1,-1)})
+                last_val = r if d else sess.run(v, feed_dict={x_ph: np.expand_dims(o, axis=0)})
                 buf.finish_path(last_val)
                 if terminal:
                     # only save EpRet / EpLen if trajectory finished

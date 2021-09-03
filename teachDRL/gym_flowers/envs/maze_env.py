@@ -55,7 +55,7 @@ class MazeEnv(Env):
         self.obs_radius = env_config['obs_radius']
         self.observation_space = spaces.Box(low=0, 
                                             high=2, 
-                                            shape=self.maze.flatten().shape, 
+                                            shape=self.maze.shape, 
                                             dtype=np.uint8)
         
         self.Z = Variable(torch.tensor(np.random.normal(0, 1, (1, self.generator.latent_dim)), dtype=torch.float)).cuda()
@@ -107,7 +107,7 @@ class MazeEnv(Env):
     def _get_obs(self):
         obs = torch.clone(self.maze).cpu().detach().numpy()
         obs[self.y, self.x] = 3
-        return obs.flatten()
+        return obs
 
     def reset(self, random = False):
         if random:
