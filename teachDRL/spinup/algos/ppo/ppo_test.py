@@ -11,6 +11,7 @@ from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_stat
 from tqdm import tqdm
 from PIL import Image
 from moviepy.editor import ImageSequenceClip
+import os
 
 class PPOBuffer:
     """
@@ -90,7 +91,7 @@ Proximal Policy Optimization (by clipping),
 with early stopping based on approximate KL
 """
 
-def images_to_gif(l_images, epoch, name):
+def images_to_gif(l_images, epoch, name, path_gif):
     """
     Output gif from list of images
     """
@@ -99,13 +100,13 @@ def images_to_gif(l_images, epoch, name):
     
     clip = ImageSequenceClip(new_l, fps=20, ismask=True)
     
-    clip.write_gif(f'/home/pierre/Git/teachDeepRL/teachDRL/data/test_convergence/{name}_epoch_number_{epoch}.gif', fps=20)
+    clip.write_gif(os.path.join(path_gif, f'{name}_epoch_number_{epoch}.gif'), fps=20)
 
 
 def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
         vf_lr=1e-3, train_pi_iters=10, train_v_iters=10, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10):
+        target_kl=0.01, logger_kwargs=dict(), save_freq=10, path_gif=None, gpu_name = "/device:CPU:0"):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -167,26 +168,29 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     np.random.seed(seed)
 
     env = env_fn()
-    name = "test_aldous_100"
-    list_mazes = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
+    maze_test = np.load(open(ac_kwargs['path_maze'], "rb" ))
+    ac_kwargs.pop('path_maze', None)
 
-    obs_dim = env.observation_space.shape ## Add channel to image
+
+    obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
     
     # Share information about action space with policy architecture
     ac_kwargs['action_space'] = env.action_space
 
     # Inputs to computation graph
-    x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-    #x_ph = tf.placeholder(dtype=tf.float32, shape=(None,17, 17, 1))
-    #x_ph = tf.layers.Flatten()(x_ph)
 
-    adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
+    with tf.device(gpu_name):
+        x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
+        #x_ph = tf.placeholder(dtype=tf.float32, shape=(None,17, 17, 1))
+        #x_ph = tf.layers.Flatten()(x_ph)
 
-    # Main outputs from computation graph
-    # ac_kwargs defines architecture student
-    # x_ph is the data
-    # a_ph is the action placeholder
+        adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
+
+        # Main outputs from computation graph
+        # ac_kwargs defines architecture student
+        # x_ph is the data
+        # a_ph is the action placeholder
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
     
     # Need all placeholders in *this* order later (to zip with data from buffer)
@@ -204,6 +208,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     logger.log('\nNumber of parameters: \t pi: %d, \t v: %d\n'%var_counts)
 
     # PPO objectives
+    
     ratio = tf.exp(logp - logp_old_ph)          # pi(a|s) / pi_old(a|s)
     min_adv = tf.where(adv_ph>0, (1+clip_ratio)*adv_ph, (1-clip_ratio)*adv_ph)
     pi_loss = -tf.reduce_mean(tf.minimum(ratio * adv_ph, min_adv))
@@ -219,6 +224,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     train_pi = MpiAdamOptimizer(learning_rate=pi_lr).minimize(pi_loss)
     train_v = MpiAdamOptimizer(learning_rate=vf_lr).minimize(v_loss)
 
+    #sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
@@ -231,7 +237,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     def test_agent(sess, pi, epoch):
         print("Saving test agent")
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-        o = env.env.set_environment_maze(list_mazes[0])
+        o = env.env.set_environment_maze(maze_test)
         
         images_gif = []
         o_new = o.reshape(17,17)
@@ -246,7 +252,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
             o_new = o.reshape(17,17)
             o_new[env.env.y, env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, "policy_test_aldous")
+        images_to_gif(images_gif, epoch, "policy_test_aldous", path_gif)
 
         return
 
@@ -275,7 +281,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
 
     start_time = time.time()
     o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-    o = env.env.set_environment_maze(list_mazes[0])
+    o = env.env.set_environment_maze(maze_test)
 
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
@@ -303,7 +309,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
                 #images_to_gif(images_gif, epoch)
                 #images_gif = []
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-                o = env.env.set_environment_maze(list_mazes[0])
+                o = env.env.set_environment_maze(maze_test)
 
 
 

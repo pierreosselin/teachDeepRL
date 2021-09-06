@@ -1,22 +1,25 @@
 {
-    "ac_kwargs":	{},
+    "ac_kwargs":	{
+        "path_maze":	"/home/osselinp/teachDeepRL/teachDRL/teachers/test_sets/sanitycheck.npy"
+    },
     "actor_critic":	"convolutional_actor_critic",
     "clip_ratio":	0.2,
-    "env_fn":	"<function <lambda> at 0x7f4e92e2fb70>",
+    "env_fn":	"<function <lambda> at 0x7f53703cec80>",
     "epochs":	100,
     "exp_name":	"test",
     "gamma":	0.99,
+    "gpu_name":	"/device:XLA_GPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f4e92e30588>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f53703d9c50>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,
             "log_current_row":	{},
             "log_headers":	[],
-            "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0",
+            "output_dir":	"/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0",
             "output_file":	{
-                "<_io.TextIOWrapper name='/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                "<_io.TextIOWrapper name='/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
                     "mode":	"w"
                 }
             }
@@ -24,9 +27,10 @@
     },
     "logger_kwargs":	{
         "exp_name":	"test",
-        "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0"
+        "output_dir":	"/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0"
     },
     "max_ep_len":	2000,
+    "path_gif":	"/home/osselinp/teachDeepRL/teachDRL/data/test_convergence/",
     "pi_lr":	0.0003,
     "save_freq":	10,
     "seed":	0,

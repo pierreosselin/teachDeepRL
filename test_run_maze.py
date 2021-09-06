@@ -10,6 +10,8 @@ from collections import OrderedDict
 import os
 import numpy as np
 
+import os
+
 # Argument definition
 parser = argparse.ArgumentParser()
 
@@ -78,11 +80,16 @@ logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 # Bind this run to specific GPU if there is one
 if args.gpu_id != -1:
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_id)
+    gpu_name = "/device:XLA_GPU:" + str(args.gpu_id)
+else:
+    gpu_name = "/device:CPU:0"
 
 # Set up Student's DeepNN architecture if provided
 ac_kwargs = dict()
 if args.hid != -1:
     ac_kwargs['hidden_sizes'] = [args.hid] * args.l
+
+ac_kwargs['path_maze'] = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/teachers/test_sets/sanitycheck.npy')
 
 # Set bounds for environment's parameter space format:[min, max, nb_dimensions] (if no nb_dimensions, assumes only 1)
 
@@ -143,7 +150,7 @@ elif args.teacher == "Oracle":
 
 env_config = {}
 env_config['device'] = "cuda"
-env_config['maze_model_path'] = "/home/pierre/Git/teachDeepRL/teachDRL/models/generator_aldous-pacman_4.pth"
+env_config['maze_model_path'] = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/models/generator_aldous-pacman_4.pth')
 env_config['obs_radius'] = 2
 env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=1000)
 env_init = {}
@@ -155,7 +162,7 @@ Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bound
 # Launch Student training
 
 ppo_test(env_f, actor_critic=core.convolutional_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
-    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep)
+    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep, path_gif = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/data/test_convergence/'), gpu_name=gpu_name)
 
 """
 add alpha

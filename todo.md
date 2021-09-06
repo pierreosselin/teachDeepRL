@@ -19,4 +19,3 @@ TODO Today:
 - Make sure architecture works for one normal maze with PPO
 - Make sure works on AIMS server
 - Understand metrics for ppo convergence
-- 
