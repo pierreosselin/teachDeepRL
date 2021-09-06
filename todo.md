@@ -16,6 +16,7 @@ Implementation details:
 
 
 TODO Today:
-- Make sure architecture works for one normal maze with PPO
-- Make sure works on AIMS server
-- Understand metrics for ppo convergence
+- Make policy deterministic
+- SPend some tume understanding why gpu utils so low (parallel?)
+- Make sure test set works on small experiments
+- Run policy on several benchmark overnight
