@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras import datasets, layers, models
 import gym
 import pickle
 import time
@@ -10,7 +11,6 @@ from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_stat
 from tqdm import tqdm
 from PIL import Image
 from moviepy.editor import ImageSequenceClip
-
 
 class PPOBuffer:
     """
@@ -167,10 +167,10 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     np.random.seed(seed)
 
     env = env_fn()
-    name = "test_pacman_100"
+    name = "test_aldous_100"
     list_mazes = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
 
-    obs_dim = env.observation_space.shape
+    obs_dim = env.observation_space.shape ## Add channel to image
     act_dim = env.action_space.shape
     
     # Share information about action space with policy architecture
@@ -178,6 +178,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
 
     # Inputs to computation graph
     x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
+    #x_ph = tf.placeholder(dtype=tf.float32, shape=(None,17, 17, 1))
     #x_ph = tf.layers.Flatten()(x_ph)
 
     adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
@@ -187,7 +188,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     # x_ph is the data
     # a_ph is the action placeholder
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
-
+    
     # Need all placeholders in *this* order later (to zip with data from buffer)
     all_phs = [x_ph, a_ph, adv_ph, ret_ph, logp_old_ph]
 
@@ -245,7 +246,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
             o_new = o.reshape(17,17)
             o_new[env.env.y, env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, "policy_test_pacman")
+        images_to_gif(images_gif, epoch, "policy_test_aldous")
 
         return
 

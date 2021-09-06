@@ -32,15 +32,14 @@ def mlp(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
         x = tf.layers.dense(x, units=h, activation=activation)
     return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
 
-
 def convolutional(x, hidden_sizes=(32,64, 32), activation=tf.tanh, output_activation=None):
-    x = tf.layers.Conv2D(x, hidden_sizes[0], 3, input_shape=x.size(), activation='relu', padding="same"),
+    x = tf.expand_dims(x, axis=-1)
+    x = tf.layers.Conv2D(hidden_sizes[0], 3, activation='relu', padding="same")(x)
     for h in hidden_sizes[1:-1]:
-        x = tf.layers.Conv2D(x, h, 3, activation='relu', padding="same"),
-    x = tf.layers.Flatten(),
+        x = tf.layers.Conv2D(h, 3, activation='relu', padding="same")(x)
+    x = tf.layers.Flatten()(x)
     x = tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)  # output
     return x
-    
 
 
 

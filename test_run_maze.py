@@ -154,7 +154,7 @@ Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bound
 
 # Launch Student training
 
-ppo_test(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
+ppo_test(env_f, actor_critic=core.convolutional_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
     logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep)
 
 """
