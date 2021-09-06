@@ -1,4 +1,3 @@
-- Change Architecture Agent for a convolutional neural network
 
 - Setup visualization
     - Latent space representation
@@ -16,5 +15,8 @@ Implementation details:
 - Correct setup for data loading
 
 
-Right Now:
-- Fix mazes
+TODO Today:
+- Make sure architecture works for one normal maze with PPO
+- Make sure works on AIMS server
+- Understand metrics for ppo convergence
+- 

@@ -32,11 +32,11 @@ def mlp(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
         x = tf.layers.dense(x, units=h, activation=activation)
     return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
 
-def convolutional(x, hidden_sizes=(32,64, 32), activation=tf.tanh, output_activation=None):
+def convolutional(x, hidden_sizes=(32,64, 32), activation='relu', output_activation=None):
     x = tf.expand_dims(x, axis=-1)
-    x = tf.layers.Conv2D(hidden_sizes[0], 3, activation='relu', padding="same")(x)
+    x = tf.layers.Conv2D(hidden_sizes[0], 3, activation=activation, padding="same")(x)
     for h in hidden_sizes[1:-1]:
-        x = tf.layers.Conv2D(h, 3, activation='relu', padding="same")(x)
+        x = tf.layers.Conv2D(h, 3, activation=activation, padding="same")(x)
     x = tf.layers.Flatten()(x)
     x = tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)  # output
     return x
@@ -128,7 +128,7 @@ def mlp_actor_critic(x, a, hidden_sizes=(64,64), activation=tf.tanh,
         v = tf.squeeze(mlp(x, list(hidden_sizes)+[1], activation, None), axis=1)
     return pi, logp, logp_pi, v
 
-def convolutional_actor_critic(x, a, hidden_sizes=(32,64,32), activation=tf.tanh, 
+def convolutional_actor_critic(x, a, hidden_sizes=(32,32,32), activation=tf.tanh, 
                      output_activation=None, policy=None, action_space=None):
 
     # default policy builder depends on action space
@@ -141,5 +141,6 @@ def convolutional_actor_critic(x, a, hidden_sizes=(32,64,32), activation=tf.tanh
     with tf.variable_scope('pi'):
         pi, logp, logp_pi = policy(x, a, hidden_sizes, activation, output_activation, action_space)
     with tf.variable_scope('v'):
-        v = tf.squeeze(mlp(x, list(hidden_sizes)+[1], activation, None), axis=1)
+        v = tf.squeeze(convolutional(x, list(hidden_sizes)+[1], activation, None), axis=1)
+        #v = tf.squeeze(mlp(x, list(hidden_sizes)+[1], activation, None), axis=1)
     return pi, logp, logp_pi, v

@@ -104,7 +104,7 @@ def images_to_gif(l_images, epoch, name):
 
 def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
-        vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
+        vf_lr=1e-3, train_pi_iters=10, train_v_iters=10, lam=0.97, max_ep_len=1000,
         target_kl=0.01, logger_kwargs=dict(), save_freq=10):
     """
     Args:
@@ -255,14 +255,15 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
         pi_l_old, v_l_old, ent = sess.run([pi_loss, v_loss, approx_ent], feed_dict=inputs)
 
         # Training
-        for i in range(train_pi_iters):
+        print("Updating...")
+        for i in tqdm(range(train_pi_iters), desc="Gradient pi"):
             _, kl = sess.run([train_pi, approx_kl], feed_dict=inputs)
             kl = mpi_avg(kl)
             if kl > 1.5 * target_kl:
                 logger.log('Early stopping at step %d due to reaching max kl.'%i)
                 break
         logger.store(StopIter=i)
-        for _ in range(train_v_iters):
+        for _ in tqdm(range(train_v_iters), desc="Gradient v"):
             sess.run(train_v, feed_dict=inputs)
 
         # Log changes from update
