@@ -73,7 +73,7 @@ class TeacherController(object):
         #self.test_mode = "None"
         if self.test_mode == "fixed_set":
             #name = get_test_set_name(self.param_env_bounds)
-            name = "test_aldous_100"
+            name = "test_set_mix"
             self.test_env_list = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
             print('fixed set of {} tasks loaded: {}'.format(len(self.test_env_list),name))
 
@@ -122,6 +122,7 @@ class TeacherController(object):
     def set_test_env_params(self, test_env):
         self.test_ep_counter += 1
         if self.test_mode == "fixed_set":
+            print(f"Environment number {self.test_ep_counter}")
             maze_test = self.test_env_list[self.test_ep_counter-1]
 
             # removing legacy parameters from test_set, don't pay attention

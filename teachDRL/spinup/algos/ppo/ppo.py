@@ -105,7 +105,7 @@ def images_to_gif(l_images, epoch, name, path_gif):
 def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=10, Teacher=None, path_gif=None, gpu_name = "/device:CPU:0"):
+        target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=1, Teacher=None, path_gif=None, gpu_name = "/device:CPU:0"):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -125,8 +125,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                                            | the policy, of the action sampled by
                                            | ``pi``.
             ``v``        (batch,)          | Gives the value estimate for states
-                                           | in ``x_ph``. (Critical: make sure 
-                                           | to flatten this!)
+                                           | in ``x_ph``.
             ===========  ================  ======================================
         ac_kwargs (dict): Any kwargs appropriate for the actor_critic 
             function you provided to PPO.
@@ -161,6 +160,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
     logger = EpochLogger(**logger_kwargs)
     logger.save_config(locals())
+
+    print("Info Dir", logger.output_dir)
 
     seed += 10000 * proc_id()
     tf.set_random_seed(seed)
@@ -232,7 +233,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     def test_agent(n, sess, pi, epoch):
         print("Saving test agent")
         o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
-        o = test_env.env.set_environment_maze(Teacher.test_env_list[1])
+        o = test_env.env.set_environment_maze(Teacher.test_env_list[0])
         
         images_gif = []
         o_new = o.reshape(17,17)
@@ -246,7 +247,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
             o_new = o.reshape(17,17)
             o_new[test_env.env.y, test_env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, , "policy_test_aldous", path_gif)
+        images_to_gif(images_gif, epoch, "test_set_mix", path_gif)
 
         print("Test Set Evaluation...")
         list_rewards = []
@@ -331,7 +332,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         update()
 
         if (epoch % test_freq == 0) or (epoch == epochs-1):
-            test_agent(100, sess, pi, epoch)
+            test_agent(30, sess, pi, epoch)
 
         # Log info about epoch
         logger.log_tabular('Epoch', epoch)

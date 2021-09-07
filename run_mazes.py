@@ -26,7 +26,7 @@ parser.add_argument('--ent_coef', type=float, default=0.005)
 parser.add_argument('--max_ep_len', type=int, default=2000)
 parser.add_argument('--steps_per_ep', type=int, default=10000)  # nb of env steps per epochs (stay above max_ep_len)
 parser.add_argument('--buf_size', type=int, default=2000000)
-parser.add_argument('--nb_test_episodes', type=int, default=50)
+parser.add_argument('--nb_test_episodes', type=int, default=30)
 parser.add_argument('--lr', type=float, default=1e-3)
 parser.add_argument('--train_freq', type=int, default=10)
 parser.add_argument('--batch_size', type=int, default=1000)
@@ -134,7 +134,7 @@ elif args.teacher == "Oracle":
         params['window_step_vector'] = [0.1, -0.2]  # order must match param_env_bounds construction
     elif 'poly_shape' in param_env_bounds:
         params['window_step_vector'] = [0.1] * 12
-        print('hih')    
+        print('hih')
     elif 'stump_seq' in param_env_bounds:
         params['window_step_vector'] = [0.1] * 10
     else:
@@ -143,7 +143,7 @@ elif args.teacher == "Oracle":
 
 env_config = {}
 env_config['device'] = "cuda"
-env_config['maze_model_path'] = "/home/pierre/Git/teachDeepRL/teachDRL/models/generator_aldous-pacman_4.pth"
+env_config['maze_model_path'] = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/models/generator_aldous-pacman_4.pth')
 env_config['obs_radius'] = 2
 env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=1000)
 env_init = {}
@@ -155,7 +155,7 @@ Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bound
 # Launch Student training
 
 ppo(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
-    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep, Teacher=Teacher)
+    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep, Teacher=Teacher, path_gif = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/data/test_set/'))
 
 """
 add alpha
