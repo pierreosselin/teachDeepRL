@@ -9,7 +9,7 @@ from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_stat
 from tqdm import tqdm
 from PIL import Image
 from moviepy.editor import ImageSequenceClip
-
+import os
 
 class PPOBuffer:
     """
@@ -89,7 +89,7 @@ Proximal Policy Optimization (by clipping),
 with early stopping based on approximate KL
 """
 
-def images_to_gif(l_images, epoch):
+def images_to_gif(l_images, epoch, name, path_gif):
     """
     Output gif from list of images
     """
@@ -98,13 +98,14 @@ def images_to_gif(l_images, epoch):
     
     clip = ImageSequenceClip(new_l, fps=20, ismask=True)
     
-    clip.write_gif(f'./epoch_number_{epoch}.gif', fps=20)
+    clip.write_gif(os.path.join(path_gif, f'{name}_epoch_number_{epoch}.gif'), fps=20)
+
 
 
 def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10, Teacher=None):
+        target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=10, Teacher=None, path_gif=None, gpu_name = "/device:CPU:0"):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -177,15 +178,16 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     ac_kwargs['action_space'] = env.action_space
 
     # Inputs to computation graph
-    x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-    #x_ph = tf.layers.Flatten()(x_ph) try to put 2D observation
+    with tf.device(gpu_name):
+        x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
+        #x_ph = tf.layers.Flatten()(x_ph) try to put 2D observation
 
-    adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
+        adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
-    # Main outputs from computation graph
-    # ac_kwargs defines architecture student
-    # x_ph is the data
-    # a_ph is the action placeholder
+        # Main outputs from computation graph
+        # ac_kwargs defines architecture student
+        # x_ph is the data
+        # a_ph is the action placeholder
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
 
     # Need all placeholders in *this* order later (to zip with data from buffer)
@@ -227,25 +229,24 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
-    def test_agent(n, sess, pi, epoch, gif=True):
+    def test_agent(n, sess, pi, epoch):
+        print("Saving test agent")
+        o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
+        o = test_env.env.set_environment_maze(Teacher.test_env_list[1])
         
-        if gif:
-            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
-            o = test_env.env.set_environment_maze(Teacher.test_env_list[1])
-            
-            images_gif = []
+        images_gif = []
+        o_new = o.reshape(17,17)
+        o_new[test_env.env.y, test_env.env.x] = 3
+        images_gif.append(o_new)
+
+        while not(d or (ep_len == max_ep_len)):
+            o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
+            ep_ret += r
+            ep_len += 1
             o_new = o.reshape(17,17)
             o_new[test_env.env.y, test_env.env.x] = 3
             images_gif.append(o_new)
-            while not(d or (ep_len == max_ep_len)):
-                # Take deterministic actions at test time
-                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
-                ep_ret += r
-                ep_len += 1
-                o_new = o.reshape(17,17)
-                o_new[test_env.env.y, test_env.env.x] = 3
-                images_gif.append(o_new)
-            images_to_gif(images_gif, epoch)
+        images_to_gif(images_gif, epoch, , "policy_test_aldous", path_gif)
 
         print("Test Set Evaluation...")
         list_rewards = []
@@ -329,7 +330,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         # Perform PPO update!
         update()
 
-        test_agent(100, sess, pi, epoch, gif=True)
+        if (epoch % test_freq == 0) or (epoch == epochs-1):
+            test_agent(100, sess, pi, epoch)
 
         # Log info about epoch
         logger.log_tabular('Epoch', epoch)

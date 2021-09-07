@@ -184,13 +184,15 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
         x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
         #x_ph = tf.placeholder(dtype=tf.float32, shape=(None,17, 17, 1))
         #x_ph = tf.layers.Flatten()(x_ph)
-
+        
         adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
         # Main outputs from computation graph
         # ac_kwargs defines architecture student
         # x_ph is the data
         # a_ph is the action placeholder
+    
+    
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
     
     # Need all placeholders in *this* order later (to zip with data from buffer)
@@ -235,6 +237,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
     def test_agent(sess, pi, epoch):
+
         print("Saving test agent")
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
         o = env.env.set_environment_maze(maze_test)
