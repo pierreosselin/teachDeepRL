@@ -103,7 +103,7 @@ def images_to_gif(l_images, epoch, name, path_gif):
 
 
 def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
-        steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
+        steps_per_epoch=4000, epochs=200, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
         target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=1, Teacher=None, path_gif=None, gpu_name = "/device:CPU:0"):
     """
@@ -341,7 +341,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
         o_new = o.reshape(17,17)
         o_new[test_env.env.y, test_env.env.x] = 3
-        np.save(os.path.join(os.path.abspath(os.getcwd()), f'teachDRL/data/sampled_mazes/maze_{epoch}_teacher_{Teacher.teacher}.npy'), o_new)
+        np.save(f'maze_{epoch}_teacher_{Teacher.teacher}.npy'), o_new)
 
 
         # Log info about epoch
@@ -360,7 +360,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('StopIter', average_only=True)
         logger.log_tabular('Time', time.time()-start_time)
         logger.dump_tabular()
-        if Teacher: Teacher.dump(logger.output_dir+'/env_params_save' + Teacher.teacher + '.pkl')
+        if Teacher: Teacher.dump('env_params_save' + Teacher.teacher + '.pkl')
 
 if __name__ == '__main__':
     import argparse
