@@ -1,6 +1,6 @@
 {
     "Teacher":	{
-        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7fd4a13644e0>":	{
+        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7fda8f9b96d8>":	{
             "env_params_test":	[],
             "env_params_train":	[],
             "env_test_len":	[],
@@ -18,13 +18,13 @@
                 ]
             },
             "task_generator":	{
-                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7fd4a13645f8>":	{
+                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7fda8f9b97f0>":	{
                     "alp_computer":	{
-                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7fd3aa0fada0>":	{
+                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7fdbac8b6fd0>":	{
                             "alp_knn":	{
-                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7fd4a13646a0>":	{
+                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7fda8f9b9898>":	{
                                     "buffer":	{
-                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7fd4a1364668>":	{
+                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7fda8f9b9860>":	{
                                             "data":	[
                                                 [],
                                                 []
@@ -86,7 +86,7 @@
                     "nb_random":	250,
                     "potential_gmms":	[
                         {
-                            "GaussianMixture(n_components=2, random_state=147777)":	{
+                            "GaussianMixture(n_components=2, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -94,7 +94,7 @@
                                 "n_components":	"2",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -104,7 +104,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=3, random_state=147777)":	{
+                            "GaussianMixture(n_components=3, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -112,7 +112,7 @@
                                 "n_components":	"3",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -122,7 +122,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=4, random_state=147777)":	{
+                            "GaussianMixture(n_components=4, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -130,7 +130,7 @@
                                 "n_components":	"4",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -140,7 +140,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=5, random_state=147777)":	{
+                            "GaussianMixture(n_components=5, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -148,7 +148,7 @@
                                 "n_components":	"5",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -158,7 +158,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=6, random_state=147777)":	{
+                            "GaussianMixture(n_components=6, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -166,7 +166,7 @@
                                 "n_components":	"6",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -176,7 +176,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=7, random_state=147777)":	{
+                            "GaussianMixture(n_components=7, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -184,7 +184,7 @@
                                 "n_components":	"7",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -194,7 +194,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=8, random_state=147777)":	{
+                            "GaussianMixture(n_components=8, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -202,7 +202,7 @@
                                 "n_components":	"8",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -212,7 +212,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=9, random_state=147777)":	{
+                            "GaussianMixture(n_components=9, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -220,7 +220,7 @@
                                 "n_components":	"9",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -230,7 +230,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=10, random_state=147777)":	{
+                            "GaussianMixture(n_components=10, random_state=222820)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -238,7 +238,7 @@
                                 "n_components":	"10",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	147777,
+                                "random_state":	222820,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -250,7 +250,7 @@
                     ],
                     "potential_ks":	"[ 2  3  4  5  6  7  8  9 10]",
                     "random_task_generator":	{
-                        "Box([-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100.], [100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100.], (100,), float32)":	{
+                        "Box(-100.0, 100.0, (100,), float32)":	{
                             "_np_random":	null,
                             "bounded_above":	"[ True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True]",
                             "bounded_below":	"[ True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True]",
@@ -263,7 +263,7 @@
                         }
                     },
                     "random_task_ratio":	0.2,
-                    "seed":	147777,
+                    "seed":	222820,
                     "tasks":	[],
                     "tasks_alps":	[],
                     "warm_start":	false
@@ -309,22 +309,22 @@
     "ac_kwargs":	{},
     "actor_critic":	"mlp_actor_critic",
     "clip_ratio":	0.2,
-    "env_fn":	"<function <lambda> at 0x7fd4a135ad90>",
+    "env_fn":	"<function <lambda> at 0x7fda8ff1db70>",
     "epochs":	100,
     "exp_name":	"test",
     "gamma":	0.99,
     "gpu_name":	"/device:CPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7fd4a1364b00>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7fda8f9b9c88>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,
             "log_current_row":	{},
             "log_headers":	[],
-            "output_dir":	"/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0",
+            "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0",
             "output_file":	{
-                "<_io.TextIOWrapper name='/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                "<_io.TextIOWrapper name='/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
                     "mode":	"w"
                 }
             }
@@ -332,10 +332,10 @@
     },
     "logger_kwargs":	{
         "exp_name":	"test",
-        "output_dir":	"/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0"
+        "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0"
     },
     "max_ep_len":	2000,
-    "path_gif":	"/home/osselinp/teachDeepRL/teachDRL/data/test_set/",
+    "path_gif":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test_set/",
     "pi_lr":	0.0003,
     "save_freq":	10,
     "seed":	0,

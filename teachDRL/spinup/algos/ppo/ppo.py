@@ -161,7 +161,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     logger = EpochLogger(**logger_kwargs)
     logger.save_config(locals())
 
-    print("Info Dir", logger.output_dir)
+
+    print(logger.output_dir)
 
     seed += 10000 * proc_id()
     tf.set_random_seed(seed)
@@ -247,7 +248,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
             o_new = o.reshape(17,17)
             o_new[test_env.env.y, test_env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, "test_set_mix", path_gif)
+        images_to_gif(images_gif, epoch, "test_set_mix" + Teacher.teacher, path_gif)
 
         print("Test Set Evaluation...")
         list_rewards = []
@@ -318,7 +319,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                 #images_gif = []
                 if Teacher:
                     Teacher.record_train_episode(ep_ret, ep_len)
-                    Teacher.set_env_params(env)
+                    #Teacher.set_env_params(env)
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
 
 
@@ -333,6 +334,15 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
         if (epoch % test_freq == 0) or (epoch == epochs-1):
             test_agent(30, sess, pi, epoch)
+
+
+        Teacher.set_env_params(env)
+
+        o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+        o_new = o.reshape(17,17)
+        o_new[test_env.env.y, test_env.env.x] = 3
+        np.save(os.path.join(os.path.abspath(os.getcwd()), f'teachDRL/data/sampled_mazes/maze_{epoch}_teacher_{Teacher.teacher}.npy'), o_new)
+
 
         # Log info about epoch
         logger.log_tabular('Epoch', epoch)
@@ -350,7 +360,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('StopIter', average_only=True)
         logger.log_tabular('Time', time.time()-start_time)
         logger.dump_tabular()
-        if Teacher: Teacher.dump(logger.output_dir+'/env_params_save.pkl')
+        if Teacher: Teacher.dump(logger.output_dir+'/env_params_save' + Teacher.teacher + '.pkl')
 
 if __name__ == '__main__':
     import argparse
