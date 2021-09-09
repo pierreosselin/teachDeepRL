@@ -315,8 +315,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                 if terminal:
                     # only save EpRet / EpLen if trajectory finished
                     logger.store(EpRet=ep_ret, EpLen=ep_len)
-                #images_to_gif(images_gif, epoch)
-                #images_gif = []
                 if Teacher:
                     Teacher.record_train_episode(ep_ret, ep_len)
                     #Teacher.set_env_params(env)
@@ -337,7 +335,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
 
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
         o_new = o.reshape(17,17)
-        o_new[test_env.env.y, test_env.env.x] = 3
+        o_new[env.env.y, env.env.x] = 3
         np.save(f'maze_{epoch}_teacher_{Teacher.teacher}.npy', o_new)
 
 
