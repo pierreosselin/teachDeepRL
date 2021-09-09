@@ -95,7 +95,6 @@ def images_to_gif(l_images, epoch, name, path_gif):
     """
     new_l = [np.repeat(el.astype(np.uint8)[:, :, np.newaxis], 3, axis=2) for el in l_images]
     new_l = [el[:,:,np.newaxis]/3 for el in l_images]
-    
     clip = ImageSequenceClip(new_l, fps=20, ismask=True)
     
     clip.write_gif(os.path.join(path_gif, f'{name}_epoch_number_{epoch}.gif'), fps=20)
@@ -162,8 +161,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     logger.save_config(locals())
 
 
-    print(logger.output_dir)
-
     seed += 10000 * proc_id()
     tf.set_random_seed(seed)
     np.random.seed(seed)
@@ -182,14 +179,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Inputs to computation graph
     with tf.device(gpu_name):
         x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-        #x_ph = tf.layers.Flatten()(x_ph) try to put 2D observation
-
         adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
-        # Main outputs from computation graph
-        # ac_kwargs defines architecture student
-        # x_ph is the data
-        # a_ph is the action placeholder
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
 
     # Need all placeholders in *this* order later (to zip with data from buffer)
@@ -222,6 +213,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     train_pi = MpiAdamOptimizer(learning_rate=pi_lr).minimize(pi_loss)
     train_v = MpiAdamOptimizer(learning_rate=vf_lr).minimize(v_loss)
 
+    # Session
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
@@ -232,7 +224,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
     def test_agent(n, sess, pi, epoch):
-        print("Saving test agent")
         o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
         o = test_env.env.set_environment_maze(Teacher.test_env_list[0])
         
@@ -253,7 +244,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         print("Test Set Evaluation...")
         list_rewards = []
         for j in tqdm(range(n)):
-
             o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
             if Teacher:
                 o = Teacher.set_test_env_params(test_env)
@@ -336,7 +326,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
         o_new = o.reshape(17,17)
         o_new[env.env.y, env.env.x] = 3
-        np.save(f'maze_{epoch}_teacher_{Teacher.teacher}.npy', o_new)
+        save_image(torch.tensor(o_new), f'maze_{epoch}_teacher_{Teacher.teacher}.npy', normalize=True)
 
 
         # Log info about epoch

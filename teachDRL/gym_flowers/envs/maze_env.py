@@ -52,7 +52,6 @@ class MazeEnv(Env):
 
         self.maze = self.generator.generate_random()[0][0]
         self.action_space = spaces.Discrete(4) # 4 actions
-        self.obs_radius = env_config['obs_radius']
         self.observation_space = spaces.Box(low=0, 
                                             high=2, 
                                             shape=self.maze.shape, 
@@ -97,12 +96,6 @@ class MazeEnv(Env):
             return 1
         else:
             return 0
-
-    """
-    def _get_obs(self):
-        return self.padded_maze[self.y : self.y + 2 * self.obs_radius + 1,
-                                self.x : self.x + 2 * self.obs_radius + 1].detach().cpu().numpy()
-    """
 
     def _get_obs(self):
         obs = torch.clone(self.maze).cpu().detach().numpy()

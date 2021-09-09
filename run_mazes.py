@@ -9,100 +9,42 @@ from teachDRL.teachers.teacher_controller import TeacherController
 from collections import OrderedDict
 import os
 import numpy as np
+from torchvision.utils import save_image
+import torch
+import yaml
+
 
 # Argument definition
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--exp_name', type=str, default='test')
-parser.add_argument('--seed', '-s', type=int, default=0)
-
-# Deep RL student arguments, so far only works with SAC
-parser.add_argument('--hid', type=int, default=-1)  # number of neurons in hidden layers
-parser.add_argument('--l', type=int, default=1)  # number of hidden layers
-parser.add_argument('--gamma', type=float, default=0.99)
-parser.add_argument('--epochs', type=int, default=100)
-parser.add_argument('--gpu_id', type=int, default=-1)  # default is no GPU
-parser.add_argument('--ent_coef', type=float, default=0.005)
-parser.add_argument('--max_ep_len', type=int, default=2000)
-parser.add_argument('--steps_per_ep', type=int, default=10000)  # nb of env steps per epochs (stay above max_ep_len)
-parser.add_argument('--buf_size', type=int, default=2000000)
-parser.add_argument('--nb_test_episodes', type=int, default=30)
-parser.add_argument('--lr', type=float, default=1e-3)
-parser.add_argument('--train_freq', type=int, default=10)
-parser.add_argument('--batch_size', type=int, default=1000)
-
-# Parameterized bipedal walker arguments, so far only works with bipedal-walker-continuous-v0
-parser.add_argument('--env', type=str, default="bipedal-walker-continuous-v0")
-
-# Choose student (walker morphology)
-parser.add_argument('--leg_size', type=str, default="default")  # choose walker type ("short", "default" or "quadru")
-
-
-# Selection of parameter space
-# So far 3 choices: "--max_stump_h 3.0 --max_obstacle_spacing 6.0" (aka Stump Tracks) or "-hexa" (aka Hexagon Tracks)
-# or "-seq" (untested experimental env)
-parser.add_argument('--max_stump_h', type=float, default=None)
-parser.add_argument('--max_stump_w', type=float, default=None)
-parser.add_argument('--max_stump_r', type=float, default=None)
-parser.add_argument('--roughness', type=float, default=None)
-parser.add_argument('--max_obstacle_spacing', type=float, default=None)
-parser.add_argument('--max_gap_w', type=float, default=None)
-parser.add_argument('--step_h', type=float, default=None)
-parser.add_argument('--step_nb', type=float, default=None)
-parser.add_argument('--hexa_shape', '-hexa', action='store_true')
-parser.add_argument('--stump_seq', '-seq', action='store_true')
-
-# Teacher-specific arguments:
-parser.add_argument('--teacher', type=str, default="ALP-GMM")  # ALP-GMM, Covar-GMM, RIAC, Oracle, Random
-
-# ALPGMM (Absolute Learning Progress - Gaussian Mixture Model) related arguments
-parser.add_argument('--gmm_fitness_fun', '-fit', type=str, default=None)
-parser.add_argument('--nb_em_init', type=int, default=None)
-parser.add_argument('--min_k', type=int, default=None)
-parser.add_argument('--max_k', type=int, default=None)
-parser.add_argument('--fit_rate', type=int, default=None)
-parser.add_argument('--weighted_gmm', '-wgmm', action='store_true')
-parser.add_argument('--alp_max_size', type=int, default=None)
-
-# CovarGMM related arguments
-parser.add_argument('--absolute_lp', '-alp', action='store_true')
-
-# RIAC related arguments
-parser.add_argument('--max_region_size', type=int, default=None)
-parser.add_argument('--alp_window_size', type=int, default=None)
+parser.add_argument('--config', type=str, default='config')
 
 args = parser.parse_args()
 
-logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
+config = yaml.safe_load(open(f'teachDRL/config/{arg.config}.yaml'))
+
+logger_kwargs = setup_logger_kwargs(config["exp_name"], config["seed"])
 
 # Bind this run to specific GPU if there is one
-if args.gpu_id != -1:
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_id)
+if config["args.gpu_id"] != -1:
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(config["args.gpu_id"])
 
 # Set up Student's DeepNN architecture if provided
 ac_kwargs = dict()
-if args.hid != -1:
-    ac_kwargs['hidden_sizes'] = [args.hid] * args.l
+if config["student"]["hid"] != -1:
+    ac_kwargs['hidden_sizes'] = [config["student"]["hid"]] * config["student"]["l"]
+
+# Get architecture of the actor critic
+if config["student"]["actor"] == "convolutional":
+    actor_critic = core.convolutional_actor_critic
+elif config["student"]["actor"] == "mlp":
+    actor_critic = core.mlp_actor_critic
+
 
 # Set bounds for environment's parameter space format:[min, max, nb_dimensions] (if no nb_dimensions, assumes only 1)
-
+## To modify with the model
 param_env_bounds = OrderedDict()
-"""
-if args.max_stump_h is not None:
-    param_env_bounds['stump_height'] = [0, args.max_stump_h]
-if args.max_stump_w is not None:
-    param_env_bounds['stump_width'] = [0, args.max_stump_w]
-if args.max_stump_r is not None:
-    param_env_bounds['stump_rot'] = [0, args.max_stump_r]
-if args.max_obstacle_spacing is not None:
-    param_env_bounds['obstacle_spacing'] = [0, args.max_obstacle_spacing]
-if args.hexa_shape:
-    param_env_bounds['poly_shape'] = [0, 4.0, 12]
-if args.stump_seq:
-    param_env_bounds['stump_seq'] = [0, 6.0, 10]
-"""
 
-#param_env_bounds['latent_radius'] = [0, 6.0, 10]
 param_env_bounds['Z'] = [-100, 100, 100]
 
 
@@ -143,8 +85,7 @@ elif args.teacher == "Oracle":
 
 env_config = {}
 env_config['device'] = "cuda"
-env_config['maze_model_path'] = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/models/generator_aldous-pacman_4.pth')
-env_config['obs_radius'] = 2
+env_config['maze_model_path'] = os.path.join(os.path.abspath(os.getcwd()), f'teachDRL/models/{config["model"]}.pth')
 env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=1000)
 env_init = {}
 
@@ -154,30 +95,9 @@ Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bound
 
 # Launch Student training
 
-ppo(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
-    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep, Teacher=Teacher, path_gif = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/data/test_set/'))
+ppo(env_f, actor_critic=actor_critic, ac_kwargs=ac_kwargs, gamma=config["student"]["gamma"], seed=config["seed"], epochs=config["students"]["epochs"],
+    logger_kwargs=logger_kwargs, max_ep_len=config["student"]["max_ep_len"], steps_per_epoch=config["student"]["steps_per_ep"], Teacher=Teacher, path_gif = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/data/test_set/'))
 
-"""
-add alpha
-sac(env_f, actor_critic=core.mlp_actor_critic, ac_kwargs=ac_kwargs, gamma=args.gamma, seed=args.seed, epochs=args.epochs,
-    logger_kwargs=logger_kwargs, max_ep_len=args.max_ep_len, steps_per_epoch=args.steps_per_ep,
-    replay_size=args.buf_size, env_init=env_init, env_name=args.env, nb_test_episodes=args.nb_test_episodes, lr=args.lr,
-    train_freq=args.train_freq, batch_size=args.batch_size, Teacher=Teacher)
-
-clip_ratio
-pi_lr
-vf_lr
-train_pi_iters
-train_v_iters
-lam
-target_kl
-save_freq
-
-to remove:
-replay_size
-env_init
-env_name
-"""
 
 
 

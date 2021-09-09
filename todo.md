@@ -37,5 +37,12 @@ Main components:
     - GAN multimodal
 
 TODO Now:
-- Make code cleaner (remove useless components, sort out path issues)
-- Code for plotting mazes from numpy arrays
+- Make code cleaner:
+    - remove useless components
+    - sort out path issues
+    - Make log simpler to understand + config for place
+    - Experiment name should be unique
+
+- Code for plotting mazes from numpy arrays:
+    - Plot
+    - Make emplacement clean
