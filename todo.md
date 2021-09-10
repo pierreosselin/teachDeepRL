@@ -38,10 +38,14 @@ Main components:
 
 TODO Now:
 - Make code cleaner:
-    - remove useless components
     - sort out path issues
     - Make log simpler to understand + config for place
+        - log training metrics
+        - gif test maze
+        - Sampled mazes
+        - ALP-GMM visualization
     - Experiment name should be unique
+    - Take care parameter handling for teacher
 
 - Code for plotting mazes from numpy arrays:
     - Plot

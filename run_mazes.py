@@ -12,22 +12,36 @@ import numpy as np
 from torchvision.utils import save_image
 import torch
 import yaml
+from pathlib import Path
 
 
 # Argument definition
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--config', type=str, default='config')
+parser.add_argument('--gpu_id', type=int, default=-1)
+
 
 args = parser.parse_args()
 
-config = yaml.safe_load(open(f'teachDRL/config/{arg.config}.yaml'))
+config = yaml.safe_load(open(f'teachDRL/config/{args.config}.yaml'))
+
+###Create folders for output
+Path(f"./teachDRL/data/experiments/{args.config}").mkdir(parents=True, exist_ok=True)
+Path(f"./teachDRL/data/experiments/{args.config}/sampled_mazes").mkdir(parents=True, exist_ok=True)
+Path(f"./teachDRL/data/experiments/{args.config}/test_gif").mkdir(parents=True, exist_ok=True)
+Path(f"./teachDRL/data/experiments/{args.config}/training_metrics").mkdir(parents=True, exist_ok=True)
+
+
 
 logger_kwargs = setup_logger_kwargs(config["exp_name"], config["seed"])
 
 # Bind this run to specific GPU if there is one
-if config["args.gpu_id"] != -1:
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(config["args.gpu_id"])
+if args.gpu_id != -1:
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_id)
+    gpu_name = "/device:XLA_GPU:" + str(args.gpu_id)
+else:
+    gpu_name = "/device:CPU:0"
 
 # Set up Student's DeepNN architecture if provided
 ac_kwargs = dict()
@@ -49,9 +63,11 @@ param_env_bounds['Z'] = [-100, 100, 100]
 
 
 # Set Teacher hyperparameters
+
 params = {}
-if args.teacher == 'ALP-GMM':
-    if args.gmm_fitness_fun is not None:
+"""
+if config["teacher"]["teacher"] == 'ALP-GMM':
+    if config["teacher"]["gmm_fitness_fun"] is not None:
         params['gmm_fitness_fun'] = args.gmm_fitness_fun
     if args.min_k is not None and args.max_k is not None:
         params['potential_ks'] = np.arange(args.min_k, args.max_k, 1)
@@ -82,6 +98,8 @@ elif args.teacher == "Oracle":
     else:
         print('Oracle not defined for this parameter space')
         exit(1)
+"""
+
 
 env_config = {}
 env_config['device'] = "cuda"
@@ -89,16 +107,18 @@ env_config['maze_model_path'] = os.path.join(os.path.abspath(os.getcwd()), f'tea
 env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=1000)
 env_init = {}
 
+#Path
+path_gif = f'./teachDRL/data/experiments/{args.config}/test_gif/'
+path_sampled_maze = f'./teachDRL/data/experiments/{args.config}/sampled_mazes/'
+path_metrics = f'./teachDRL/data/experiments/{args.config}/training_metrics/'
+
 # Initialize teacher
-Teacher = TeacherController(args.teacher, args.nb_test_episodes, param_env_bounds,
-                            seed=args.seed, teacher_params=params)
+Teacher = TeacherController(config["teacher"]["teacher"], config["student"]["nb_test_episodes"], param_env_bounds,
+                            seed=config["seed"], teacher_params=params)
 
 # Launch Student training
+ppo(env_f, actor_critic=actor_critic, ac_kwargs=ac_kwargs, gamma=config["student"]["gamma"], seed=config["seed"], epochs=config["student"]["epochs"],
+    logger_kwargs=logger_kwargs, max_ep_len=config["student"]["max_ep_len"], steps_per_epoch=config["student"]["steps_per_ep"], Teacher=Teacher, 
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, gpu_name=gpu_name)
 
-ppo(env_f, actor_critic=actor_critic, ac_kwargs=ac_kwargs, gamma=config["student"]["gamma"], seed=config["seed"], epochs=config["students"]["epochs"],
-    logger_kwargs=logger_kwargs, max_ep_len=config["student"]["max_ep_len"], steps_per_epoch=config["student"]["steps_per_ep"], Teacher=Teacher, path_gif = os.path.join(os.path.abspath(os.getcwd()), 'teachDRL/data/test_set/'))
-
-
-
-
-
+    

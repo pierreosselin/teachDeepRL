@@ -10,6 +10,11 @@ from tqdm import tqdm
 from PIL import Image
 from moviepy.editor import ImageSequenceClip
 import os
+from torchvision.utils import save_image
+import torch
+from pathlib import Path
+
+
 
 class PPOBuffer:
     """
@@ -103,8 +108,8 @@ def images_to_gif(l_images, epoch, name, path_gif):
 
 def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
         steps_per_epoch=4000, epochs=200, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
-        vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=1, Teacher=None, path_gif=None, gpu_name = "/device:CPU:0"):
+        vf_lr=1e-3, train_pi_iters=10, train_v_iters=10, lam=0.97, max_ep_len=1000,
+        target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=1, Teacher=None, path_gif=None, path_sampled_maze=None, path_metrics=None, gpu_name = "/device:CPU:0"):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -326,7 +331,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
         o_new = o.reshape(17,17)
         o_new[env.env.y, env.env.x] = 3
-        save_image(torch.tensor(o_new), f'maze_{epoch}_teacher_{Teacher.teacher}.npy', normalize=True)
+        save_image(torch.tensor(o_new), path_sampled_maze + f'maze_{epoch}_teacher_{Teacher.teacher}.png', normalize=True)
 
 
         # Log info about epoch
@@ -345,8 +350,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         logger.log_tabular('StopIter', average_only=True)
         logger.log_tabular('Time', time.time()-start_time)
         logger.dump_tabular()
-        if Teacher: Teacher.dump('env_params_save' + Teacher.teacher + '.pkl')
-
+        if Teacher: Teacher.dump(path_metrics + 'env_params_save.pkl')
+        
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()

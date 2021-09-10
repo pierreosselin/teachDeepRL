@@ -1,4 +1,31 @@
-#Helll
-exp_name:
-  lol:
-    what: 3
+## Configuration File 
+exp_name: test
+seed: 0
+model: generator_aldous-pacman_4
+student:
+  hid: -1
+  l: 1
+  gamma: 0.99
+  epochs: 100
+  gpu_id: -1
+  ent_coef: 0.005
+  max_ep_len: 2000
+  steps_per_ep: 10000
+  buf_size: 2000000
+  nb_test_episodes: 30
+  lr: 0.001
+  train_freq: 10 
+  batch_size: 1000
+  actor: convolutional
+teacher:
+  teacher: ALP-GMM
+  gmm_fitness_fun: null
+  nb_em_init: null
+  min_k: null
+  max_k: null
+  fit_rate: null
+  weighted_gmm: true
+  alp_max_size: null
+  absolute_lp: true
+  max_region_size: null
+  alp_window_size: null
