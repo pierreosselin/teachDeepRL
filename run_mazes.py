@@ -111,14 +111,14 @@ env_init = {}
 path_gif = f'./teachDRL/data/experiments/{args.config}/test_gif/'
 path_sampled_maze = f'./teachDRL/data/experiments/{args.config}/sampled_mazes/'
 path_metrics = f'./teachDRL/data/experiments/{args.config}/training_metrics/'
+path_metrics = f'./teachDRL/data/experiments/{args.config}/training_metrics/'
+path_maze_visu = './teachDRL/teachers/test_sets/maze_visu.npy'
 
 # Initialize teacher
 Teacher = TeacherController(config["teacher"]["teacher"], config["student"]["nb_test_episodes"], param_env_bounds,
-                            seed=config["seed"], teacher_params=params)
+                            seed=config["seed"], teacher_params=params, name_test=config["test_set"])
 
 # Launch Student training
-ppo(env_f, actor_critic=actor_critic, ac_kwargs=ac_kwargs, gamma=config["student"]["gamma"], seed=config["seed"], epochs=config["student"]["epochs"],
-    logger_kwargs=logger_kwargs, max_ep_len=config["student"]["max_ep_len"], steps_per_epoch=config["student"]["steps_per_ep"], Teacher=Teacher, 
-    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, gpu_name=gpu_name)
+ppo(env_f, actor_critic=actor_critic, config=config, ac_kwargs=ac_kwargs, logger_kwargs=logger_kwargs, Teacher=Teacher, 
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
 
-    

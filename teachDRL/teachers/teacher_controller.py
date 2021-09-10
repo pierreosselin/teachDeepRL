@@ -33,7 +33,7 @@ def param_dict_to_param_vec(param_env_bounds, param_dict):  # needs param_env_bo
 
 
 class TeacherController(object):
-    def __init__(self, teacher, nb_test_episodes, param_env_bounds, seed=None, teacher_params={}):
+    def __init__(self, teacher, nb_test_episodes, param_env_bounds, seed=None, teacher_params={}, name_test=None):
         self.teacher = teacher
         self.nb_test_episodes = nb_test_episodes
         self.test_ep_counter = 0
@@ -72,10 +72,8 @@ class TeacherController(object):
         self.test_mode = "fixed_set"
         #self.test_mode = "None"
         if self.test_mode == "fixed_set":
-            #name = get_test_set_name(self.param_env_bounds)
-            name = "test_set_mix"
-            self.test_env_list = pickle.load(open("teachDRL/teachers/test_sets/"+name+".pkl", "rb" ))
-            print('fixed set of {} tasks loaded: {}'.format(len(self.test_env_list),name))
+            self.test_env_list = pickle.load(open("teachDRL/teachers/test_sets/"+name_test+".pkl", "rb" ))
+            print('fixed set of {} tasks loaded: {}'.format(len(self.test_env_list),name_test))
 
         #data recording
         self.env_params_train = []

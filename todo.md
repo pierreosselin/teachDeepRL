@@ -37,16 +37,12 @@ Main components:
     - GAN multimodal
 
 TODO Now:
-- Make code cleaner:
-    - sort out path issues
-    - Make log simpler to understand + config for place
-        - log training metrics
-        - gif test maze
-        - Sampled mazes
-        - ALP-GMM visualization
-    - Experiment name should be unique
-    - Take care parameter handling for teacher
+- Modify test set loading on Teacher side
+- Modify test maze visualization
 
+- Make code cleaner:
+    - Make log simpler to understand + config for place
+        - ALP-GMM visualization
 - Code for plotting mazes from numpy arrays:
     - Plot
     - Make emplacement clean

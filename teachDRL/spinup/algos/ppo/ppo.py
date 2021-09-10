@@ -106,10 +106,8 @@ def images_to_gif(l_images, epoch, name, path_gif):
 
 
 
-def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
-        steps_per_epoch=4000, epochs=200, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
-        vf_lr=1e-3, train_pi_iters=10, train_v_iters=10, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10, test_freq=1, Teacher=None, path_gif=None, path_sampled_maze=None, path_metrics=None, gpu_name = "/device:CPU:0"):
+def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(), logger_kwargs=dict(),
+        Teacher=None, path_gif=None, path_sampled_maze=None, path_metrics=None, path_maze_visu=None, gpu_name = "/device:CPU:0"):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -162,6 +160,26 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
             the current policy and value function.
     """
 
+    #allocate configuration elements
+    gamma = config["student"]["gamma"]
+    seed = config["seed"]
+    epochs = config["student"]["epochs"]
+    max_ep_len = config["student"]["max_ep_len"]
+    steps_per_epoch = config["student"]["steps_per_ep"]
+    clip_ratio = config["student"]["clip_ratio"]
+    pi_lr = config["student"]["pi_lr"]
+    vf_lr = config["student"]["vf_lr"]
+    train_pi_iters = config["student"]["train_pi_iters"]
+    train_v_iters = config["student"]["train_v_iters"]
+    lam = config["student"]["lam"]
+    target_kl = config["student"]["target_kl"]
+    save_freq = config["student"]["save_freq"]
+    test_freq = config["student"]["test_freq"]
+
+
+    ## Load maze for gif visualization
+    maze_visu = np.load(path_maze_visu)
+
     logger = EpochLogger(**logger_kwargs)
     logger.save_config(locals())
 
@@ -170,7 +188,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
-    env, test_env = env_fn(), env_fn()
+    env, test_env, visu_env = env_fn(), env_fn(), env_fn()
 
     if Teacher: Teacher.set_env_params(env)
 
@@ -228,24 +246,27 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
-    def test_agent(n, sess, pi, epoch):
-        o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
-        o = test_env.env.set_environment_maze(Teacher.test_env_list[0])
+
+    def visualize_test(epoch):
+        o, r, d, ep_ret, ep_len = visu_env.reset(), 0, False, 0, 0
+        o = visu_env.env.set_environment_maze(maze_visu)
         
         images_gif = []
         o_new = o.reshape(17,17)
-        o_new[test_env.env.y, test_env.env.x] = 3
+        o_new[visu_env.env.y, visu_env.env.x] = 3
         images_gif.append(o_new)
 
         while not(d or (ep_len == max_ep_len)):
-            o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
+            o, r, d, _ = visu_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
             ep_ret += r
             ep_len += 1
             o_new = o.reshape(17,17)
-            o_new[test_env.env.y, test_env.env.x] = 3
+            o_new[visu_env.env.y, visu_env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, "test_set_mix" + Teacher.teacher, path_gif)
+        images_to_gif(images_gif, epoch, "test_maze_visualization" + Teacher.teacher, path_gif)
 
+
+    def test_agent(n, sess, pi):
         print("Test Set Evaluation...")
         list_rewards = []
         for j in tqdm(range(n)):
@@ -268,14 +289,14 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         pi_l_old, v_l_old, ent = sess.run([pi_loss, v_loss, approx_ent], feed_dict=inputs)
 
         # Training
-        for i in range(train_pi_iters):
+        for i in tqdm(range(train_pi_iters), desc="Gradient pi"):
             _, kl = sess.run([train_pi, approx_kl], feed_dict=inputs)
             kl = mpi_avg(kl)
             if kl > 1.5 * target_kl:
                 logger.log('Early stopping at step %d due to reaching max kl.'%i)
                 break
         logger.store(StopIter=i)
-        for _ in range(train_v_iters):
+        for _ in tqdm(range(train_v_iters), desc="Gradient v"):
             sess.run(train_v, feed_dict=inputs)
 
         # Log changes from update
@@ -323,12 +344,16 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
         update()
 
         if (epoch % test_freq == 0) or (epoch == epochs-1):
-            test_agent(30, sess, pi, epoch)
+            test_agent(30, sess, pi)
+            visualize_test(epoch)
 
 
         Teacher.set_env_params(env)
 
+        
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+        
+        #Save Sampled maze
         o_new = o.reshape(17,17)
         o_new[env.env.y, env.env.x] = 3
         save_image(torch.tensor(o_new), path_sampled_maze + f'maze_{epoch}_teacher_{Teacher.teacher}.png', normalize=True)

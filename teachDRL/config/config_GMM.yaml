@@ -2,6 +2,7 @@
 exp_name: test
 seed: 0
 model: generator_aldous-pacman_4
+test_set: test_set_mix
 student:
   hid: -1
   l: 1
@@ -14,9 +15,18 @@ student:
   buf_size: 2000000
   nb_test_episodes: 30
   lr: 0.001
-  train_freq: 10 
+  train_freq: 10
   batch_size: 1000
   actor: convolutional
+  clip_ratio: 0.2
+  pi_lr: 0.0003
+  vf_lr: 0.001
+  train_pi_iters: 10
+  train_v_iters: 10
+  lam: 0.97
+  target_kl: 0.01
+  save_freq: 10
+  test_freq: 1
 teacher:
   teacher: ALP-GMM
   gmm_fitness_fun: null
