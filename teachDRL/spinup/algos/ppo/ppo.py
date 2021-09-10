@@ -309,6 +309,18 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
     start_time = time.time()
     o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
+
+    # Resample if not solvable
+    while not env.is_solvable():
+        print("Maze not solvable, resampling...")
+        o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
+    
+    # Save first sampled maze
+    o_new = o.reshape(17,17)
+    o_new[env.env.y, env.env.x] = 3
+    save_image(torch.tensor(o_new), path_sampled_maze + f'maze_1_teacher_{Teacher.teacher}.png', normalize=True)
+
+
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
@@ -349,6 +361,9 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
         if (epoch + 1) % epochs_per_task == 0:
             Teacher.set_env_params(env)
+            while not env.is_solvable():
+                print("Maze not solvable, resampling...")
+                Teacher.set_env_params(env)
 
         
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0

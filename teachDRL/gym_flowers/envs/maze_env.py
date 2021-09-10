@@ -4,6 +4,8 @@ import random
 import os
 import numpy as np
 from torch.autograd import Variable
+import copy
+
 
 from gym import Env, spaces
 
@@ -131,3 +133,25 @@ class MazeEnv(Env):
         self.maze[goal_y, goal_x] = GOAL
 
         return (goal_x, goal_y)
+    
+    def is_solvable(self, maze=None):
+        if maze is None:
+            maze = self.maze.detach().clone().cpu().numpy()
+        
+        def search(y, x):
+            BEEN_THERE = -1
+            if y==self.goal_y and x== self.goal_x:
+                return True
+            elif round(maze[y, x]) == WALL:
+                return False
+            elif int(maze[y, x]) == BEEN_THERE:
+                return False
+            maze[y, x] = BEEN_THERE
+
+            if ((x < len(maze)-1 and search(y, x+1))
+                or (y > 0 and search(y-1, x))
+                or (x > 0 and search(y, x-1))
+                or (y < len(maze)-1 and search(y+1, x))):
+                return True
+            return False
+        return search(self.maze.shape[0] - 1, 0)

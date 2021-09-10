@@ -30,7 +30,6 @@ Main components:
     - GAN multimodal
 
 TODO:
-- make all sampled maze solvable
 - Z dimension not hard coded
 - Size test set not hard coded
 
@@ -38,3 +37,4 @@ TODO:
 
 - ALP-GMM visualization
 - Computing max reward per mazes to normalize, reward random agent?
+- Check out why always same seed
