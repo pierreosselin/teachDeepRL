@@ -1,6 +1,6 @@
 {
     "Teacher":	{
-        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f1021ab1048>":	{
+        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7fb95cd0a048>":	{
             "env_params_test":	[],
             "env_params_train":	[],
             "env_test_len":	[],
@@ -18,13 +18,13 @@
                 ]
             },
             "task_generator":	{
-                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7f1021ab1080>":	{
+                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7fb95cd0a1d0>":	{
                     "alp_computer":	{
-                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7f0f3a532c18>":	{
+                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7fb9914c8c50>":	{
                             "alp_knn":	{
-                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7f1021ab11d0>":	{
+                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7fb95cd0a208>":	{
                                     "buffer":	{
-                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7f1021ab12b0>":	{
+                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7fb95cd0a2b0>":	{
                                             "data":	[
                                                 [],
                                                 []
@@ -86,7 +86,7 @@
                     "nb_random":	250,
                     "potential_gmms":	[
                         {
-                            "GaussianMixture(n_components=2, random_state=116426)":	{
+                            "GaussianMixture(n_components=2, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -94,7 +94,7 @@
                                 "n_components":	"2",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -104,7 +104,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=3, random_state=116426)":	{
+                            "GaussianMixture(n_components=3, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -112,7 +112,7 @@
                                 "n_components":	"3",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -122,7 +122,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=4, random_state=116426)":	{
+                            "GaussianMixture(n_components=4, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -130,7 +130,7 @@
                                 "n_components":	"4",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -140,7 +140,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=5, random_state=116426)":	{
+                            "GaussianMixture(n_components=5, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -148,7 +148,7 @@
                                 "n_components":	"5",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -158,7 +158,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=6, random_state=116426)":	{
+                            "GaussianMixture(n_components=6, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -166,7 +166,7 @@
                                 "n_components":	"6",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -176,7 +176,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=7, random_state=116426)":	{
+                            "GaussianMixture(n_components=7, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -184,7 +184,7 @@
                                 "n_components":	"7",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -194,7 +194,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=8, random_state=116426)":	{
+                            "GaussianMixture(n_components=8, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -202,7 +202,7 @@
                                 "n_components":	"8",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -212,7 +212,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=9, random_state=116426)":	{
+                            "GaussianMixture(n_components=9, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -220,7 +220,7 @@
                                 "n_components":	"9",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -230,7 +230,7 @@
                             }
                         },
                         {
-                            "GaussianMixture(n_components=10, random_state=116426)":	{
+                            "GaussianMixture(n_components=10, random_state=366897)":	{
                                 "covariance_type":	"full",
                                 "init_params":	"kmeans",
                                 "max_iter":	100,
@@ -238,7 +238,7 @@
                                 "n_components":	"10",
                                 "n_init":	1,
                                 "precisions_init":	null,
-                                "random_state":	116426,
+                                "random_state":	366897,
                                 "reg_covar":	1e-06,
                                 "tol":	0.001,
                                 "verbose":	0,
@@ -263,7 +263,7 @@
                         }
                     },
                     "random_task_ratio":	0.2,
-                    "seed":	116426,
+                    "seed":	366897,
                     "tasks":	[],
                     "tasks_alps":	[],
                     "warm_start":	false
@@ -320,6 +320,7 @@
             "clip_ratio":	0.2,
             "ent_coef":	0.005,
             "epochs":	100,
+            "epochs_per_task":	10,
             "gamma":	0.99,
             "gpu_id":	-1,
             "hid":	-1,
@@ -353,14 +354,15 @@
         },
         "test_set":	"test_set_mix"
     },
-    "env_fn":	"<function <lambda> at 0x7f1021a9f840>",
+    "env_fn":	"<function <lambda> at 0x7fb95ccf9840>",
     "epochs":	100,
+    "epochs_per_task":	10,
     "exp_name":	"test",
     "gamma":	0.99,
     "gpu_name":	"/device:XLA_GPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f1021aacc88>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7fb95cd04da0>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,

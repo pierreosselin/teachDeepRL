@@ -13,6 +13,7 @@ from torchvision.utils import save_image
 import torch
 import yaml
 from pathlib import Path
+import shutil
 
 
 # Argument definition
@@ -27,7 +28,10 @@ args = parser.parse_args()
 config = yaml.safe_load(open(f'teachDRL/config/{args.config}.yaml'))
 
 ###Create folders for output
-Path(f"./teachDRL/data/experiments/{args.config}").mkdir(parents=True, exist_ok=True)
+path_parent = Path(f"./teachDRL/data/experiments/{args.config}")
+if path_parent.exists():
+    shutil.rmtree(path_parent)
+path_parent.mkdir(parents=True, exist_ok=True)
 Path(f"./teachDRL/data/experiments/{args.config}/sampled_mazes").mkdir(parents=True, exist_ok=True)
 Path(f"./teachDRL/data/experiments/{args.config}/test_gif").mkdir(parents=True, exist_ok=True)
 Path(f"./teachDRL/data/experiments/{args.config}/training_metrics").mkdir(parents=True, exist_ok=True)

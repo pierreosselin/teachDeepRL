@@ -26,7 +26,6 @@ def param_vec_to_param_dict(param_env_bounds, param):
 def param_dict_to_param_vec(param_env_bounds, param_dict):  # needs param_env_bounds for order reference
     param_vec = []
     for name, bounds in param_env_bounds.items():
-        #print(param_dict[name])
         param_vec.append(param_dict[name])
     return np.array(param_vec, dtype=np.float32)
 
