@@ -38,3 +38,4 @@ TODO:
 - ALP-GMM visualization
 - Computing max reward per mazes to normalize, reward random agent?
 - Check out why always same seed
+- Large Scale with gpu
