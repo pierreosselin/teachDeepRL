@@ -307,6 +307,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
                      DeltaLossV=(v_l_new - v_l_old))
 
     start_time = time.time()
+    print("CHeck device environment")
+    print(next(env.env.generator.parameters()).device)
     o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):

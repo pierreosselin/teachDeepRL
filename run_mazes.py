@@ -39,7 +39,8 @@ logger_kwargs = setup_logger_kwargs(config["exp_name"], config["seed"])
 # Bind this run to specific GPU if there is one
 if args.gpu_id != -1:
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_id)
-    gpu_name = "/device:XLA_GPU:" + str(args.gpu_id)
+    #gpu_name = "/device:XLA_GPU:" + str(args.gpu_id)
+    gpu_name = "/device:XLA_GPU:" + "0"
 else:
     gpu_name = "/device:CPU:0"
 

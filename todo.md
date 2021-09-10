@@ -37,8 +37,10 @@ Main components:
     - GAN multimodal
 
 TODO Now:
-- Modify test set loading on Teacher side
-- Modify test maze visualization
+debug gpu on server
+make all sampled maze solvable
+modify number of epochs before resampling
+
 
 - Make code cleaner:
     - Make log simpler to understand + config for place
