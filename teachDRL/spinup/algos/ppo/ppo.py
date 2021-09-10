@@ -175,6 +175,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     target_kl = config["student"]["target_kl"]
     save_freq = config["student"]["save_freq"]
     test_freq = config["student"]["test_freq"]
+    epochs_per_task = config["student"]["epochs_per_task"]
 
 
     ## Load maze for gif visualization
@@ -307,8 +308,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
                      DeltaLossV=(v_l_new - v_l_old))
 
     start_time = time.time()
-    print("CHeck device environment")
-    print(next(env.env.generator.parameters()).device)
     o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
@@ -335,7 +334,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
                     logger.store(EpRet=ep_ret, EpLen=ep_len)
                 if Teacher:
                     Teacher.record_train_episode(ep_ret, ep_len)
-                    #Teacher.set_env_params(env)
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
 
         # Save model
@@ -349,16 +347,17 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
             test_agent(30, sess, pi)
             visualize_test(epoch)
 
-
-        Teacher.set_env_params(env)
+        if (epoch + 1) % epochs_per_task == 0:
+            Teacher.set_env_params(env)
 
         
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
         
-        #Save Sampled maze
-        o_new = o.reshape(17,17)
-        o_new[env.env.y, env.env.x] = 3
-        save_image(torch.tensor(o_new), path_sampled_maze + f'maze_{epoch}_teacher_{Teacher.teacher}.png', normalize=True)
+        #Save Sampled maze when updated
+        if (epoch + 1) % epochs_per_task == 0:
+            o_new = o.reshape(17,17)
+            o_new[env.env.y, env.env.x] = 3
+            save_image(torch.tensor(o_new), path_sampled_maze + f'maze_{epoch}_teacher_{Teacher.teacher}.png', normalize=True)
 
 
         # Log info about epoch

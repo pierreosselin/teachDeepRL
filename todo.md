@@ -37,9 +37,12 @@ Main components:
     - GAN multimodal
 
 TODO Now:
-debug gpu on server
 make all sampled maze solvable
-modify number of epochs before resampling
+
+
+- Z dimension not hard coded
+- SIze test set not hard coded
+
 
 
 - Make code cleaner:
