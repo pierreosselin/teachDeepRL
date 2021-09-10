@@ -33,5 +33,8 @@ TODO:
 - make all sampled maze solvable
 - Z dimension not hard coded
 - Size test set not hard coded
+
+
+
 - ALP-GMM visualization
 - Computing max reward per mazes to normalize, reward random agent?
