@@ -42,7 +42,7 @@ class ALPGMM():
     def __init__(self, mins, maxs, seed=None, params=dict()):
         
         ### Think about whether or not remove its
-        #self.seed = seed
+        self.seed = seed
         #if not seed:
         #    self.seed = np.random.randint(42,424242)
         #np.random.seed(self.seed)
@@ -85,8 +85,10 @@ class ALPGMM():
         self.bk = {'weights': [], 'covariances': [], 'means': [], 'tasks_alps': [], 'episodes': []}
 
     def init_gmm(self, nb_gaussians):
-        return GMM(n_components=nb_gaussians, covariance_type='full', random_state=self.seed,
-                                            warm_start=self.warm_start, n_init=self.nb_em_init)
+        #return GMM(n_components=nb_gaussians, covariance_type='full', random_state=self.seed,
+        #                                    warm_start=self.warm_start, n_init=self.nb_em_init)
+        return GMM(n_components=nb_gaussians, covariance_type='full', warm_start=self.warm_start, n_init=self.nb_em_init)
+
     def get_nb_gmm_params(self, gmm):
         # assumes full covariance
         # see https://stats.stackexchange.com/questions/229293/the-number-of-parameters-in-gaussian-mixture-model
