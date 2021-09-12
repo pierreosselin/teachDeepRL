@@ -69,7 +69,6 @@ class TeacherController(object):
             raise NotImplementedError
 
         self.test_mode = "fixed_set"
-        #self.test_mode = "None"
         if self.test_mode == "fixed_set":
             self.test_env_list = pickle.load(open("teachDRL/teachers/test_sets/"+name_test+".pkl", "rb" ))
             print('fixed set of {} tasks loaded: {}'.format(len(self.test_env_list),name_test))

@@ -40,10 +40,12 @@ class EmpiricalALPComputer():
 # mins / maxs are vectors defining task space boundaries (ex: mins=[0,0,0] maxs=[1,1,1])
 class ALPGMM():
     def __init__(self, mins, maxs, seed=None, params=dict()):
-        self.seed = seed
-        if not seed:
-            self.seed = np.random.randint(42,424242)
-        np.random.seed(self.seed)
+        
+        ### Think about whether or not remove its
+        #self.seed = seed
+        #if not seed:
+        #    self.seed = np.random.randint(42,424242)
+        #np.random.seed(self.seed)
 
         # Task space boundaries
         self.mins = np.array(mins)
@@ -139,7 +141,9 @@ class ALPGMM():
         if (len(self.tasks) < self.nb_random) or (np.random.random() < self.random_task_ratio):
             # Random task sampling
             new_task = self.random_task_generator.sample()
+            print("Sample random task")
         else:
+            print("Sample GMM task")
             # ALP-based task sampling
 
             # 1 - Retrieve the mean ALP value of each Gaussian in the GMM

@@ -34,8 +34,13 @@ TODO:
 - Size test set not hard coded
 
 
+TODO today:
+- Make ALP GMM work
+- Implement algo for maximum reward per mazes and compute it for test set
+
+
 
 - ALP-GMM visualization
-- Computing max reward per mazes to normalize, reward random agent?
+-reward random agent?
 - Check out why always same seed
 - Large Scale with gpu
