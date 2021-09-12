@@ -1,6 +1,6 @@
 {
     "Teacher":	{
-        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f1700492080>":	{
+        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f3138052080>":	{
             "env_params_test":	[],
             "env_params_train":	[],
             "env_test_len":	[],
@@ -18,13 +18,13 @@
                 ]
             },
             "task_generator":	{
-                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7f1700492048>":	{
+                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7f3138052048>":	{
                     "alp_computer":	{
-                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7f1612fbdb00>":	{
+                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7f304333bb00>":	{
                             "alp_knn":	{
-                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7f17004921d0>":	{
+                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7f31380521d0>":	{
                                     "buffer":	{
-                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7f17004922b0>":	{
+                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7f31380522b0>":	{
                                             "data":	[
                                                 [],
                                                 []
@@ -354,7 +354,7 @@
         },
         "test_set":	"test_set_mix"
     },
-    "env_fn":	"<function <lambda> at 0x7f17004818c8>",
+    "env_fn":	"<function <lambda> at 0x7f31380408c8>",
     "epochs":	100,
     "epochs_per_task":	10,
     "exp_name":	"test",
@@ -362,7 +362,7 @@
     "gpu_name":	"/device:XLA_GPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f170048deb8>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f313804deb8>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,
