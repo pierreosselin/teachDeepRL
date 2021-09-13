@@ -360,9 +360,11 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
         if (epoch + 1) % epochs_per_task == 0:
             Teacher.set_env_params(env)
+            o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
             while not env.is_solvable():
                 print("Maze not solvable, resampling...")
                 Teacher.set_env_params(env)
+                o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
 
         
         o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
