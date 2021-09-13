@@ -15,7 +15,6 @@ import torch
 from pathlib import Path
 
 
-
 class PPOBuffer:
     """
     A buffer for storing trajectories experienced by a PPO agent interacting
@@ -355,7 +354,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
         # Perform PPO update!
         update()
 
-        if (epoch % test_freq == 0) or (epoch == epochs-1):
+        if ((epoch + 1) % test_freq == 0) or (epoch == epochs-1):
             test_agent(30, sess, pi)
             visualize_test(epoch)
 

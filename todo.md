@@ -1,26 +1,3 @@
-
-- Setup visualization
-    - Latent space representation
-
-- Check Gan Latent Space Gives modes of environments
-
-- SPend some tume understanding why gpu utils so low (parallel?)
-
-- Make sure test set works on small experiments
-
-
-- Plot KL divergence
-- Plot ALP-GMM Visualization
-- Look failed mazes (0 average reward)
-- Check GPU
-- Difference maze looks (make gif sequential mazes)
-- Why random better than alp
-- Train test set optimal policy, number of steps required (ex bfs) + order in difficulty
-- Exploration -> sparse reward
-
-
-
-
 Main components:
 - Visualization:
     - Latent Space GMM
@@ -35,12 +12,6 @@ TODO:
 
 
 TODO today:
-- Make ALP GMM work
-- Implement algo for maximum reward per mazes and compute it for test set
-
-
-
-- ALP-GMM visualization
--reward random agent?
-- Check out why always same seed
-- Large Scale with gpu
+- Check why random sampling does not manage to get out of unsolvable maze.
+- Check NN weights, I am even learning anything?
+- Check loss function for one same environment, use wandb for this.

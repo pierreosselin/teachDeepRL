@@ -8,6 +8,8 @@ from teachDRL.teachers.algos.random_teacher import RandomTeacher
 from teachDRL.teachers.algos.oracle_teacher import OracleTeacher
 from teachDRL.teachers.utils.test_utils import get_test_set_name
 from collections import OrderedDict
+from torchvision.utils import save_image
+import torch
 
 def param_vec_to_param_dict(param_env_bounds, param):
     param_dict = OrderedDict()
@@ -38,6 +40,7 @@ class TeacherController(object):
         self.test_ep_counter = 0
         self.eps= 1e-03
         self.param_env_bounds = copy.deepcopy(param_env_bounds)
+        self.number_sampled = 0
 
         # figure out parameters boundaries vectors
         mins, maxs = [], []
@@ -108,11 +111,15 @@ class TeacherController(object):
 
 
     def set_env_params(self, env):
+        self.number_sampled += 1
         params = copy.copy(self.task_generator.sample_task())
+        print("Params sampled maze", params)
         assert type(params[0]) == np.float32
         self.env_params_train.append(params)
         param_dict = param_vec_to_param_dict(self.param_env_bounds, params)
         env.env.set_environment(**param_dict)
+        #save_image(torch.tensor(env.env.maze.cpu().detach().numpy()), f'maze_{self.number_sampled}_sampled.png', normalize=True)
+        
         return params
 
     def set_test_env_params(self, test_env):
