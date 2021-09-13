@@ -1,6 +1,6 @@
 {
     "Teacher":	{
-        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f3138052080>":	{
+        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f985e43e0b8>":	{
             "env_params_test":	[],
             "env_params_train":	[],
             "env_test_len":	[],
@@ -18,13 +18,13 @@
                 ]
             },
             "task_generator":	{
-                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7f3138052048>":	{
+                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7f985e43e198>":	{
                     "alp_computer":	{
-                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7f304333bb00>":	{
+                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7f980693bcf8>":	{
                             "alp_knn":	{
-                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7f31380521d0>":	{
+                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7f985e43e358>":	{
                                     "buffer":	{
-                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7f31380522b0>":	{
+                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7f985e43e128>":	{
                                             "data":	[
                                                 [],
                                                 []
@@ -320,7 +320,7 @@
             "clip_ratio":	0.2,
             "ent_coef":	0.005,
             "epochs":	100,
-            "epochs_per_task":	10,
+            "epochs_per_task":	20,
             "gamma":	0.99,
             "gpu_id":	-1,
             "hid":	-1,
@@ -331,9 +331,9 @@
             "nb_test_episodes":	30,
             "pi_lr":	0.0003,
             "save_freq":	10,
-            "steps_per_ep":	10000,
+            "steps_per_ep":	20000,
             "target_kl":	0.01,
-            "test_freq":	1,
+            "test_freq":	5,
             "train_freq":	10,
             "train_pi_iters":	10,
             "train_v_iters":	10,
@@ -354,15 +354,15 @@
         },
         "test_set":	"test_set_mix"
     },
-    "env_fn":	"<function <lambda> at 0x7f31380408c8>",
+    "env_fn":	"<function <lambda> at 0x7f985e42bf28>",
     "epochs":	100,
-    "epochs_per_task":	10,
+    "epochs_per_task":	20,
     "exp_name":	"test",
     "gamma":	0.99,
     "gpu_name":	"/device:XLA_GPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f313804deb8>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f985e425e80>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,
@@ -389,9 +389,9 @@
     "pi_lr":	0.0003,
     "save_freq":	10,
     "seed":	0,
-    "steps_per_epoch":	10000,
+    "steps_per_epoch":	20000,
     "target_kl":	0.01,
-    "test_freq":	1,
+    "test_freq":	5,
     "train_pi_iters":	10,
     "train_v_iters":	10,
     "vf_lr":	0.001

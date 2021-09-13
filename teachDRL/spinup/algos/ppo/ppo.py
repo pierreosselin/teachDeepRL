@@ -186,8 +186,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
 
     seed += 10000 * proc_id()
-    tf.set_random_seed(seed)
-    np.random.seed(seed)
+    #tf.set_random_seed(seed)
+    #np.random.seed(seed)
 
     env, test_env, visu_env = env_fn(), env_fn(), env_fn()
 

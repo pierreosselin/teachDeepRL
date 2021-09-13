@@ -11,7 +11,7 @@ student:
   gpu_id: -1
   ent_coef: 0.005
   max_ep_len: 2000
-  steps_per_ep: 10000
+  steps_per_ep: 20000
   buf_size: 2000000
   nb_test_episodes: 30
   lr: 0.001
@@ -26,8 +26,8 @@ student:
   lam: 0.97
   target_kl: 0.01
   save_freq: 10
-  test_freq: 1
-  epochs_per_task: 10
+  test_freq: 5
+  epochs_per_task: 20
 teacher:
   teacher: Random
   gmm_fitness_fun: null
