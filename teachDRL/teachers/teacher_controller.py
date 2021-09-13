@@ -113,7 +113,6 @@ class TeacherController(object):
     def set_env_params(self, env):
         self.number_sampled += 1
         params = copy.copy(self.task_generator.sample_task())
-        print("Params sampled maze", params)
         assert type(params[0]) == np.float32
         self.env_params_train.append(params)
         param_dict = param_vec_to_param_dict(self.param_env_bounds, params)

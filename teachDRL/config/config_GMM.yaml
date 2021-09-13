@@ -1,13 +1,13 @@
 ## Configuration File 
 exp_name: test
 seed: 0
-model: generator_aldous-pacman_4
+model: generatornobatch_aldous-pacman_4
 test_set: test_set_mix
 student:
   hid: -1
   l: 1
   gamma: 0.99
-  epochs: 100
+  epochs: 200
   gpu_id: -1
   ent_coef: 0.005
   max_ep_len: 2000

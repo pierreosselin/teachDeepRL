@@ -64,7 +64,7 @@ elif config["student"]["actor"] == "mlp":
 ## To modify with the model
 param_env_bounds = OrderedDict()
 
-param_env_bounds['Z'] = [-1, 1, 100]
+param_env_bounds['Z'] = [-100, 100, 100]
 
 
 # Set Teacher hyperparameters
