@@ -1,0 +1,154 @@
+Sample random task
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+[32mEarly stopping at step 1 due to reaching max kl.
+---------------------------------------
+|             Epoch |               0 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |          -0.313 |
+|          StdVVals |          0.0188 |
+|          MaxVVals |          -0.281 |
+|          MinVVals |          -0.344 |
+| TotalEnvInteracts |           1e+03 |
+|            LossPi |       -1.18e-07 |
+|             LossV |          0.0982 |
+|       DeltaLossPi |        -0.00148 |
+|        DeltaLossV |          -0.082 |
+|           Entropy |            1.36 |
+|                KL |         0.00546 |
+|          ClipFrac |               0 |
+|          StopIter |               1 |
+|              Time |            5.79 |
+---------------------------------------
+MoviePy - Building file ./teachDRL/data/experiments_test/config_convergence/test_gif/test_maze_visualizationALP-GMM_epoch_number_1.gif with imageio.
+Sample random task
+new maze
+tensor([[1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 2.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000,
+         0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000,
+         0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000,
+         0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
+         0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000],
+        [0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
+         0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000]],
+       device='cuda:0', grad_fn=<AsStridedBackward>)
+Warning: trajectory cut off by epoch at 473 steps.
+---------------------------------------
+|             Epoch |               0 |
+|      AverageEpRet |               1 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               1 |
+|             EpLen |             527 |
+|      AverageVVals |           0.249 |
+|          StdVVals |          0.0249 |
+|          MaxVVals |           0.309 |
+|          MinVVals |           0.198 |
+| TotalEnvInteracts |           1e+03 |
+|            LossPi |        6.91e-09 |
+|             LossV |          0.0523 |
+|       DeltaLossPi |        0.000724 |
+|        DeltaLossV |         -0.0153 |
+|           Entropy |            1.34 |
+|                KL |         0.00309 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |            17.1 |
+---------------------------------------
+MoviePy - Building file ./teachDRL/data/experiments_test/config_convergence/test_gif/test_maze_visualizationALP-GMM_epoch_number_2.gif with imageio.
+MoviePy - Building file ./teachDRL/data/experiments_test/config_convergence/test_gif/test_maze_visualizationALP-GMM_epoch_number_3.gif with imageio.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:14: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:140: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:37: The name tf.layers.Conv2D is deprecated. Please use tf.compat.v1.layers.Conv2D instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:40: The name tf.layers.Flatten is deprecated. Please use tf.compat.v1.layers.Flatten instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:41: dense (from tensorflow.python.layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.Dense instead.
+WARNING:tensorflow:From /home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/layers/core.py:187: Layer.apply (from tensorflow.python.keras.engine.base_layer) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.__call__` method instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:95: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:48: The name tf.trainable_variables is deprecated. Please use tf.compat.v1.trainable_variables instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo_test.py:230: where (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:63: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:14: The name tf.assign is deprecated. Please use tf.compat.v1.assign instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo_test.py:245: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+2021-09-14 22:44:53.662223: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2021-09-14 22:44:53.667632: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Found device 0 with properties:
+name: TITAN V major: 7 minor: 0 memoryClockRate(GHz): 1.455
+pciBusID: 0000:1a:00.0
+2021-09-14 22:44:53.668424: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcudart.so.10.0'; dlerror: libcudart.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668528: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcublas.so.10.0'; dlerror: libcublas.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668594: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcufft.so.10.0'; dlerror: libcufft.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668664: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcurand.so.10.0'; dlerror: libcurand.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668739: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcusolver.so.10.0'; dlerror: libcusolver.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668805: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcusparse.so.10.0'; dlerror: libcusparse.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668869: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcudnn.so.7'; dlerror: libcudnn.so.7: cannot open shared object file: No such file or directory
+2021-09-14 22:44:53.668881: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1662] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-09-14 22:44:53.669447: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2021-09-14 22:44:53.708946: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2200000000 Hz
+2021-09-14 22:44:53.714467: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5578cc103e30 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-09-14 22:44:53.714530: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-09-14 22:44:53.724162: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5578cc167130 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-09-14 22:44:53.724207: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): TITAN V, Compute Capability 7.0
+2021-09-14 22:44:53.724380: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1180] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-09-14 22:44:53.724392: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1186]
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo_test.py:246: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:26: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1000/1000 [00:03<00:00, 282.79it/s]
+Gradient pi:  10%|████████████▉                                                                                                                    | 1/10 [00:00<00:03,  2.38it/s]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:01<00:00,  6.54it/s]
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1000/1000 [00:03<00:00, 278.87it/s]
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/logx.py:227: simple_save (from tensorflow.python.saved_model.simple_save) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.simple_save.
+WARNING:tensorflow:From /home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/saved_model/signature_def_utils_impl.py:201: build_tensor_info (from tensorflow.python.saved_model.utils_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.utils.build_tensor_info or tf.compat.v1.saved_model.build_tensor_info.
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:01<00:00,  6.78it/s]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:01<00:00,  6.83it/s]

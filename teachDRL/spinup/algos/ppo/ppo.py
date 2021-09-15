@@ -13,7 +13,9 @@ import os
 from torchvision.utils import save_image
 import torch
 from pathlib import Path
+import wandb
 
+os.environ["WANDB_BASE_URL"] = "https://api.wandb.ai"
 
 class PPOBuffer:
     """
@@ -183,6 +185,8 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     logger = EpochLogger(**logger_kwargs)
     logger.save_config(locals())
 
+    ## Initialize Wandb
+    wandb.init(project="mini-rl")
 
     seed += 10000 * proc_id()
     #tf.set_random_seed(seed)

@@ -7,7 +7,7 @@ student:
   hid: -1
   l: 1
   gamma: 0.99
-  epochs: 200
+  epochs: 300
   gpu_id: -1
   ent_coef: 0.005
   max_ep_len: 2000
@@ -27,7 +27,7 @@ student:
   target_kl: 0.01
   save_freq: 10
   test_freq: 5
-  epochs_per_task: 20
+  epochs_per_task: 10
 teacher:
   teacher: Random
   gmm_fitness_fun: null

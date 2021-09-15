@@ -1,0 +1,187 @@
+Sample random task
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+Warning: trajectory cut off by epoch at 604 steps.
+[32mEarly stopping at step 1 due to reaching max kl.
+---------------------------------------
+|             Epoch |               0 |
+|      AverageEpRet |           0.538 |
+|          StdEpRet |           0.499 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             723 |
+|      AverageVVals |          0.0689 |
+|          StdVVals |           0.105 |
+|          MaxVVals |           0.421 |
+|          MinVVals |         -0.0605 |
+| TotalEnvInteracts |           1e+04 |
+|            LossPi |        3.05e-08 |
+|             LossV |          0.0456 |
+|       DeltaLossPi |        -0.00622 |
+|        DeltaLossV |          0.0841 |
+|           Entropy |            1.37 |
+|                KL |          0.0102 |
+|          ClipFrac |           0.312 |
+|          StopIter |               1 |
+|              Time |            34.5 |
+---------------------------------------
+Warning: trajectory cut off by epoch at 803 steps.
+[32mEarly stopping at step 6 due to reaching max kl.
+---------------------------------------
+|             Epoch |               1 |
+|      AverageEpRet |             0.5 |
+|          StdEpRet |             0.5 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             766 |
+|      AverageVVals |          -0.251 |
+|          StdVVals |          0.0271 |
+|          MaxVVals |          -0.184 |
+|          MinVVals |          -0.335 |
+| TotalEnvInteracts |           2e+04 |
+|            LossPi |        5.49e-08 |
+|             LossV |           0.122 |
+|       DeltaLossPi |        -0.00109 |
+|        DeltaLossV |         -0.0847 |
+|           Entropy |            1.36 |
+|                KL |          0.0319 |
+|          ClipFrac |           0.609 |
+|          StopIter |               6 |
+|              Time |            72.3 |
+---------------------------------------
+Warning: trajectory cut off by epoch at 325 steps.
+---------------------------------------
+|             Epoch |               2 |
+|      AverageEpRet |           0.562 |
+|          StdEpRet |           0.496 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             605 |
+|      AverageVVals |         -0.0363 |
+|          StdVVals |          0.0204 |
+|          MaxVVals |          0.0271 |
+|          MinVVals |          -0.116 |
+| TotalEnvInteracts |           3e+04 |
+|            LossPi |       -1.22e-08 |
+|             LossV |          0.0512 |
+|       DeltaLossPi |       -0.000699 |
+|        DeltaLossV |         -0.0126 |
+|           Entropy |            1.29 |
+|                KL |          0.0085 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |             112 |
+---------------------------------------
+Warning: trajectory cut off by epoch at 118 steps.
+---------------------------------------
+|             Epoch |               3 |
+|      AverageEpRet |             0.5 |
+|          StdEpRet |             0.5 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             618 |
+|      AverageVVals |          0.0373 |
+|          StdVVals |          0.0185 |
+|          MaxVVals |           0.107 |
+|          MinVVals |         -0.0268 |
+| TotalEnvInteracts |           4e+04 |
+|            LossPi |        1.65e-08 |
+|             LossV |          0.0349 |
+|       DeltaLossPi |       -0.000923 |
+|        DeltaLossV |         -0.0024 |
+|           Entropy |            1.24 |
+|                KL |         0.00586 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |             152 |
+---------------------------------------
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:14: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:140: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:37: The name tf.layers.Conv2D is deprecated. Please use tf.compat.v1.layers.Conv2D instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:40: The name tf.layers.Flatten is deprecated. Please use tf.compat.v1.layers.Flatten instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:41: dense (from tensorflow.python.layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.Dense instead.
+WARNING:tensorflow:From /home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/layers/core.py:187: Layer.apply (from tensorflow.python.keras.engine.base_layer) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.__call__` method instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:95: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:48: The name tf.trainable_variables is deprecated. Please use tf.compat.v1.trainable_variables instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py:229: where (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:63: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:14: The name tf.assign is deprecated. Please use tf.compat.v1.assign instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py:244: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+2021-09-14 17:05:18.506770: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2021-09-14 17:05:18.510418: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Found device 0 with properties:
+name: TITAN V major: 7 minor: 0 memoryClockRate(GHz): 1.455
+pciBusID: 0000:1a:00.0
+2021-09-14 17:05:18.510972: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcudart.so.10.0'; dlerror: libcudart.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511065: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcublas.so.10.0'; dlerror: libcublas.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511129: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcufft.so.10.0'; dlerror: libcufft.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511192: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcurand.so.10.0'; dlerror: libcurand.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511254: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcusolver.so.10.0'; dlerror: libcusolver.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511318: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcusparse.so.10.0'; dlerror: libcusparse.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511380: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcudnn.so.7'; dlerror: libcudnn.so.7: cannot open shared object file: No such file or directory
+2021-09-14 17:05:18.511390: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1662] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-09-14 17:05:18.511801: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2021-09-14 17:05:18.553079: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2200000000 Hz
+2021-09-14 17:05:18.559856: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x564de6cff910 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-09-14 17:05:18.559912: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-09-14 17:05:18.568646: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x564de6d62be0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-09-14 17:05:18.568712: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): TITAN V, Compute Capability 7.0
+2021-09-14 17:05:18.568894: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1180] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-09-14 17:05:18.568918: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1186]
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py:245: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:26: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:18<00:00, 531.21it/s]
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/logx.py:227: simple_save (from tensorflow.python.saved_model.simple_save) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.simple_save.
+WARNING:tensorflow:From /home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/saved_model/signature_def_utils_impl.py:201: build_tensor_info (from tensorflow.python.saved_model.utils_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.utils.build_tensor_info or tf.compat.v1.saved_model.build_tensor_info.
+Gradient pi:  10%|████████████▉                                                                                                                    | 1/10 [00:02<00:21,  2.42s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:11<00:00,  1.17s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:19<00:00, 523.86it/s]
+Gradient pi:  60%|█████████████████████████████████████████████████████████████████████████████▍                                                   | 6/10 [00:07<00:05,  1.25s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:10<00:00,  1.03s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:18<00:00, 552.92it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:10<00:00,  1.03s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:10<00:00,  1.03s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:18<00:00, 537.28it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:10<00:00,  1.02s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:10<00:00,  1.03s/it]
+ 76%|██████████████████████████████████████████████████████████████████████████████████████████████████████▍                                | 7592/10000 [00:14<00:04, 524.56it/s]
+Traceback (most recent call last):
+  File "run_mazes.py", line 128, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 330, in ppo
+    a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.expand_dims(o, axis=0)})
+  File "/home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/client/session.py", line 956, in run
+    run_metadata_ptr)
+  File "/home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/client/session.py", line 1180, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/client/session.py", line 1359, in _do_run
+    run_metadata)
+  File "/home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/client/session.py", line 1365, in _do_call
+    return fn(*args)
+  File "/home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/client/session.py", line 1350, in _run_fn
+    target_list, run_metadata)
+  File "/home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/client/session.py", line 1443, in _call_tf_sessionrun
+    run_metadata)
+KeyboardInterrupt

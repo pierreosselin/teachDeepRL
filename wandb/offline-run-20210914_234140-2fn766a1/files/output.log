@@ -1,0 +1,619 @@
+Sample random task
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+Warning: trajectory cut off by epoch at 677 steps.
+[32mEarly stopping at step 1 due to reaching max kl.
+---------------------------------------
+|             Epoch |               0 |
+|      AverageEpRet |             0.2 |
+|          StdEpRet |             0.4 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             966 |
+|      AverageVVals |          -0.076 |
+|          StdVVals |          0.0525 |
+|          MaxVVals |          0.0125 |
+|          MinVVals |          -0.343 |
+| TotalEnvInteracts |           2e+04 |
+|            LossPi |        3.05e-08 |
+|             LossV |          0.0211 |
+|       DeltaLossPi |        0.000641 |
+|        DeltaLossV |          0.0372 |
+|           Entropy |            1.37 |
+|                KL |          0.0129 |
+|          ClipFrac |           0.209 |
+|          StopIter |               1 |
+|              Time |             112 |
+---------------------------------------
+Warning: trajectory cut off by epoch at 339 steps.
+[32mEarly stopping at step 1 due to reaching max kl.
+---------------------------------------
+|             Epoch |               1 |
+|      AverageEpRet |           0.733 |
+|          StdEpRet |           0.442 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             655 |
+|      AverageVVals |           0.228 |
+|          StdVVals |           0.026 |
+|          MaxVVals |           0.312 |
+|          MinVVals |           0.151 |
+| TotalEnvInteracts |           4e+04 |
+|            LossPi |        -6.1e-09 |
+|             LossV |           0.058 |
+|       DeltaLossPi |          0.0134 |
+|        DeltaLossV |          0.0318 |
+|           Entropy |            1.37 |
+|                KL |          0.0237 |
+|          ClipFrac |           0.192 |
+|          StopIter |               1 |
+|              Time |             223 |
+---------------------------------------
+Warning: trajectory cut off by epoch at 382 steps.
+[32mEarly stopping at step 2 due to reaching max kl.
+---------------------------------------
+|             Epoch |               2 |
+|      AverageEpRet |             0.1 |
+|          StdEpRet |             0.3 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             981 |
+|      AverageVVals |           0.326 |
+|          StdVVals |          0.0232 |
+|          MaxVVals |           0.397 |
+|          MinVVals |           0.253 |
+| TotalEnvInteracts |           6e+04 |
+|            LossPi |        6.41e-08 |
+|             LossV |           0.104 |
+|       DeltaLossPi |        -0.00131 |
+|        DeltaLossV |         -0.0822 |
+|           Entropy |            1.38 |
+|                KL |         0.00892 |
+|          ClipFrac |               0 |
+|          StopIter |               2 |
+|              Time |             332 |
+---------------------------------------
+[32mEarly stopping at step 3 due to reaching max kl.
+---------------------------------------
+|             Epoch |               3 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |           0.139 |
+|          StdVVals |          0.0235 |
+|          MaxVVals |           0.209 |
+|          MinVVals |          0.0846 |
+| TotalEnvInteracts |           8e+04 |
+|            LossPi |        9.99e-08 |
+|             LossV |          0.0199 |
+|       DeltaLossPi |        -0.00117 |
+|        DeltaLossV |        -0.00765 |
+|           Entropy |            1.38 |
+|                KL |          0.0094 |
+|          ClipFrac |           0.305 |
+|          StopIter |               3 |
+|              Time |             445 |
+---------------------------------------
+Warning: trajectory cut off by epoch at 427 steps.
+[32mEarly stopping at step 3 due to reaching max kl.
+---------------------------------------
+|             Epoch |               4 |
+|      AverageEpRet |           0.333 |
+|          StdEpRet |           0.471 |
+|          MaxEpRet |               1 |
+|          MinEpRet |               0 |
+|             EpLen |             932 |
+|      AverageVVals |          -0.109 |
+|          StdVVals |          0.0222 |
+|          MaxVVals |         -0.0413 |
+|          MinVVals |          -0.174 |
+| TotalEnvInteracts |           1e+05 |
+|            LossPi |        9.16e-09 |
+|             LossV |           0.037 |
+|       DeltaLossPi |         0.00454 |
+|        DeltaLossV |         -0.0199 |
+|           Entropy |            1.38 |
+|                KL |          0.0166 |
+|          ClipFrac |           0.259 |
+|          StopIter |               3 |
+|              Time |             558 |
+---------------------------------------
+[32mEarly stopping at step 5 due to reaching max kl.
+---------------------------------------
+|             Epoch |               5 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         0.00857 |
+|          StdVVals |          0.0211 |
+|          MaxVVals |          0.0593 |
+|          MinVVals |           -0.04 |
+| TotalEnvInteracts |         1.2e+05 |
+|            LossPi |        1.98e-08 |
+|             LossV |         0.00052 |
+|       DeltaLossPi |        0.000461 |
+|        DeltaLossV |         0.00288 |
+|           Entropy |            1.36 |
+|                KL |          0.0164 |
+|          ClipFrac |           0.509 |
+|          StopIter |               5 |
+|              Time |             672 |
+---------------------------------------
+[32mEarly stopping at step 3 due to reaching max kl.
+---------------------------------------
+|             Epoch |               6 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |          0.0588 |
+|          StdVVals |          0.0188 |
+|          MaxVVals |           0.104 |
+|          MinVVals |        -0.00424 |
+| TotalEnvInteracts |         1.4e+05 |
+|            LossPi |       -1.91e-08 |
+|             LossV |         0.00381 |
+|       DeltaLossPi |         0.00177 |
+|        DeltaLossV |        -0.00337 |
+|           Entropy |            1.37 |
+|                KL |          0.0161 |
+|          ClipFrac |           0.419 |
+|          StopIter |               3 |
+|              Time |             783 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               7 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         -0.0101 |
+|          StdVVals |          0.0183 |
+|          MaxVVals |           0.053 |
+|          MinVVals |         -0.0627 |
+| TotalEnvInteracts |         1.6e+05 |
+|            LossPi |       -1.83e-08 |
+|             LossV |        0.000437 |
+|       DeltaLossPi |        -0.00222 |
+|        DeltaLossV |        0.000323 |
+|           Entropy |            1.35 |
+|                KL |         0.00391 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |             909 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               8 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         -0.0205 |
+|          StdVVals |          0.0146 |
+|          MaxVVals |          0.0232 |
+|          MinVVals |         -0.0735 |
+| TotalEnvInteracts |         1.8e+05 |
+|            LossPi |        4.65e-08 |
+|             LossV |        0.000633 |
+|       DeltaLossPi |        -0.00162 |
+|        DeltaLossV |       -0.000439 |
+|           Entropy |            1.35 |
+|                KL |          0.0029 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |        1.03e+03 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               9 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |        0.000518 |
+|          StdVVals |          0.0134 |
+|          MaxVVals |          0.0435 |
+|          MinVVals |         -0.0531 |
+| TotalEnvInteracts |           2e+05 |
+|            LossPi |        9.35e-09 |
+|             LossV |        0.000179 |
+|       DeltaLossPi |        -0.00046 |
+|        DeltaLossV |         3.6e-05 |
+|           Entropy |            1.33 |
+|                KL |         0.00538 |
+|          ClipFrac |          0.0162 |
+|          StopIter |               9 |
+|              Time |        1.15e+03 |
+---------------------------------------
+MoviePy - Building file ./teachDRL/data/experiments_test/config_convergence/test_gif/test_maze_visualizationALP-GMM_epoch_number_1.gif with imageio.
+Sample random task
+new maze
+tensor([[1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000,
+         1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 2.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000,
+         0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.0000,
+         0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 0.0000, 0.0000,
+         0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 1.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 0.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000,
+         0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000],
+        [0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000,
+         0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000],
+        [0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 0.0000,
+         0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000],
+        [1.0000, 1.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000,
+         1.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 0.0000,
+         1.0000, 1.0000, 0.0000, 0.0000, 1.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 0.0000, 0.0000, 0.0000, 1.0000, 1.0000, 1.0000, 0.0000, 0.0000,
+         0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000],
+        [1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+         1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 1.0000]],
+       device='cuda:0', grad_fn=<AsStridedBackward>)
+[32mEarly stopping at step 6 due to reaching max kl.
+---------------------------------------
+|             Epoch |               0 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |          0.0855 |
+|          StdVVals |          0.0177 |
+|          MaxVVals |           0.132 |
+|          MinVVals |          0.0248 |
+| TotalEnvInteracts |           2e+04 |
+|            LossPi |        4.12e-08 |
+|             LossV |         0.00762 |
+|       DeltaLossPi |        -0.00161 |
+|        DeltaLossV |        -0.00667 |
+|           Entropy |            1.36 |
+|                KL |         0.00759 |
+|          ClipFrac |               0 |
+|          StopIter |               6 |
+|              Time |        1.27e+03 |
+---------------------------------------
+[32mEarly stopping at step 3 due to reaching max kl.
+---------------------------------------
+|             Epoch |               1 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |          0.0251 |
+|          StdVVals |           0.018 |
+|          MaxVVals |          0.0711 |
+|          MinVVals |         -0.0462 |
+| TotalEnvInteracts |           4e+04 |
+|            LossPi |        7.44e-09 |
+|             LossV |        0.000956 |
+|       DeltaLossPi |        0.000319 |
+|        DeltaLossV |       -0.000529 |
+|           Entropy |            1.34 |
+|                KL |         0.00916 |
+|          ClipFrac |               0 |
+|          StopIter |               3 |
+|              Time |        1.39e+03 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               2 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         -0.0103 |
+|          StdVVals |           0.021 |
+|          MaxVVals |          0.0313 |
+|          MinVVals |         -0.0704 |
+| TotalEnvInteracts |           6e+04 |
+|            LossPi |       -2.11e-08 |
+|             LossV |        0.000549 |
+|       DeltaLossPi |        -0.00206 |
+|        DeltaLossV |        0.000142 |
+|           Entropy |            1.36 |
+|                KL |         0.00816 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |        1.51e+03 |
+---------------------------------------
+[32mEarly stopping at step 4 due to reaching max kl.
+---------------------------------------
+|             Epoch |               3 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         -0.0153 |
+|          StdVVals |          0.0219 |
+|          MaxVVals |          0.0229 |
+|          MinVVals |         -0.0773 |
+| TotalEnvInteracts |           8e+04 |
+|            LossPi |       -1.32e-08 |
+|             LossV |        0.000713 |
+|       DeltaLossPi |        -0.00337 |
+|        DeltaLossV |       -0.000351 |
+|           Entropy |            1.34 |
+|                KL |         0.00948 |
+|          ClipFrac |           0.139 |
+|          StopIter |               4 |
+|              Time |        1.62e+03 |
+---------------------------------------
+[32mEarly stopping at step 3 due to reaching max kl.
+---------------------------------------
+|             Epoch |               4 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |        -0.00388 |
+|          StdVVals |          0.0185 |
+|          MaxVVals |          0.0198 |
+|          MinVVals |         -0.0452 |
+| TotalEnvInteracts |           1e+05 |
+|            LossPi |       -6.22e-08 |
+|             LossV |        0.000357 |
+|       DeltaLossPi |         0.00242 |
+|        DeltaLossV |       -0.000193 |
+|           Entropy |            1.29 |
+|                KL |         0.00819 |
+|          ClipFrac |           0.152 |
+|          StopIter |               3 |
+|              Time |        1.73e+03 |
+---------------------------------------
+[32mEarly stopping at step 2 due to reaching max kl.
+---------------------------------------
+|             Epoch |               5 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         0.00175 |
+|          StdVVals |          0.0112 |
+|          MaxVVals |          0.0229 |
+|          MinVVals |         -0.0581 |
+| TotalEnvInteracts |         1.2e+05 |
+|            LossPi |       -6.46e-08 |
+|             LossV |        0.000128 |
+|       DeltaLossPi |       -0.000635 |
+|        DeltaLossV |       -7.74e-05 |
+|           Entropy |            1.29 |
+|                KL |          0.0117 |
+|          ClipFrac |               0 |
+|          StopIter |               2 |
+|              Time |        1.83e+03 |
+---------------------------------------
+[32mEarly stopping at step 8 due to reaching max kl.
+---------------------------------------
+|             Epoch |               6 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |         0.00259 |
+|          StdVVals |         0.00712 |
+|          MaxVVals |          0.0245 |
+|          MinVVals |         -0.0563 |
+| TotalEnvInteracts |         1.4e+05 |
+|            LossPi |       -4.04e-08 |
+|             LossV |        5.74e-05 |
+|       DeltaLossPi |        -0.00157 |
+|        DeltaLossV |       -3.68e-05 |
+|           Entropy |            1.28 |
+|                KL |          0.0149 |
+|          ClipFrac |           0.284 |
+|          StopIter |               8 |
+|              Time |        1.96e+03 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               7 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |        8.09e-05 |
+|          StdVVals |         0.00545 |
+|          MaxVVals |          0.0223 |
+|          MinVVals |         -0.0366 |
+| TotalEnvInteracts |         1.6e+05 |
+|            LossPi |        1.62e-08 |
+|             LossV |        2.98e-05 |
+|       DeltaLossPi |        -0.00259 |
+|        DeltaLossV |       -1.09e-05 |
+|           Entropy |            1.24 |
+|                KL |          0.0061 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |        2.08e+03 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               8 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |       -0.000609 |
+|          StdVVals |         0.00424 |
+|          MaxVVals |          0.0219 |
+|          MinVVals |         -0.0369 |
+| TotalEnvInteracts |         1.8e+05 |
+|            LossPi |       -8.77e-09 |
+|             LossV |        1.84e-05 |
+|       DeltaLossPi |        -0.00222 |
+|        DeltaLossV |       -8.58e-06 |
+|           Entropy |             1.2 |
+|                KL |          0.0101 |
+|          ClipFrac |           0.162 |
+|          StopIter |               9 |
+|              Time |        2.21e+03 |
+---------------------------------------
+---------------------------------------
+|             Epoch |               9 |
+|      AverageEpRet |               0 |
+|          StdEpRet |               0 |
+|          MaxEpRet |               0 |
+|          MinEpRet |               0 |
+|             EpLen |           1e+03 |
+|      AverageVVals |        0.000225 |
+|          StdVVals |         0.00243 |
+|          MaxVVals |          0.0234 |
+|          MinVVals |         -0.0159 |
+| TotalEnvInteracts |           2e+05 |
+|            LossPi |        9.92e-09 |
+|             LossV |        5.94e-06 |
+|       DeltaLossPi |       -0.000996 |
+|        DeltaLossV |       -2.56e-06 |
+|           Entropy |            1.11 |
+|                KL |         0.00482 |
+|          ClipFrac |               0 |
+|          StopIter |               9 |
+|              Time |        2.34e+03 |
+---------------------------------------
+MoviePy - Building file ./teachDRL/data/experiments_test/config_convergence/test_gif/test_maze_visualizationALP-GMM_epoch_number_2.gif with imageio.
+MoviePy - Building file ./teachDRL/data/experiments_test/config_convergence/test_gif/test_maze_visualizationALP-GMM_epoch_number_3.gif with imageio.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:14: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:140: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:37: The name tf.layers.Conv2D is deprecated. Please use tf.compat.v1.layers.Conv2D instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:40: The name tf.layers.Flatten is deprecated. Please use tf.compat.v1.layers.Flatten instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:41: dense (from tensorflow.python.layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.Dense instead.
+WARNING:tensorflow:From /home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/layers/core.py:187: Layer.apply (from tensorflow.python.keras.engine.base_layer) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.__call__` method instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:95: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/core.py:48: The name tf.trainable_variables is deprecated. Please use tf.compat.v1.trainable_variables instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo_test.py:230: where (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:63: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:14: The name tf.assign is deprecated. Please use tf.compat.v1.assign instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo_test.py:245: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+2021-09-14 23:41:54.046929: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2021-09-14 23:41:54.047769: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Found device 0 with properties:
+name: TITAN V major: 7 minor: 0 memoryClockRate(GHz): 1.455
+pciBusID: 0000:1a:00.0
+2021-09-14 23:41:54.048763: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcudart.so.10.0'; dlerror: libcudart.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.048918: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcublas.so.10.0'; dlerror: libcublas.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.048995: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcufft.so.10.0'; dlerror: libcufft.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.049077: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcurand.so.10.0'; dlerror: libcurand.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.049148: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcusolver.so.10.0'; dlerror: libcusolver.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.049217: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcusparse.so.10.0'; dlerror: libcusparse.so.10.0: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.049287: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcudnn.so.7'; dlerror: libcudnn.so.7: cannot open shared object file: No such file or directory
+2021-09-14 23:41:54.049298: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1662] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-09-14 23:41:54.049907: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2021-09-14 23:41:54.084999: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2200000000 Hz
+2021-09-14 23:41:54.090447: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x562d7538e4e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-09-14 23:41:54.090507: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-09-14 23:41:54.099054: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x562d753f1790 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-09-14 23:41:54.099102: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): TITAN V, Compute Capability 7.0
+2021-09-14 23:41:54.099287: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1180] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-09-14 23:41:54.099300: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1186]
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/algos/ppo/ppo_test.py:246: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:26: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:14<00:00, 268.60it/s]
+Gradient pi:  10%|████████████▉                                                                                                                    | 1/10 [00:05<00:46,  5.13s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:30<00:00,  3.01s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:16<00:00, 260.70it/s]
+Gradient pi:  10%|████████████▉                                                                                                                    | 1/10 [00:05<00:47,  5.30s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:26<00:00,  2.63s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:14<00:00, 268.31it/s]
+Gradient pi:  20%|█████████████████████████▊                                                                                                       | 2/10 [00:07<00:29,  3.71s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.56s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:13<00:00, 270.86it/s]
+Gradient pi:  30%|██████████████████████████████████████▋                                                                                          | 3/10 [00:10<00:23,  3.33s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:26<00:00,  2.63s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:15<00:00, 264.23it/s]
+Gradient pi:  30%|██████████████████████████████████████▋                                                                                          | 3/10 [00:10<00:24,  3.43s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.55s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:11<00:00, 280.41it/s]
+Gradient pi:  50%|████████████████████████████████████████████████████████████████▌                                                                | 5/10 [00:14<00:14,  2.99s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.52s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:13<00:00, 273.39it/s]
+Gradient pi:  30%|██████████████████████████████████████▋                                                                                          | 3/10 [00:09<00:23,  3.32s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.53s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:13<00:00, 272.23it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.51s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.54s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:10<00:00, 282.86it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:24<00:00,  2.48s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.53s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:09<00:00, 287.21it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.50s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.51s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:09<00:00, 287.75it/s]
+WARNING:tensorflow:From /home/osselinp/teachDeepRL/teachDRL/spinup/utils/logx.py:227: simple_save (from tensorflow.python.saved_model.simple_save) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.simple_save.
+WARNING:tensorflow:From /home/osselinp/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow_core/python/saved_model/signature_def_utils_impl.py:201: build_tensor_info (from tensorflow.python.saved_model.utils_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.utils.build_tensor_info or tf.compat.v1.saved_model.build_tensor_info.
+Gradient pi:  60%|█████████████████████████████████████████████████████████████████████████████▍                                                   | 6/10 [00:17<00:11,  2.89s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.51s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:15<00:00, 264.13it/s]
+Gradient pi:  30%|██████████████████████████████████████▋                                                                                          | 3/10 [00:10<00:23,  3.36s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.53s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:12<00:00, 275.70it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:24<00:00,  2.48s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.52s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:12<00:00, 277.01it/s]
+Gradient pi:  40%|███████████████████████████████████████████████████▌                                                                             | 4/10 [00:12<00:18,  3.11s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.52s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:11<00:00, 279.01it/s]
+Gradient pi:  30%|██████████████████████████████████████▋                                                                                          | 3/10 [00:09<00:23,  3.29s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.52s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:09<00:00, 289.69it/s]
+Gradient pi:  20%|█████████████████████████▊                                                                                                       | 2/10 [00:07<00:29,  3.73s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.55s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:11<00:00, 281.57it/s]
+Gradient pi:  80%|███████████████████████████████████████████████████████████████████████████████████████████████████████▏                         | 8/10 [00:22<00:05,  2.81s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.54s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:14<00:00, 269.14it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.52s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.54s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:16<00:00, 261.56it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:24<00:00,  2.48s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.53s/it]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20000/20000 [01:16<00:00, 261.64it/s]
+Gradient pi: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:24<00:00,  2.48s/it]
+Gradient v: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:25<00:00,  2.52s/it]

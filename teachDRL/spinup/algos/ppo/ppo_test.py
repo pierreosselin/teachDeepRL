@@ -1,8 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras import datasets, layers, models
 import gym
-import pickle
 import time
 import teachDRL.spinup.algos.ppo.core as core
 from teachDRL.spinup.utils.logx import EpochLogger
@@ -12,6 +10,12 @@ from tqdm import tqdm
 from PIL import Image
 from moviepy.editor import ImageSequenceClip
 import os
+from torchvision.utils import save_image
+import torch
+from pathlib import Path
+import wandb
+
+os.environ["WANDB_BASE_URL"] = "https://api.wandb.ai"
 
 class PPOBuffer:
     """
@@ -97,16 +101,14 @@ def images_to_gif(l_images, epoch, name, path_gif):
     """
     new_l = [np.repeat(el.astype(np.uint8)[:, :, np.newaxis], 3, axis=2) for el in l_images]
     new_l = [el[:,:,np.newaxis]/3 for el in l_images]
-    
     clip = ImageSequenceClip(new_l, fps=20, ismask=True)
     
     clip.write_gif(os.path.join(path_gif, f'{name}_epoch_number_{epoch}.gif'), fps=20)
 
 
-def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0, 
-        steps_per_epoch=4000, epochs=50, gamma=0.99, clip_ratio=0.2, pi_lr=3e-4,
-        vf_lr=1e-3, train_pi_iters=10, train_v_iters=10, lam=0.97, max_ep_len=1000,
-        target_kl=0.01, logger_kwargs=dict(), save_freq=10, path_gif=None, gpu_name = "/device:CPU:0"):
+
+def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(), logger_kwargs=dict(),
+        Teacher=None, path_gif=None, path_sampled_maze=None, path_metrics=None, path_maze_visu=None, gpu_name = "/device:CPU:0"):
     """
     Args:
         env_fn : A function which creates a copy of the environment.
@@ -126,8 +128,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
                                            | the policy, of the action sampled by
                                            | ``pi``.
             ``v``        (batch,)          | Gives the value estimate for states
-                                           | in ``x_ph``. (Critical: make sure 
-                                           | to flatten this!)
+                                           | in ``x_ph``.
             ===========  ================  ======================================
         ac_kwargs (dict): Any kwargs appropriate for the actor_critic 
             function you provided to PPO.
@@ -160,16 +161,41 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
             the current policy and value function.
     """
 
+    #allocate configuration elements
+    gamma = config["student"]["gamma"]
+    seed = config["seed"]
+    epochs = config["student"]["epochs"]
+    max_ep_len = config["student"]["max_ep_len"]
+    steps_per_epoch = config["student"]["steps_per_ep"]
+    clip_ratio = config["student"]["clip_ratio"]
+    pi_lr = config["student"]["pi_lr"]
+    vf_lr = config["student"]["vf_lr"]
+    train_pi_iters = config["student"]["train_pi_iters"]
+    train_v_iters = config["student"]["train_v_iters"]
+    lam = config["student"]["lam"]
+    target_kl = config["student"]["target_kl"]
+    save_freq = config["student"]["save_freq"]
+    test_freq = config["student"]["test_freq"]
+    epochs_per_task = config["student"]["epochs_per_task"]
+
+
+    ## Load maze for gif visualization
+    maze_visu = np.load(path_maze_visu)
+
     logger = EpochLogger(**logger_kwargs)
     logger.save_config(locals())
 
-    seed += 10000 * proc_id()
-    tf.set_random_seed(seed)
-    np.random.seed(seed)
+    ## Initialize Wandb
+    wandb.init(project="test convergence", entity="pierre77")
 
-    env = env_fn()
-    maze_test = np.load(open(ac_kwargs['path_maze'], "rb" ))
-    ac_kwargs.pop('path_maze', None)
+
+    seed += 10000 * proc_id()
+    #tf.set_random_seed(seed)
+    #np.random.seed(seed)
+
+    env, test_env, visu_env = env_fn(), env_fn(), env_fn()
+
+    if Teacher: Teacher.set_env_params(env)
 
 
     obs_dim = env.observation_space.shape
@@ -179,22 +205,12 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     ac_kwargs['action_space'] = env.action_space
 
     # Inputs to computation graph
-
     with tf.device(gpu_name):
         x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-        #x_ph = tf.placeholder(dtype=tf.float32, shape=(None,17, 17, 1))
-        #x_ph = tf.layers.Flatten()(x_ph)
-        
         adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
 
-        # Main outputs from computation graph
-        # ac_kwargs defines architecture student
-        # x_ph is the data
-        # a_ph is the action placeholder
-    
-    
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
-    
+
     # Need all placeholders in *this* order later (to zip with data from buffer)
     all_phs = [x_ph, a_ph, adv_ph, ret_ph, logp_old_ph]
 
@@ -210,7 +226,6 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     logger.log('\nNumber of parameters: \t pi: %d, \t v: %d\n'%var_counts)
 
     # PPO objectives
-    
     ratio = tf.exp(logp - logp_old_ph)          # pi(a|s) / pi_old(a|s)
     min_adv = tf.where(adv_ph>0, (1+clip_ratio)*adv_ph, (1-clip_ratio)*adv_ph)
     pi_loss = -tf.reduce_mean(tf.minimum(ratio * adv_ph, min_adv))
@@ -226,7 +241,7 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     train_pi = MpiAdamOptimizer(learning_rate=pi_lr).minimize(pi_loss)
     train_v = MpiAdamOptimizer(learning_rate=vf_lr).minimize(v_loss)
 
-    #sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+    # Session
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
@@ -236,35 +251,49 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
 
-    def test_agent(sess, pi, epoch):
 
-        print("Saving test agent")
-        o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-        o = env.env.set_environment_maze(maze_test)
+    def visualize_test(epoch, maze_visu):
+        o, r, d, ep_ret, ep_len = visu_env.reset(), 0, False, 0, 0
+        o = visu_env.env.set_environment_maze(maze_visu)
         
         images_gif = []
         o_new = o.reshape(17,17)
-        o_new[env.env.y, env.env.x] = 3
+        o_new[visu_env.env.y, visu_env.env.x] = 3
         images_gif.append(o_new)
-        
+
         while not(d or (ep_len == max_ep_len)):
-            # Take deterministic actions at test time
-            o, r, d, _ = env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
+            o, r, d, _ = visu_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
             ep_ret += r
             ep_len += 1
             o_new = o.reshape(17,17)
-            o_new[env.env.y, env.env.x] = 3
+            o_new[visu_env.env.y, visu_env.env.x] = 3
             images_gif.append(o_new)
-        images_to_gif(images_gif, epoch, "policy_test_aldous", path_gif)
+        images_to_gif(images_gif, epoch, "test_maze_visualization" + Teacher.teacher, path_gif)
 
-        return
+
+    def test_agent(n, sess, pi):
+        print("Test Set Evaluation...")
+        list_rewards = []
+        for j in tqdm(range(n)):
+            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
+            if Teacher:
+                o = Teacher.set_test_env_params(test_env)
+            while not(d or (ep_len == max_ep_len)):
+                # Take deterministic actions at test time 
+                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
+                ep_ret += r
+                ep_len += 1
+
+            list_rewards.append(ep_ret)
+            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
+        if Teacher: Teacher.record_test_episode(np.mean(list_rewards), 0)
+
 
     def update():
         inputs = {k:v for k,v in zip(all_phs, buf.get())}
         pi_l_old, v_l_old, ent = sess.run([pi_loss, v_loss, approx_ent], feed_dict=inputs)
 
         # Training
-        print("Updating...")
         for i in tqdm(range(train_pi_iters), desc="Gradient pi"):
             _, kl = sess.run([train_pi, approx_kl], feed_dict=inputs)
             kl = mpi_avg(kl)
@@ -281,10 +310,16 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
                      KL=kl, Entropy=ent, ClipFrac=cf,
                      DeltaLossPi=(pi_l_new - pi_l_old),
                      DeltaLossV=(v_l_new - v_l_old))
+        wandb.log({"pi_loss": pi_l_old, })
 
     start_time = time.time()
-    o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-    o = env.env.set_environment_maze(maze_test)
+    o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
+
+    # Resample if not solvable
+    while not env.is_solvable():
+        print("Maze not solvable, resampling...")
+        o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
+
 
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
@@ -309,25 +344,15 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
                 if terminal:
                     # only save EpRet / EpLen if trajectory finished
                     logger.store(EpRet=ep_ret, EpLen=ep_len)
-                #images_to_gif(images_gif, epoch)
-                #images_gif = []
+                if Teacher:
+                    Teacher.record_train_episode(ep_ret, ep_len)
                 o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
-                o = env.env.set_environment_maze(maze_test)
-
-
-
-
-        # Save model
-        if (epoch % save_freq == 0) or (epoch == epochs-1):
-            logger.save_state({'env': env}, None)
 
         # Perform PPO update!
         update()
+        
+        o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
 
-        if (epoch % save_freq == 0) or (epoch == epochs-1):
-            test_agent(sess, pi, epoch)
-
-        # Log info about epoch
         logger.log_tabular('Epoch', epoch)
         logger.log_tabular('EpRet', with_min_and_max=True)
         logger.log_tabular('EpLen', average_only=True)
@@ -343,6 +368,80 @@ def ppo_test(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=
         logger.log_tabular('StopIter', average_only=True)
         logger.log_tabular('Time', time.time()-start_time)
         logger.dump_tabular()
+
+    ### Check peformance on maze : Save a gif
+    first_maze = env.env.maze
+    visualize_test(1, first_maze)
+
+    Teacher.set_env_params(env)
+    o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+    while not env.is_solvable():
+        print("Maze not solvable, resampling...")
+        Teacher.set_env_params(env)
+        o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+
+    print("new maze")
+    print(env.env.maze)
+
+    # Second training on different environment
+    for epoch in range(epochs):
+        for t in tqdm(range(local_steps_per_epoch)):
+            a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.expand_dims(o, axis=0)})
+            # save and log
+            buf.store(o, a, r, v_t, logp_t)
+            logger.store(VVals=v_t)
+            
+            o, r, d, _ = env.step(a[0])
+            
+            ep_ret += r
+            ep_len += 1
+            
+            terminal = d or (ep_len == max_ep_len)
+            if terminal or (t==local_steps_per_epoch-1):
+                if not(terminal):
+                    print('Warning: trajectory cut off by epoch at %d steps.'%ep_len)
+                # if trajectory didn't reach terminal state, bootstrap value target
+                last_val = r if d else sess.run(v, feed_dict={x_ph: np.expand_dims(o, axis=0)})
+                buf.finish_path(last_val)
+                if terminal:
+                    # only save EpRet / EpLen if trajectory finished
+                    logger.store(EpRet=ep_ret, EpLen=ep_len)
+                if Teacher:
+                    Teacher.record_train_episode(ep_ret, ep_len)
+                o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+
+        # Save model
+        if (epoch % save_freq == 0) or (epoch == epochs-1):
+            logger.save_state({'env': env}, None)
+
+        # Perform PPO update!
+        update()
+    
+        o, r, d, ep_ret, ep_len = env.reset(), 0, False, 0, 0
+
+        logger.log_tabular('Epoch', epoch)
+        logger.log_tabular('EpRet', with_min_and_max=True)
+        logger.log_tabular('EpLen', average_only=True)
+        logger.log_tabular('VVals', with_min_and_max=True)
+        logger.log_tabular('TotalEnvInteracts', (epoch+1)*steps_per_epoch)
+        logger.log_tabular('LossPi', average_only=True)
+        logger.log_tabular('LossV', average_only=True)
+        logger.log_tabular('DeltaLossPi', average_only=True)
+        logger.log_tabular('DeltaLossV', average_only=True)
+        logger.log_tabular('Entropy', average_only=True)
+        logger.log_tabular('KL', average_only=True)
+        logger.log_tabular('ClipFrac', average_only=True)
+        logger.log_tabular('StopIter', average_only=True)
+        logger.log_tabular('Time', time.time()-start_time)
+        logger.dump_tabular()
+
+    ### Save the resulting policy on second environment
+    visualize_test(2, env.env.maze)
+
+    ### Check performance on first maze as well
+    visualize_test(3, first_maze)
+
+
 
 if __name__ == '__main__':
     import argparse
@@ -363,7 +462,7 @@ if __name__ == '__main__':
     from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
-    ppo_test(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,
+    ppo(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l), gamma=args.gamma, 
         seed=args.seed, steps_per_epoch=args.steps, epochs=args.epochs,
         logger_kwargs=logger_kwargs)

@@ -1,0 +1,82 @@
+2021-09-14 17:08:42,249 INFO    MainThread:7806 [internal.py:wandb_internal():89] W&B internal server running at pid: 7806, started at: 2021-09-14 17:08:42.249087
+2021-09-14 17:08:42,253 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: run_start
+2021-09-14 17:08:42,253 INFO    WriterThread:7806 [datastore.py:open_for_write():77] open: /home/osselinp/teachDeepRL/wandb/offline-run-20210914_170841-m3idev80/run-m3idev80.wandb
+2021-09-14 17:08:43,633 DEBUG   HandlerThread:7806 [meta.py:__init__():40] meta init
+2021-09-14 17:08:43,633 DEBUG   HandlerThread:7806 [meta.py:__init__():54] meta init done
+2021-09-14 17:08:43,633 DEBUG   HandlerThread:7806 [meta.py:probe():211] probe
+2021-09-14 17:08:43,640 DEBUG   HandlerThread:7806 [meta.py:_setup_git():201] setup git
+2021-09-14 17:08:43,677 DEBUG   HandlerThread:7806 [meta.py:_setup_git():208] setup git done
+2021-09-14 17:08:43,678 DEBUG   HandlerThread:7806 [meta.py:_save_pip():58] save pip
+2021-09-14 17:08:43,679 DEBUG   HandlerThread:7806 [meta.py:_save_pip():72] save pip done
+2021-09-14 17:08:43,680 DEBUG   HandlerThread:7806 [meta.py:_save_conda():79] save conda
+2021-09-14 17:08:45,805 DEBUG   HandlerThread:7806 [meta.py:_save_conda():87] save conda done
+2021-09-14 17:08:45,806 DEBUG   HandlerThread:7806 [meta.py:probe():249] probe done
+2021-09-14 17:19:18,925 WARNING MainThread:7806 [internal.py:wandb_internal():145] Internal process interrupt: 1
+2021-09-14 17:19:22,732 DEBUG   SenderThread:7806 [sender.py:send():182] send: exit
+2021-09-14 17:19:22,733 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: poll_exit
+2021-09-14 17:19:22,733 INFO    SenderThread:7806 [sender.py:send_exit():291] handling exit code: 255
+2021-09-14 17:19:22,734 INFO    SenderThread:7806 [sender.py:send_exit():293] handling runtime: 640
+2021-09-14 17:19:22,735 INFO    SenderThread:7806 [sender.py:_save_file():873] saving file wandb-summary.json with policy end
+2021-09-14 17:19:22,735 INFO    SenderThread:7806 [sender.py:send_exit():303] send defer
+2021-09-14 17:19:22,735 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: poll_exit
+2021-09-14 17:19:22,737 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,737 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 0
+2021-09-14 17:19:22,737 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,737 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 0
+2021-09-14 17:19:22,738 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 1
+2021-09-14 17:19:22,738 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,739 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 1
+2021-09-14 17:19:22,901 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,901 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 1
+2021-09-14 17:19:22,902 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: poll_exit
+2021-09-14 17:19:22,902 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 2
+2021-09-14 17:19:22,903 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: poll_exit
+2021-09-14 17:19:22,903 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,904 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 2
+2021-09-14 17:19:22,904 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,904 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 2
+2021-09-14 17:19:22,904 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 3
+2021-09-14 17:19:22,905 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,905 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 3
+2021-09-14 17:19:22,906 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,906 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 3
+2021-09-14 17:19:22,906 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 4
+2021-09-14 17:19:22,907 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,907 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 4
+2021-09-14 17:19:22,907 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,907 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 4
+2021-09-14 17:19:22,908 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 5
+2021-09-14 17:19:22,908 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,908 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 5
+2021-09-14 17:19:22,909 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,909 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 5
+2021-09-14 17:19:22,909 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 6
+2021-09-14 17:19:22,910 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,910 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 6
+2021-09-14 17:19:22,910 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,910 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 6
+2021-09-14 17:19:22,910 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 7
+2021-09-14 17:19:22,911 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,911 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 7
+2021-09-14 17:19:22,911 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,912 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 7
+2021-09-14 17:19:22,912 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 8
+2021-09-14 17:19:22,912 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,912 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 8
+2021-09-14 17:19:22,912 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,913 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 8
+2021-09-14 17:19:22,913 INFO    SenderThread:7806 [sender.py:transition_state():316] send defer: 9
+2021-09-14 17:19:22,914 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: defer
+2021-09-14 17:19:22,914 DEBUG   SenderThread:7806 [sender.py:send():182] send: final
+2021-09-14 17:19:22,914 INFO    HandlerThread:7806 [handler.py:handle_request_defer():143] handle defer: 9
+2021-09-14 17:19:22,914 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: defer
+2021-09-14 17:19:22,915 INFO    SenderThread:7806 [sender.py:send_request_defer():312] handle sender defer: 9
+2021-09-14 17:19:23,005 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: poll_exit
+2021-09-14 17:19:23,005 DEBUG   SenderThread:7806 [sender.py:send_request():196] send_request: poll_exit
+2021-09-14 17:19:23,007 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: get_summary
+2021-09-14 17:19:23,009 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: sampled_history
+2021-09-14 17:19:23,011 DEBUG   HandlerThread:7806 [handler.py:handle_request():126] handle_request: shutdown
+2021-09-14 17:19:23,012 INFO    HandlerThread:7806 [handler.py:finish():683] shutting down handler
+2021-09-14 17:19:23,914 INFO    WriterThread:7806 [datastore.py:close():281] close: /home/osselinp/teachDeepRL/wandb/offline-run-20210914_170841-m3idev80/run-m3idev80.wandb
+2021-09-14 17:19:24,006 INFO    SenderThread:7806 [sender.py:finish():979] shutting down sender
+2021-09-14 17:19:24,008 INFO    MainThread:7806 [internal.py:handle_exit():76] Internal process exited
