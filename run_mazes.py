@@ -66,7 +66,6 @@ param_env_bounds = OrderedDict()
 
 param_env_bounds['Z'] = [-100, 100, 100]
 
-
 # Set Teacher hyperparameters
 
 params = {}

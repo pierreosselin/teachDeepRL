@@ -26,13 +26,13 @@ def placeholder_from_space(space):
 def placeholders_from_spaces(*args):
     return [placeholder_from_space(space) for space in args]
 
-def mlp(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):
+def mlp(x, hidden_sizes=(32,64, 64, 32), activation=tf.tanh, output_activation=None):
     x = tf.layers.Flatten()(x)
     for h in hidden_sizes[:-1]:
         x = tf.layers.dense(x, units=h, activation=activation)
     return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
 
-def convolutional(x, hidden_sizes=(32, 64, 32), activation='relu', output_activation=None):
+def convolutional(x, hidden_sizes=(150, 250, 150, 100, 50, 32), activation='relu', output_activation=None):
     x = tf.expand_dims(x, axis=-1)
     x = tf.layers.Conv2D(hidden_sizes[0], 3, activation=activation, padding="same")(x)
     for h in hidden_sizes[1:-1]:
@@ -112,7 +112,7 @@ def mlp_gaussian_policy(x, a, hidden_sizes, activation, output_activation, actio
 """
 Actor-Critics
 """
-def mlp_actor_critic(x, a, hidden_sizes=(64,64), activation=tf.tanh, 
+def mlp_actor_critic(x, a, hidden_sizes=(150, 250, 150, 150, 50, 32), activation=tf.tanh, 
                      output_activation=None, policy=None, action_space=None):
 
     # default policy builder depends on action space

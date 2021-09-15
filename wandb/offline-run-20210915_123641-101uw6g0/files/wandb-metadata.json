@@ -1,0 +1,29 @@
+{
+    "os": "Linux-5.11.0-34-generic-x86_64-with-debian-bullseye-sid",
+    "python": "3.6.13",
+    "heartbeatAt": "2021-09-15T11:36:42.809628",
+    "startedAt": "2021-09-15T11:36:41.214072",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1650 Ti",
+    "gpu_count": 1,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [
+        "--config",
+        "config_Random_MLP",
+        "--gpu_id",
+        "0"
+    ],
+    "state": "running",
+    "program": "run_mazes.py",
+    "codePath": "run_mazes.py",
+    "git": {
+        "remote": "https://github.com/pierreosselin/teachDeepRL.git",
+        "commit": "019f205f04b2652313ec119d7271ec24fc387332"
+    },
+    "email": "pierre.osselin@gmail.com",
+    "root": "/home/pierre/Git/teachDeepRL",
+    "host": "pierre-XPS-15-9500",
+    "username": "pierre",
+    "executable": "/home/pierre/miniconda3/envs/teachDRL/bin/python"
+}
