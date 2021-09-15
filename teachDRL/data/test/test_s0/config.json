@@ -1,6 +1,6 @@
 {
     "Teacher":	{
-        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f3e2c12e160>":	{
+        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7fd450d78160>":	{
             "env_params_test":	[],
             "env_params_train":	[],
             "env_test_len":	[],
@@ -19,13 +19,13 @@
                 ]
             },
             "task_generator":	{
-                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7f3e2c12e080>":	{
+                "<teachDRL.teachers.algos.alp_gmm.ALPGMM object at 0x7fd450d780b8>":	{
                     "alp_computer":	{
-                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7f3ee9ae6e48>":	{
+                        "<teachDRL.teachers.algos.alp_gmm.EmpiricalALPComputer object at 0x7fd36a77aeb8>":	{
                             "alp_knn":	{
-                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7f3e2c12e128>":	{
+                                "<teachDRL.teachers.utils.dataset.BufferedDataset object at 0x7fd450d78208>":	{
                                     "buffer":	{
-                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7f3e2c12e0b8>":	{
+                                        "<teachDRL.teachers.utils.dataset.Dataset object at 0x7fd450d782e8>":	{
                                             "data":	[
                                                 [],
                                                 []
@@ -355,7 +355,7 @@
         },
         "test_set":	"test_set_mix"
     },
-    "env_fn":	"<function <lambda> at 0x7f3e2c11ec80>",
+    "env_fn":	"<function <lambda> at 0x7fd450d67c80>",
     "epochs":	10,
     "epochs_per_task":	1,
     "exp_name":	"test",
@@ -363,7 +363,7 @@
     "gpu_name":	"/device:XLA_GPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f3e2c0b2f60>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7fd450cfbe80>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,
@@ -383,10 +383,10 @@
     },
     "max_ep_len":	2000,
     "maze_visu":	"[[1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1]\n [1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0]\n [1 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1]\n [0 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 1]\n [1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 1 1]\n [1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 0]\n [1 0 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1]\n [1 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 1]\n [1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1]\n [0 0 0 0 1 1 1 1 1 1 1 1 1 0 1 0 1]\n [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]\n [1 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0]\n [1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]\n [1 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1]\n [1 1 1 0 1 1 1 0 1 1 1 1 1 0 1 0 1]\n [0 0 1 0 0 0 1 0 1 0 0 0 0 0 1 0 1]\n [1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1]]",
-    "path_gif":	"./teachDRL/data/experiments_test/config_convergence/test_gif/",
+    "path_gif":	"./teachDRL/data/experiments_test/config_convergence3/test_gif/",
     "path_maze_visu":	"./teachDRL/teachers/test_sets/maze_visu.npy",
-    "path_metrics":	"./teachDRL/data/experiments_test/config_convergence/training_metrics/",
-    "path_sampled_maze":	"./teachDRL/data/experiments_test/config_convergence/sampled_mazes/",
+    "path_metrics":	"./teachDRL/data/experiments_test/config_convergence3/training_metrics/",
+    "path_sampled_maze":	"./teachDRL/data/experiments_test/config_convergence3/sampled_mazes/",
     "pi_lr":	0.0003,
     "save_freq":	10,
     "seed":	0,

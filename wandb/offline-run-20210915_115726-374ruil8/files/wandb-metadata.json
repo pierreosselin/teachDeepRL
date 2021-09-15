@@ -1,0 +1,29 @@
+{
+    "os": "Linux-4.15.0-142-generic-x86_64-with-debian-stretch-sid",
+    "python": "3.6.13",
+    "heartbeatAt": "2021-09-15T10:57:29.149571",
+    "startedAt": "2021-09-15T10:57:26.909172",
+    "docker": null,
+    "gpu": "TITAN V",
+    "gpu_count": 4,
+    "cpu_count": 56,
+    "cuda": null,
+    "args": [
+        "--config",
+        "config_convergence2",
+        "--gpu_id",
+        "1"
+    ],
+    "state": "running",
+    "program": "test_run_maze.py",
+    "codePath": "test_run_maze.py",
+    "git": {
+        "remote": "https://github.com/pierreosselin/teachDeepRL.git",
+        "commit": "239d9c0084f3780cf891b666a60c3f80f45ff618"
+    },
+    "email": "pierre.osselin@gmail.com",
+    "root": "/home/osselinp/teachDeepRL",
+    "host": "aimscdt2",
+    "username": "osselinp",
+    "executable": "/home/osselinp/miniconda3/envs/teachDRL/bin/python"
+}
