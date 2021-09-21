@@ -1,0 +1,15 @@
+
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+WARNING:tensorflow:From /home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/util/dispatch.py:206: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+Traceback (most recent call last):
+  File "run_mazes.py", line 127, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 241, in ppo
+    train_pi = MpiAdamOptimizer(learning_rate=pi_lr).minimize(pi_loss)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/training/optimizer.py", line 411, in minimize
+    grad_loss=grad_loss)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py", line 64, in compute_gradients
+    avg_flat_grad = tf.py_func(_collect_grads, [flat_grad], tf.float32)
+AttributeError: module 'tensorflow' has no attribute 'py_func'

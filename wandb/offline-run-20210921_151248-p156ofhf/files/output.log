@@ -1,0 +1,29 @@
+
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+WARNING:tensorflow:From /home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/util/dispatch.py:206: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+WARNING:tensorflow:From /home/pierre/Git/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:64: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+2021-09-21 15:12:55.444802: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-09-21 15:12:55.450590: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory
+2021-09-21 15:12:55.450612: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-09-21 15:12:55.450907: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "run_mazes.py", line 127, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 246, in ppo
+    sess.run(tf.global_variables_initializer())
+AttributeError: module 'tensorflow' has no attribute 'global_variables_initializer'

@@ -1,0 +1,29 @@
+
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+WARNING:tensorflow:From /home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/util/dispatch.py:206: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+WARNING:tensorflow:From /home/pierre/Git/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:64: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+Traceback (most recent call last):
+  File "run_mazes.py", line 127, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 241, in ppo
+    train_pi = MpiAdamOptimizer(learning_rate=pi_lr).minimize(pi_loss)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/training/optimizer.py", line 421, in minimize
+    name=name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py", line 78, in apply_gradients
+    sync = sync_params([v for g,v in grads_and_vars])
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py", line 21, in sync_params
+    synced_params = tf.py_func(_broadcast, [get_params], tf.float32)
+AttributeError: module 'tensorflow' has no attribute 'py_func'

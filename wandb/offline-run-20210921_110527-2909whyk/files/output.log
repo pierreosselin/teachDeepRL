@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "run_mazes.py", line 127, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 195, in ppo
+    env, test_env, visu_env = env_fn(), env_fn(), env_fn()
+  File "run_mazes.py", line 111, in <lambda>
+    env_f = lambda: TimeLimit(MazeEnv(env_config), max_episode_steps=1000)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/gym_flowers/envs/maze_env.py", line 55, in __init__
+    self.maze = self.generator.generate_random()[0][0]
+  File "/home/pierre/Git/teachDeepRL/gan_utils.py", line 54, in generate_random
+    return self.forward(z)
+  File "/home/pierre/Git/teachDeepRL/gan_utils.py", line 47, in forward
+    img = rearrange(img, 'b c h w -> b (c h w)')
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/einops/einops.py", line 424, in rearrange
+    return reduce(tensor, pattern, reduction='rearrange', **axes_lengths)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/einops/einops.py", line 368, in reduce
+    return recipe.apply(tensor)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/einops/einops.py", line 203, in apply
+    backend = get_backend(tensor)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/einops/_backends.py", line 49, in get_backend
+    if backend.is_appropriate_type(tensor):
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/einops/_backends.py", line 513, in is_appropriate_type
+    return self.K.is_tensor(tensor) and self.K.is_keras_tensor(tensor)
+AttributeError: module 'keras.backend' has no attribute 'is_tensor'

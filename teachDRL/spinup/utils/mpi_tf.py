@@ -11,14 +11,14 @@ def assign_params_from_flat(x, params):
     flat_size = lambda p : int(np.prod(p.shape.as_list())) # the 'int' is important for scalars
     splits = tf.split(x, [flat_size(p) for p in params])
     new_params = [tf.reshape(p_new, p.shape) for p, p_new in zip(params, splits)]
-    return tf.group([tf.assign(p, p_new) for p, p_new in zip(params, new_params)])
+    return tf.group([tf.compat.v1.assign(p, p_new) for p, p_new in zip(params, new_params)])
 
 def sync_params(params):
     get_params = flat_concat(params)
     def _broadcast(x):
         broadcast(x)
         return x
-    synced_params = tf.py_func(_broadcast, [get_params], tf.float32)
+    synced_params = tf.compat.v1.py_func(_broadcast, [get_params], tf.float32)
     return assign_params_from_flat(synced_params, params)
 
 def sync_all_params():
@@ -26,7 +26,7 @@ def sync_all_params():
     return sync_params(tf.global_variables())
 
 
-class MpiAdamOptimizer(tf.train.AdamOptimizer):
+class MpiAdamOptimizer(tf.compat.v1.train.AdamOptimizer):
     """
     Adam optimizer that averages gradients across MPI processes.
 
@@ -40,7 +40,8 @@ class MpiAdamOptimizer(tf.train.AdamOptimizer):
 
     def __init__(self, **kwargs):
         self.comm = MPI.COMM_WORLD
-        tf.train.AdamOptimizer.__init__(self, **kwargs)
+        tf.compat.v1.train.AdamOptimizer.__init__(self, **kwargs)
+        #tf.optimizers.Adam.__init__(self, **kwargs)
 
     def compute_gradients(self, loss, var_list, **kwargs):
         """
@@ -60,7 +61,7 @@ class MpiAdamOptimizer(tf.train.AdamOptimizer):
             np.divide(buf, float(num_tasks), out=buf)
             return buf
 
-        avg_flat_grad = tf.py_func(_collect_grads, [flat_grad], tf.float32)
+        avg_flat_grad = tf.compat.v1.py_func(_collect_grads, [flat_grad], tf.float32)
         avg_flat_grad.set_shape(flat_grad.shape)
         avg_grads = tf.split(avg_flat_grad, sizes, axis=0)
         avg_grads_and_vars = [(tf.reshape(g, v.shape), v)

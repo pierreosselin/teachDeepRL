@@ -1,0 +1,20 @@
+2021-09-21 14:15:37.230465: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-09-21 14:15:37.235896: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory
+2021-09-21 14:15:37.235917: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-09-21 14:15:37.236301: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "run_mazes.py", line 127, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 208, in ppo
+    x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/core.py", line 27, in placeholders_from_spaces
+    return [placeholder_from_space(space) for space in args]
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/core.py", line 27, in <listcomp>
+    return [placeholder_from_space(space) for space in args]
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/core.py", line 21, in placeholder_from_space
+    return placeholder(space.shape)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/core.py", line 14, in placeholder
+    return tf.placeholder(dtype=tf.float32, shape=combined_shape(None,dim))
+AttributeError: module 'tensorflow' has no attribute 'placeholder'
