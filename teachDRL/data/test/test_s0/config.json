@@ -1,6 +1,6 @@
 {
     "Teacher":	{
-        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7fa2c08300b8>":	{
+        "<teachDRL.teachers.teacher_controller.TeacherController object at 0x7f202e1cd080>":	{
             "env_params_test":	[],
             "env_params_train":	[],
             "env_test_len":	[],
@@ -19,7 +19,7 @@
                 ]
             },
             "task_generator":	{
-                "<teachDRL.teachers.algos.random_teacher.RandomTeacher object at 0x7fa2c0830198>":	{
+                "<teachDRL.teachers.algos.random_teacher.RandomTeacher object at 0x7f202e1cd160>":	{
                     "maxs":	[
                         100,
                         100,
@@ -225,7 +225,7 @@
                         -100
                     ],
                     "random_task_generator":	{
-                        "Box(-100.0, 100.0, (100,), float32)":	{
+                        "Box([-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100.], [100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100.], (100,), float32)":	{
                             "_np_random":	null,
                             "bounded_above":	"[ True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True]",
                             "bounded_below":	"[ True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True  True  True  True  True  True  True  True  True\n  True  True  True  True]",
@@ -325,7 +325,7 @@
         },
         "test_set":	"test_set_mix"
     },
-    "env_fn":	"<function <lambda> at 0x7fa2c08a0158>",
+    "env_fn":	"<function <lambda> at 0x7f202e1be400>",
     "epochs":	100,
     "epochs_per_task":	2,
     "exp_name":	"test",
@@ -333,15 +333,15 @@
     "gpu_name":	"/device:XLA_GPU:0",
     "lam":	0.97,
     "logger":	{
-        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7fa455fb20f0>":	{
+        "<teachDRL.spinup.utils.logx.EpochLogger object at 0x7f232eb65d30>":	{
             "epoch_dict":	{},
             "exp_name":	"test",
             "first_row":	true,
             "log_current_row":	{},
             "log_headers":	[],
-            "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0",
+            "output_dir":	"/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0",
             "output_file":	{
-                "<_io.TextIOWrapper name='/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
+                "<_io.TextIOWrapper name='/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0/progress.txt' mode='w' encoding='UTF-8'>":	{
                     "mode":	"w"
                 }
             }
@@ -349,7 +349,7 @@
     },
     "logger_kwargs":	{
         "exp_name":	"test",
-        "output_dir":	"/home/pierre/Git/teachDeepRL/teachDRL/data/test/test_s0"
+        "output_dir":	"/home/osselinp/teachDeepRL/teachDRL/data/test/test_s0"
     },
     "max_ep_len":	200,
     "maze_visu":	"[[1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1]\n [1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0]\n [1 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1]\n [0 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 1]\n [1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 1 1]\n [1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 0]\n [1 0 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1]\n [1 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 1]\n [1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1]\n [0 0 0 0 1 1 1 1 1 1 1 1 1 0 1 0 1]\n [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]\n [1 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0]\n [1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]\n [1 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1]\n [1 1 1 0 1 1 1 0 1 1 1 1 1 0 1 0 1]\n [0 0 1 0 0 0 1 0 1 0 0 0 0 0 1 0 1]\n [1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1]]",
