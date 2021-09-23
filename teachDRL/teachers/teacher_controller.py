@@ -90,7 +90,7 @@ class TeacherController(object):
         self.env_train_len = []
         self.env_params_test = []
         self.env_test_rewards = []
-        self.env_test_len = []
+        self.env_test_std = []
 
     def record_train_episode(self, reward, ep_len):
         self.env_train_rewards.append(reward)
@@ -100,9 +100,9 @@ class TeacherController(object):
             self.env_train_norm_rewards.append(reward)
         self.task_generator.update(self.env_params_train[-1], reward)
 
-    def record_test_episode(self, reward, ep_len):
+    def record_test_episode(self, reward, std):
         self.env_test_rewards.append(reward)
-        self.env_test_len.append(ep_len)
+        self.env_test_std.append(std)
 
     def dump(self, filename):
         with open(filename, 'wb') as handle:
@@ -111,7 +111,7 @@ class TeacherController(object):
                          'env_train_len': self.env_train_len,
                          'env_params_test': self.env_params_test,
                          'env_test_rewards': self.env_test_rewards,
-                         'env_test_len': self.env_test_len,
+                         'env_test_std': self.env_test_std,
                          'env_param_bounds': list(self.param_env_bounds.items())}
             dump_dict = self.task_generator.dump(dump_dict)
             pickle.dump(dump_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)

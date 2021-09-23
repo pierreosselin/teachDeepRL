@@ -275,20 +275,24 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
     def test_agent(n, sess, pi):
         print("Test Set Evaluation...")
-        list_rewards = []
-        for j in tqdm(range(n)):
-            o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
-            if Teacher:
-                o = Teacher.set_test_env_params(test_env)
-            while not(d or (ep_len == max_ep_len)):
-                # Take deterministic actions at test time 
-                o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
-                ep_ret += r
-                ep_len += 1
+        list_rewards_total = []
+        for _ in range(10):
+            list_rewards = []
+            for j in tqdm(range(n)):
+                o, r, d, ep_ret, ep_len = test_env.reset(), 0, False, 0, 0
+                if Teacher:
+                    o = Teacher.set_test_env_params(test_env)
+                while not(d or (ep_len == max_ep_len)):
+                    # Take deterministic actions at test time 
+                    o, r, d, _ = test_env.step(sess.run(pi, feed_dict={x_ph: np.expand_dims(o, axis=0)})[0])
+                    ep_ret += r
+                    ep_len += 1
 
-            list_rewards.append(ep_ret)
-            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
-        if Teacher: Teacher.record_test_episode(np.mean(list_rewards), 0)
+                list_rewards.append(ep_ret)
+                logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
+            list_rewards_total.append(np.mean(list_rewards))
+        
+        if Teacher: Teacher.record_test_episode(np.mean(list_rewards_total), np.std(list_rewards_total))
 
 
     def update():

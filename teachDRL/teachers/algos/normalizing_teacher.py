@@ -204,8 +204,6 @@ class NF():
         # Task space boundaries
         self.mins = np.array(mins)
         self.maxs = np.array(maxs)
-        print("Hello here is the vector length")
-        print(len(mins))
 
         self.dim_input = len(mins)
 
@@ -250,16 +248,11 @@ class NF():
 
         self.samples = self.maf.sample()
 
-
         base_lr = 1e-3
         end_lr = 1e-4
         self.max_epochs = int(5e3)  # maximum number of epochs of the training
         learning_rate_fn = tf.keras.optimizers.schedules.PolynomialDecay(base_lr, self.max_epochs, end_lr, power=0.5)
         self.opt = tf.keras.optimizers.Adam(learning_rate=learning_rate_fn)  # optimizer
-
-
-
-        print("Initialization FInished")
 
         # Boring book-keeping
         self.bk = {'weights': [], 'covariances': [], 'means': [], 'tasks_alps': [], 'episodes': []}
