@@ -224,7 +224,7 @@ class Logger:
                 # simple_save refuses to be useful if fpath already exists,
                 # so just delete fpath if it's there.
                 shutil.rmtree(fpath)
-            tf.saved_model.simple_save(export_dir=fpath, **self.tf_saver_elements)
+            tf.compat.v1.saved_model.simple_save(export_dir=fpath, **self.tf_saver_elements)
             joblib.dump(self.tf_saver_info, osp.join(fpath, 'model_info.pkl'))
     
     def dump_tabular(self):

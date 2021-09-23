@@ -1,147 +1,83 @@
+import time
+
 import numpy as np
 import tensorflow as tf
-from tensorflow import keras
+import tensorflow_probability as tfp
+from tensorflow.keras.layers import Layer, Dense
+from tensorflow.keras import Model
 
-import scipy.signal
-from gym.spaces import Box, Discrete
-
-EPS = 1e-8
-
-def combined_shape(length, shape=None):
-    if shape is None:
-        return (length,)
-    return (length, shape) if np.isscalar(shape) else (length, *shape)
-
-def placeholder(dim=None):
-    return tf.placeholder(dtype=tf.float32, shape=combined_shape(None,dim))
-
-def placeholders(*args):
-    return [placeholder(dim) for dim in args]
-
-def placeholder_from_space(space):
-    if isinstance(space, Box):
-        return placeholder(space.shape)
-    elif isinstance(space, Discrete):
-        return tf.placeholder(dtype=tf.int32, shape=(None,))
-    raise NotImplementedError
-
-def placeholders_from_spaces(*args):
-    return [placeholder_from_space(space) for space in args]
-
-def mlp(x, hidden_sizes=(32,64, 64, 32), activation=tf.tanh, output_activation=None):
-    x = tf.layers.Flatten()(x)
-    for h in hidden_sizes[:-1]:
-        x = tf.layers.dense(x, units=h, activation=activation)
-    return tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)
-
-def convolutional(x, hidden_sizes=(150, 250, 150, 100, 50, 32), activation='relu', output_activation=None):
-    x = tf.expand_dims(x, axis=-1)
-    x = tf.layers.Conv2D(hidden_sizes[0], 3, activation=activation, padding="same")(x)
-    for h in hidden_sizes[1:-1]:
-        x = tf.layers.Conv2D(h, 3, activation=activation, padding="same")(x)
-    x = tf.layers.Flatten()(x)
-    x = tf.layers.dense(x, units=hidden_sizes[-1], activation=output_activation)  # output
-    return x
+tf.keras.backend.set_floatx('float32')
 
 
 
-
-def get_vars(scope=''):
-    return [x for x in tf.trainable_variables() if scope in x.name]
-
-def count_vars(scope=''):
-    v = get_vars(scope)
-    return sum([np.prod(var.shape.as_list()) for var in v])
-
-def gaussian_likelihood(x, mu, log_std):
-    pre_sum = -0.5 * (((x-mu)/(tf.exp(log_std)+EPS))**2 + 2*log_std + np.log(2*np.pi))
-    return tf.reduce_sum(pre_sum, axis=1)
-
-def discount_cumsum(x, discount):
+class NN(Layer):
     """
-    magic from rllab for computing discounted cumulative sums of vectors.
-
-    input: 
-        vector x, 
-        [x0, 
-         x1, 
-         x2]
-
-    output:
-        [x0 + discount * x1 + discount^2 * x2,
-         x1 + discount * x2,
-         x2]
+    Neural Network Architecture for calcualting s and t for Real-NVP
+    
+    :param input_shape: shape of the data coming in the layer
+    :param hidden_units: Python list-like of non-negative integers, specifying the number of units in each hidden layer.
+    :param activation: Activation of the hidden units
     """
-    return scipy.signal.lfilter([1], [1, float(-discount)], x[::-1], axis=0)[::-1]
+    def __init__(self, input_shape, n_hidden=[512, 512], activation="relu", name="nn"):
+        super(NN, self).__init__(name="nn")
+        layer_list = []
+        for i, hidden in enumerate(n_hidden):
+            layer_list.append(Dense(hidden, activation=activation))
+        self.layer_list = layer_list
+        self.log_s_layer = Dense(input_shape, activation="tanh", name='log_s')
+        self.t_layer = Dense(input_shape, name='t')
+
+    def call(self, x):
+        y = x
+        for layer in self.layer_list:
+            y = layer(y)
+        log_s = self.log_s_layer(y)
+        t = self.t_layer(y)
+        return log_s, t
 
 
-"""
-Policies
-"""
+class RealNVP(tfp.Bijector):
+    """
+    Implementation of a Real-NVP for Denisty Estimation. L. Dinh “Density estimation using Real NVP,” 2016.
+    This implementation only works for 1D arrays.
+    :param input_shape: shape of the data coming in the layer
+    :param hidden_units: Python list-like of non-negative integers, specifying the number of units in each hidden layer.
+    """
 
-def mlp_categorical_policy(x, a, hidden_sizes, activation, output_activation, action_space):
-    act_dim = action_space.n
-    logits = mlp(x, list(hidden_sizes)+[act_dim], activation, None) ## To modify to adapt to mazes (convolutional)
-    logp_all = tf.nn.log_softmax(logits)
-    pi = tf.squeeze(tf.multinomial(logits,1), axis=1)    
-    logp = tf.reduce_sum(tf.one_hot(a, depth=act_dim) * logp_all, axis=1)
-    logp_pi = tf.reduce_sum(tf.one_hot(pi, depth=act_dim) * logp_all, axis=1)
-    return pi, logp, logp_pi
+    def __init__(self, input_shape, n_hidden=[512, 512], forward_min_event_ndims=1, validate_args: bool = False, name="real_nvp"):
+        super(RealNVP, self).__init__(
+            validate_args=validate_args, forward_min_event_ndims=forward_min_event_ndims, name=name
+        )
 
+        assert input_shape % 2 == 0
+        input_shape = input_shape // 2
+        nn_layer = NN(input_shape, n_hidden)
+        x = tf.keras.Input(input_shape)
+        log_s, t = nn_layer(x)
+        self.nn = Model(x, [log_s, t], name="nn")
+        
+    def _bijector_fn(self, x):
+        log_s, t = self.nn(x)
+        return tfb.affine_scalar.AffineScalar(shift=t, log_scale=log_s)
 
-def convolutional_categorical_policy(x, a, hidden_sizes, activation, output_activation, action_space):
-    act_dim = action_space.n
-    logits = convolutional(x, list(hidden_sizes)+[act_dim], activation, None) ## To modify to adapt to mazes (convolutional)
-    logp_all = tf.nn.log_softmax(logits)
-    #pi_deterministic = tf.argmax(logits,axis=1)
-    pi = tf.squeeze(tf.multinomial(logits,1), axis=1)
-    logp = tf.reduce_sum(tf.one_hot(a, depth=act_dim) * logp_all, axis=1)
-    logp_pi = tf.reduce_sum(tf.one_hot(pi, depth=act_dim) * logp_all, axis=1)
-    return pi, logp, logp_pi
+    def _forward(self, x):
+        x_a, x_b = tf.split(x, 2, axis=-1)
+        y_b = x_b
+        y_a = self._bijector_fn(x_b).forward(x_a)
+        y = tf.concat([y_a, y_b], axis=-1)
+        return y
 
+    def _inverse(self, y):
+        y_a, y_b = tf.split(y, 2, axis=-1)
+        x_b = y_b
+        x_a = self._bijector_fn(y_b).inverse(y_a)
+        x = tf.concat([x_a, x_b], axis=-1)
+        return x
 
-def mlp_gaussian_policy(x, a, hidden_sizes, activation, output_activation, action_space):
-    act_dim = a.shape.as_list()[-1]
-    mu = mlp(x, list(hidden_sizes)+[act_dim], activation, output_activation)
-    log_std = tf.get_variable(name='log_std', initializer=-0.5*np.ones(act_dim, dtype=np.float32))
-    std = tf.exp(log_std)
-    pi = mu + tf.random_normal(tf.shape(mu)) * std
-    logp = gaussian_likelihood(a, mu, log_std)
-    logp_pi = gaussian_likelihood(pi, mu, log_std)
-    return pi, logp, logp_pi
-
-
-"""
-Actor-Critics
-"""
-def mlp_actor_critic(x, a, hidden_sizes=(150, 250, 150, 150, 50, 32), activation=tf.tanh, 
-                     output_activation=None, policy=None, action_space=None):
-
-    # default policy builder depends on action space
-    if policy is None and isinstance(action_space, Box):
-        policy = mlp_gaussian_policy
-    elif policy is None and isinstance(action_space, Discrete):
-        policy = mlp_categorical_policy
-
-    with tf.variable_scope('pi'):
-        pi, logp, logp_pi = policy(x, a, hidden_sizes, activation, output_activation, action_space)
-    with tf.variable_scope('v'):
-        v = tf.squeeze(mlp(x, list(hidden_sizes)+[1], activation, None), axis=1)
-    return pi, logp, logp_pi, v
-
-def convolutional_actor_critic(x, a, hidden_sizes=(32,32,32), activation=tf.tanh, 
-                     output_activation=None, policy=None, action_space=None):
-
-    # default policy builder depends on action space
-    if policy is None and isinstance(action_space, Box):
-        print("Convolutional for continuous output not implemented")
-        policy = None
-    elif policy is None and isinstance(action_space, Discrete):
-        policy = convolutional_categorical_policy
-
-    with tf.variable_scope('pi'):
-        pi, logp, logp_pi = policy(x, a, hidden_sizes, activation, output_activation, action_space)
-    with tf.variable_scope('v'):
-        v = tf.squeeze(convolutional(x, list(hidden_sizes)+[1], activation, None), axis=1)
-        #v = tf.squeeze(mlp(x, list(hidden_sizes)+[1], activation, None), axis=1)
-    return pi, logp, logp_pi, v
+    def _forward_log_det_jacobian(self, x):
+        x_a, x_b = tf.split(x, 2, axis=-1)
+        return self._bijector_fn(x_b).forward_log_det_jacobian(x_a, event_ndims=1)
+    
+    def _inverse_log_det_jacobian(self, y):
+        y_a, y_b = tf.split(y, 2, axis=-1)
+        return self._bijector_fn(y_b).inverse_log_det_jacobian(y_a, event_ndims=1)

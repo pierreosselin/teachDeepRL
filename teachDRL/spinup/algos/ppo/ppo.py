@@ -14,6 +14,7 @@ from torchvision.utils import save_image
 import torch
 from pathlib import Path
 import wandb
+import sys
 
 os.environ["WANDB_BASE_URL"] = "https://api.wandb.ai"
 
@@ -183,7 +184,9 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     maze_visu = np.load(path_maze_visu)
 
     logger = EpochLogger(**logger_kwargs)
-    logger.save_config(locals())
+
+    #logger.save_config(locals())
+
 
     ## Initialize Wandb
     wandb.init(project="mini-rl")
@@ -196,12 +199,12 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
     if Teacher: Teacher.set_env_params(env)
 
-
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
     
     # Share information about action space with policy architecture
     ac_kwargs['action_space'] = env.action_space
+
 
     # Inputs to computation graph
     tf.compat.v1.disable_eager_execution() ##Disable Eager execution
@@ -250,7 +253,6 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
 
     # Setup model saving
     logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
-
 
     def visualize_test(epoch):
         o, r, d, ep_ret, ep_len = visu_env.reset(), 0, False, 0, 0

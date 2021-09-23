@@ -23,7 +23,7 @@ def sync_params(params):
 
 def sync_all_params():
     """Sync all tf variables across MPI processes."""
-    return sync_params(tf.global_variables())
+    return sync_params(tf.compat.v1.global_variables())
 
 
 class MpiAdamOptimizer(tf.compat.v1.train.AdamOptimizer):

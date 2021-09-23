@@ -14,6 +14,7 @@ import torch
 import yaml
 from pathlib import Path
 import shutil
+import sys
 
 
 # Argument definition
@@ -121,6 +122,8 @@ path_maze_visu = './teachDRL/teachers/test_sets/maze_visu.npy'
 # Initialize teacher
 Teacher = TeacherController(config["teacher"]["teacher"], config["student"]["nb_test_episodes"], param_env_bounds,
                             seed=config["seed"], teacher_params=params, name_test=config["test_set"])
+
+
 
 # Launch Student training
 ppo(env_f, actor_critic=actor_critic, config=config, ac_kwargs=ac_kwargs, logger_kwargs=logger_kwargs, Teacher=Teacher, 
