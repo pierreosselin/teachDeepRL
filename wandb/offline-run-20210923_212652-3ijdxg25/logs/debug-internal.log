@@ -1,0 +1,19 @@
+2021-09-23 21:26:53,054 INFO    MainThread:10039 [internal.py:wandb_internal():89] W&B internal server running at pid: 10039, started at: 2021-09-23 21:26:53.054527
+2021-09-23 21:26:53,059 DEBUG   HandlerThread:10039 [handler.py:handle_request():126] handle_request: run_start
+2021-09-23 21:26:53,059 INFO    WriterThread:10039 [datastore.py:open_for_write():77] open: /home/osselinp/teachDeepRL/wandb/offline-run-20210923_212652-3ijdxg25/run-3ijdxg25.wandb
+2021-09-23 21:26:54,504 DEBUG   HandlerThread:10039 [meta.py:__init__():40] meta init
+2021-09-23 21:26:54,504 DEBUG   HandlerThread:10039 [meta.py:__init__():54] meta init done
+2021-09-23 21:26:54,504 DEBUG   HandlerThread:10039 [meta.py:probe():211] probe
+2021-09-23 21:26:54,511 DEBUG   HandlerThread:10039 [meta.py:_setup_git():201] setup git
+2021-09-23 21:26:54,548 DEBUG   HandlerThread:10039 [meta.py:_setup_git():208] setup git done
+2021-09-23 21:26:54,548 DEBUG   HandlerThread:10039 [meta.py:_save_pip():58] save pip
+2021-09-23 21:26:54,549 DEBUG   HandlerThread:10039 [meta.py:_save_pip():72] save pip done
+2021-09-23 21:26:54,550 DEBUG   HandlerThread:10039 [meta.py:_save_conda():79] save conda
+2021-09-23 21:26:57,281 DEBUG   HandlerThread:10039 [meta.py:_save_conda():87] save conda done
+2021-09-23 21:26:57,281 DEBUG   HandlerThread:10039 [meta.py:probe():249] probe done
+2021-09-23 21:30:35,941 WARNING MainThread:10039 [internal.py:wandb_internal():145] Internal process interrupt: 1
+2021-09-23 21:30:36,082 WARNING MainThread:10039 [internal.py:wandb_internal():145] Internal process interrupt: 2
+2021-09-23 21:30:36,082 ERROR   MainThread:10039 [internal.py:wandb_internal():148] Internal process interrupted.
+2021-09-23 21:30:36,199 INFO    SenderThread:10039 [sender.py:finish():979] shutting down sender
+2021-09-23 21:30:37,063 INFO    WriterThread:10039 [datastore.py:close():281] close: /home/osselinp/teachDeepRL/wandb/offline-run-20210923_212652-3ijdxg25/run-3ijdxg25.wandb
+2021-09-23 21:30:37,064 INFO    MainThread:10039 [internal.py:handle_exit():76] Internal process exited

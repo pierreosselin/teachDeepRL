@@ -28,7 +28,7 @@ class CovarGMM():
         self.random_task_generator = Box(self.mins, self.maxs, dtype=np.float32)
 
         # Number of episodes between two fit of the GMM
-        self.fit_rate = 250 if "fit_rate" not in params else params['fit_rate']
+        self.fit_rate = 20 if "fit_rate" not in params else params['fit_rate']
         self.nb_random = self.fit_rate  # Number of bootstrapping episodes
 
         # Original version do not use Absolute LP, only LP.

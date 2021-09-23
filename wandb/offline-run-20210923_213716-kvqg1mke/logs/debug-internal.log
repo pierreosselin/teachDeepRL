@@ -1,0 +1,13 @@
+2021-09-23 21:37:17,672 INFO    MainThread:14358 [internal.py:wandb_internal():89] W&B internal server running at pid: 14358, started at: 2021-09-23 21:37:17.672562
+2021-09-23 21:37:17,677 INFO    WriterThread:14358 [datastore.py:open_for_write():77] open: /home/osselinp/teachDeepRL/wandb/offline-run-20210923_213716-kvqg1mke/run-kvqg1mke.wandb
+2021-09-23 21:37:17,681 DEBUG   HandlerThread:14358 [handler.py:handle_request():126] handle_request: run_start
+2021-09-23 21:37:19,176 DEBUG   HandlerThread:14358 [meta.py:__init__():40] meta init
+2021-09-23 21:37:19,176 DEBUG   HandlerThread:14358 [meta.py:__init__():54] meta init done
+2021-09-23 21:37:19,176 DEBUG   HandlerThread:14358 [meta.py:probe():211] probe
+2021-09-23 21:37:19,189 DEBUG   HandlerThread:14358 [meta.py:_setup_git():201] setup git
+2021-09-23 21:37:19,225 DEBUG   HandlerThread:14358 [meta.py:_setup_git():208] setup git done
+2021-09-23 21:37:19,226 DEBUG   HandlerThread:14358 [meta.py:_save_pip():58] save pip
+2021-09-23 21:37:19,227 DEBUG   HandlerThread:14358 [meta.py:_save_pip():72] save pip done
+2021-09-23 21:37:19,227 DEBUG   HandlerThread:14358 [meta.py:_save_conda():79] save conda
+2021-09-23 21:37:22,205 DEBUG   HandlerThread:14358 [meta.py:_save_conda():87] save conda done
+2021-09-23 21:37:22,206 DEBUG   HandlerThread:14358 [meta.py:probe():249] probe done

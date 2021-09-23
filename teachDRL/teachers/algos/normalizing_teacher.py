@@ -210,7 +210,7 @@ class NF():
         # Restart new fit by initializing with last fit
         self.warm_start = False if "warm_start" not in params else params["warm_start"]
         # Number of episodes between two fit of the NF
-        self.fit_rate = 250 if "fit_rate" not in params else params['fit_rate']
+        self.fit_rate = 20 if "fit_rate" not in params else params['fit_rate']
         self.nb_random = self.fit_rate  # Number of bootstrapping episodes
 
         # Ratio of randomly sampled tasks VS tasks sampling using GMM
@@ -250,7 +250,7 @@ class NF():
 
         base_lr = 1e-3
         end_lr = 1e-4
-        self.max_epochs = int(5e3)  # maximum number of epochs of the training
+        self.max_epochs = int(5e2)  # maximum number of epochs of the training
         learning_rate_fn = tf.keras.optimizers.schedules.PolynomialDecay(base_lr, self.max_epochs, end_lr, power=0.5)
         self.opt = tf.keras.optimizers.Adam(learning_rate=learning_rate_fn)  # optimizer
 

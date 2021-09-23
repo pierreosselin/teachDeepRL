@@ -320,7 +320,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     start_time = time.time()
     o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
 
-    # Resample if not solvable
+    # Resample if not solvablee
     while not env.is_solvable():
         print("Maze not solvable, resampling...")
         o, r, d, ep_ret, ep_len = env.reset(random=True), 0, False, 0, 0
