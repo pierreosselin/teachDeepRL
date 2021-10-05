@@ -1,83 +1,58 @@
-import time
-
-import numpy as np
-import tensorflow as tf
-import tensorflow_probability as tfp
-from tensorflow.keras.layers import Layer, Dense
-from tensorflow.keras import Model
-
-tf.keras.backend.set_floatx('float32')
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
 
 
-class NN(Layer):
-    """
-    Neural Network Architecture for calcualting s and t for Real-NVP
-    
-    :param input_shape: shape of the data coming in the layer
-    :param hidden_units: Python list-like of non-negative integers, specifying the number of units in each hidden layer.
-    :param activation: Activation of the hidden units
-    """
-    def __init__(self, input_shape, n_hidden=[512, 512], activation="relu", name="nn"):
-        super(NN, self).__init__(name="nn")
-        layer_list = []
-        for i, hidden in enumerate(n_hidden):
-            layer_list.append(Dense(hidden, activation=activation))
-        self.layer_list = layer_list
-        self.log_s_layer = Dense(input_shape, activation="tanh", name='log_s')
-        self.t_layer = Dense(input_shape, name='t')
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 10)
 
-    def call(self, x):
-        y = x
-        for layer in self.layer_list:
-            y = layer(y)
-        log_s = self.log_s_layer(y)
-        t = self.t_layer(y)
-        return log_s, t
-
-
-class RealNVP(tfp.Bijector):
-    """
-    Implementation of a Real-NVP for Denisty Estimation. L. Dinh “Density estimation using Real NVP,” 2016.
-    This implementation only works for 1D arrays.
-    :param input_shape: shape of the data coming in the layer
-    :param hidden_units: Python list-like of non-negative integers, specifying the number of units in each hidden layer.
-    """
-
-    def __init__(self, input_shape, n_hidden=[512, 512], forward_min_event_ndims=1, validate_args: bool = False, name="real_nvp"):
-        super(RealNVP, self).__init__(
-            validate_args=validate_args, forward_min_event_ndims=forward_min_event_ndims, name=name
-        )
-
-        assert input_shape % 2 == 0
-        input_shape = input_shape // 2
-        nn_layer = NN(input_shape, n_hidden)
-        x = tf.keras.Input(input_shape)
-        log_s, t = nn_layer(x)
-        self.nn = Model(x, [log_s, t], name="nn")
-        
-    def _bijector_fn(self, x):
-        log_s, t = self.nn(x)
-        return tfb.affine_scalar.AffineScalar(shift=t, log_scale=log_s)
-
-    def _forward(self, x):
-        x_a, x_b = tf.split(x, 2, axis=-1)
-        y_b = x_b
-        y_a = self._bijector_fn(x_b).forward(x_a)
-        y = tf.concat([y_a, y_b], axis=-1)
-        return y
-
-    def _inverse(self, y):
-        y_a, y_b = tf.split(y, 2, axis=-1)
-        x_b = y_b
-        x_a = self._bijector_fn(y_b).inverse(y_a)
-        x = tf.concat([x_a, x_b], axis=-1)
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = torch.flatten(x, 1) # flatten all dimensions except batch
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
         return x
 
-    def _forward_log_det_jacobian(self, x):
-        x_a, x_b = tf.split(x, 2, axis=-1)
-        return self._bijector_fn(x_b).forward_log_det_jacobian(x_a, event_ndims=1)
-    
-    def _inverse_log_det_jacobian(self, y):
-        y_a, y_b = tf.split(y, 2, axis=-1)
-        return self._bijector_fn(y_b).inverse_log_det_jacobian(y_a, event_ndims=1)
+
+class Convolutional_Net(nn.Module):
+    def __init__(self, hidden_sizes=(150, 250, 150, 100, 50, 32, 4), activation='relu', output_activation=None):
+        super().__init__()
+
+        self.conv_layers = []
+        self.conv_layers.append(nn.Conv2d(in_channels = 1, out_channels = hidden_sizes[0], kernel_size = 3, padding="same"))
+        last_el = hidden_sizes[0]
+        for el in hidden_sizes[1:-1]:
+            self.conv_layers.append(nn.Conv2d(in_channels = last_el, out_channels = el, kernel_size = 3, padding="same"))
+            last_el = el
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc = nn.Linear(last_el * 17 *17, hidden_sizes[-1])
+
+    def forward(self, x):
+        x = torch.unsqueeze(x, 0)
+        x = torch.unsqueeze(x, 0)
+        for layer in self.conv_layers:
+            x = F.relu(layer(x))
+        x = torch.flatten(x, 1) # flatten all dimensions except batch
+        x = self.fc(x)
+        return x
+
+if __name__== "__main__":
+    from teachDRL.gym_flowers.envs.maze_env import *
+    model = Convolutional_Net()
+    env_config = {}
+    env_config['device'] = "cuda"
+    env_config['maze_model_path'] = "/home/pierre/Git/teachDeepRL/teachDRL/models/generatornobatch_aldous-pacman_4.pth"
+    env = MazeEnv(env_config)
+    x = env.maze.cpu()
+    print(x.shape)
+    print(model(x))

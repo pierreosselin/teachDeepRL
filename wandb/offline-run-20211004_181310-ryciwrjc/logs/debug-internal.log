@@ -1,0 +1,13 @@
+2021-10-04 18:13:11,610 INFO    MainThread:18748 [internal.py:wandb_internal():89] W&B internal server running at pid: 18748, started at: 2021-10-04 18:13:11.609694
+2021-10-04 18:13:11,616 INFO    WriterThread:18748 [datastore.py:open_for_write():77] open: /home/pierre/Git/teachDeepRL/wandb/offline-run-20211004_181310-ryciwrjc/run-ryciwrjc.wandb
+2021-10-04 18:13:11,617 DEBUG   HandlerThread:18748 [handler.py:handle_request():128] handle_request: run_start
+2021-10-04 18:13:13,815 DEBUG   HandlerThread:18748 [meta.py:__init__():39] meta init
+2021-10-04 18:13:13,815 DEBUG   HandlerThread:18748 [meta.py:__init__():53] meta init done
+2021-10-04 18:13:13,815 DEBUG   HandlerThread:18748 [meta.py:probe():210] probe
+2021-10-04 18:13:13,823 DEBUG   HandlerThread:18748 [meta.py:_setup_git():200] setup git
+2021-10-04 18:13:13,846 DEBUG   HandlerThread:18748 [meta.py:_setup_git():207] setup git done
+2021-10-04 18:13:13,847 DEBUG   HandlerThread:18748 [meta.py:_save_pip():57] save pip
+2021-10-04 18:13:13,848 DEBUG   HandlerThread:18748 [meta.py:_save_pip():71] save pip done
+2021-10-04 18:13:13,848 DEBUG   HandlerThread:18748 [meta.py:_save_conda():78] save conda
+2021-10-04 18:13:14,212 DEBUG   HandlerThread:18748 [meta.py:_save_conda():86] save conda done
+2021-10-04 18:13:14,212 DEBUG   HandlerThread:18748 [meta.py:probe():252] probe done

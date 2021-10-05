@@ -1,0 +1,52 @@
+Sample random task
+[32mNumber of parameters: 	 pi: 55812, 	 v: 46881
+WARNING:tensorflow:From /home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/util/dispatch.py:206: multinomial (from tensorflow.python.ops.random_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.random.categorical` instead.
+WARNING:tensorflow:From /home/pierre/Git/teachDeepRL/teachDRL/spinup/utils/mpi_tf.py:64: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+2021-10-04 18:12:07.061203: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-10-04 18:12:07.076405: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory
+2021-10-04 18:12:07.076425: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-10-04 18:12:07.077271: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+ 22%|███████████████████████████▏                                                                                              | 4459/20000 [00:08<00:30, 513.71it/s]
+Traceback (most recent call last):
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/pierre/.vscode/extensions/ms-python.python-2021.9.1246542782/pythonFiles/lib/python/debugpy/__main__.py", line 45, in <module>
+    cli.main()
+  File "/home/pierre/.vscode/extensions/ms-python.python-2021.9.1246542782/pythonFiles/lib/python/debugpy/../debugpy/server/cli.py", line 444, in main
+    run()
+  File "/home/pierre/.vscode/extensions/ms-python.python-2021.9.1246542782/pythonFiles/lib/python/debugpy/../debugpy/server/cli.py", line 285, in run_file
+    runpy.run_path(target_as_str, run_name=compat.force_str("__main__"))
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/runpy.py", line 263, in run_path
+    pkg_name=pkg_name, script_name=fname)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/runpy.py", line 96, in _run_module_code
+    mod_name, mod_spec, pkg_name, script_name)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/pierre/Git/teachDeepRL/run_mazes.py", line 130, in <module>
+    path_gif = path_gif, path_sampled_maze=path_sampled_maze, path_metrics=path_metrics, path_maze_visu=path_maze_visu, gpu_name=gpu_name)
+  File "/home/pierre/Git/teachDeepRL/teachDRL/spinup/algos/ppo/ppo.py", line 337, in ppo
+    a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.expand_dims(o, axis=0)})
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 968, in run
+    run_metadata_ptr)
+  File "/home/pierre/miniconda3/envs/teachDRL/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1102, in _run
+    def _run(self, handle, fetches, feed_dict, options, run_metadata):
+  File "/home/pierre/.vscode/extensions/ms-python.python-2021.9.1246542782/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_trace_dispatch_regular.py", line 364, in __call__
+    if not is_thread_alive(t):
+KeyboardInterrupt
