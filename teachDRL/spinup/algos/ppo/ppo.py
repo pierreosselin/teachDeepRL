@@ -210,7 +210,7 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     tf.compat.v1.disable_eager_execution() ##Disable Eager execution
     with tf.device(gpu_name):
         x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-        adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
+        adv_ph, ccret_ph, logp_old_ph = core.placeholders(None, None, None)
 
     pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
 

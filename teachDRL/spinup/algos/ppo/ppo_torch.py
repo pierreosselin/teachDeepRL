@@ -17,7 +17,7 @@ from torchvision.utils import save_image
 import torch
 from pathlib import Path
 import wandb
-import sys
+from models import Convolutional_Net
 
 os.environ["WANDB_BASE_URL"] = "https://api.wandb.ai"
 
@@ -208,58 +208,19 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     # Share information about action space with policy architecture
     ac_kwargs['action_space'] = env.action_space
 
-
-    # Inputs to computation graph
-    tf.compat.v1.disable_eager_execution() ##Disable Eager execution
-    with tf.device(gpu_name):
-        x_ph, a_ph = core.placeholders_from_spaces(env.observation_space, env.action_space)
-        adv_ph, ret_ph, logp_old_ph = core.placeholders(None, None, None)
-
-    pi, logp, logp_pi, v = actor_critic(x_ph, a_ph, **ac_kwargs)
-
-    # Need all placeholders in *this* order later (to zip with data from buffer)
-    all_phs = [x_ph, a_ph, adv_ph, ret_ph, logp_old_ph]
-
-    # Every step, get: action, value, and logprob
-    get_action_ops = [pi, v, logp_pi]
+    hidden_sizes_pi = (150, 250, 150, 100, 50, 32, 4)
+    hidden_sizes_v = (150, 250, 150, 100, 50, 32, 1)
+    model_pi = Convolutional_Net(hidden_sizes = hidden_sizes_pi)
+    model_v = Convolutional_Net(hidden_sizes = hidden_sizes_v)
 
     # Experience buffer
     local_steps_per_epoch = int(steps_per_epoch / num_procs())
     buf = PPOBuffer(obs_dim, act_dim, local_steps_per_epoch, gamma, lam)
 
-    # Count variables
-    var_counts = tuple(core.count_vars(scope) for scope in ['pi', 'v'])
-    logger.log('\nNumber of parameters: \t pi: %d, \t v: %d\n'%var_counts)
-
-    # PPO objectives
-    ratio = tf.exp(logp - logp_old_ph)          # pi(a|s) / pi_old(a|s)
-    min_adv = tf.where(adv_ph>0, (1+clip_ratio)*adv_ph, (1-clip_ratio)*adv_ph)
-    pi_loss = -tf.reduce_mean(tf.minimum(ratio * adv_ph, min_adv))
-    v_loss = tf.reduce_mean((ret_ph - v)**2)
-
-    # Info (useful to watch during learning)
-    approx_kl = tf.reduce_mean(logp_old_ph - logp)      # a sample estimate for KL-divergence, easy to compute
-    approx_ent = tf.reduce_mean(-logp)                  # a sample estimate for entropy, also easy to compute
-    clipped = tf.logical_or(ratio > (1+clip_ratio), ratio < (1-clip_ratio))
-    clipfrac = tf.reduce_mean(tf.cast(clipped, tf.float32))
 
     # Optimizers
-
-    optimizer_pi = optim.Adam(net_pi.parameters(), lr=0.001, momentum=0.9)
-    optimizer_v = optim.Adam(net_v.parameters(), lr=0.001, momentum=0.9)
-
-    train_pi = MpiAdamOptimizer(learning_rate=pi_lr).minimize(pi_loss)
-    train_v = MpiAdamOptimizer(learning_rate=vf_lr).minimize(v_loss)
-
-    # Session
-    sess = tf.compat.v1.Session()
-    sess.run(tf.compat.v1.global_variables_initializer())
-
-    # Sync params across processes
-    sess.run(sync_all_params())
-
-    # Setup model saving
-    logger.setup_tf_saver(sess, inputs={'x': x_ph}, outputs={'pi': pi, 'v': v})
+    optimizer_pi = optim.Adam(model_pi.parameters(), lr=0.001, momentum=0.9)
+    optimizer_v = optim.Adam(model_v.parameters(), lr=0.001, momentum=0.9)
 
     def visualize_test(epoch):
         o, r, d, ep_ret, ep_len = visu_env.reset(), 0, False, 0, 0
@@ -336,17 +297,42 @@ def ppo(env_fn, actor_critic=core.mlp_actor_critic, config=None, ac_kwargs=dict(
     o_new = o.reshape(17,17)
     o_new[env.env.y, env.env.x] = 3
     save_image(torch.tensor(o_new), path_sampled_maze + f'maze_1_teacher_{Teacher.teacher}.png', normalize=True)
-
+    softmax = torch.nn.Softmax()
+    logsoftmax = torch.nn.LogSoftmax()
 
     # Main loop: collect experience in env and update/log each epoch
     for epoch in range(epochs):
         for t in tqdm(range(local_steps_per_epoch)):
-            a, v_t, logp_t = sess.run(get_action_ops, feed_dict={x_ph: np.expand_dims(o, axis=0)})
+            logits = model_pi(o)
+            logp_all = logsoftmax(logits)
+            p_all = softmax(logits)
+            #pi_deterministic = tf.argmax(logits,axis=1)
+            a_t = torch.squeeze(torch.multinomial(p_all,1))
+            logp_t = torch.sum(torch.nn.functional.one_hot(a_t, depth=act_dim) * logp_all, axis=1)
+            v_t = model_v(o)
+
+
+
+            """
+            # PPO objectives
+            ratio = tf.exp(logp - logp_old_ph)          # pi(a|s) / pi_old(a|s)
+            min_adv = tf.where(adv_ph>0, (1+clip_ratio)*adv_ph, (1-clip_ratio)*adv_ph)
+            pi_loss = -tf.reduce_mean(tf.minimum(ratio * adv_ph, min_adv))
+            v_loss = tf.reduce_mean((ret_ph - v)**2)
+
+            # Info (useful to watch during learning)
+            approx_kl = tf.reduce_mean(logp_old_ph - logp)      # a sample estimate for KL-divergence, easy to compute
+            approx_ent = tf.reduce_mean(-logp)                  # a sample estimate for entropy, also easy to compute
+            clipped = tf.logical_or(ratio > (1+clip_ratio), ratio < (1-clip_ratio))
+            clipfrac = tf.reduce_mean(tf.cast(clipped, tf.float32))
+            """
+
+
             # save and log
-            buf.store(o, a, r, v_t, logp_t)
+            buf.store(o, a_t, r, v_t, logp_t)
             logger.store(VVals=v_t)
             
-            o, r, d, _ = env.step(a[0])
+            o, r, d, _ = env.step(a_t[0])
             
             ep_ret += r
             ep_len += 1
